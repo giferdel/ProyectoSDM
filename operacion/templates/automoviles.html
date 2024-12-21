@@ -1,0 +1,41 @@
+<!-- templates/mi_template.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static './style.css' %}">
+    <title>Automoviles</title>
+</head>
+<body class="app">
+    
+    <table>
+        <caption>{{marca}} {{modelo}}</caption>
+        <tr>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Año</th>
+        </tr>
+        <tr>
+            <td>{{marca}}</td>
+            <td>{{modelo}}</td>
+            <td>{{anio}}</td>
+        </tr>
+        <tr>
+            <td>{{marca}}</td>
+            <td>{{modelo}}</td>
+            <td>{{anio}}</td>
+        </tr>
+        <tr>
+            <td>{{marca}}</td>
+            <td>{{modelo}}</td>
+            <td>{{anio}}</td>
+        </tr>
+    </table>
+            <p>{{ caracteristica }}</p>
+    
+
+</body>
+</html>

@@ -6,12 +6,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Título de la Página</title>
     <link rel="stylesheet" type="text/css" href="{% static 'operacion/style.css' %}">
 
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+
 </head>
-<body>
-    <h1>Bienvenido a mi aplicación!</h1>
-    <p>{{ mensaje }}</p>
+<body class="menu">
+    <a href="http://127.0.0.1:8080/operacion/automoviles/">Automoviles</a>
+    <a href="http://127.0.0.1:8080/operacion/automoviles/">Clientes</a>
+    <a href="http://127.0.0.1:8080/operacion/automoviles/">VTV</a>
+    <a href="http://127.0.0.1:8080/operacion/automoviles/">Seguros</a>
+    <a href="http://127.0.0.1:8080/operacion/automoviles/">Patentes</a>
+    <a href="http://127.0.0.1:8080/operacion/automoviles/">Mantenimiento</a>
+
+
+
 </body>
 </html>

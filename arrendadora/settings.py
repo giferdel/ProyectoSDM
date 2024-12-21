@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-vd91h&hm!h1^4*xk)@^-$_l1ly(b!&8y)whrn1^v+^vie9=sd@
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+ 
 
 # Application definition
 
@@ -119,13 +119,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-
+# URL para acceder a los archivos estáticos en el navegador
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # Si usas un directorio de archivos estáticos en la raíz
-]
+# Directorio donde se recopilarán los archivos estáticos al ejecutar 'collectstatic'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+# Directorios adicionales donde buscar archivos estáticos
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # Por ejemplo, una carpeta 'static' dentro de tu proyecto
+    # Puedes añadir más directorios aquí si es necesario
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
