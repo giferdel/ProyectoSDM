@@ -1,6 +1,9 @@
 from .models import Automovil, ClienteParticular
 from django.shortcuts import render, redirect,get_object_or_404
 from .forms import AutomovilForm
+# views.py
+from django.contrib.auth import login, authenticate
+from .forms import CustomLoginForm
 
 
 def home(request):
@@ -90,3 +93,18 @@ def editar_automovil(request, auto_id):
         form = AutomovilForm(instance=auto)
 
     return render(request, 'editar_automovil.html', {'form': form, 'auto': auto})
+
+
+
+
+
+def login_view(request):
+    if request.method == "POST":
+        form = CustomLoginForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')  # Redirige a la vista principal después del login
+    else:
+        form = CustomLoginForm()
+    return render(request, 'login.html', {'form': form})
