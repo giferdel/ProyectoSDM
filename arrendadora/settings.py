@@ -126,12 +126,16 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Directorios adicionales donde buscar archivos estáticos
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',  # Por ejemplo, una carpeta 'static' dentro de tu proyecto
-    # Puedes añadir más directorios aquí si es necesario
-]
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static',  # Por ejemplo, una carpeta 'static' dentro de tu proyecto
+#     # Puedes añadir más directorios aquí si es necesario
+# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]

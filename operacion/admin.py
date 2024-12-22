@@ -23,7 +23,7 @@ class ClienteEmpresaAdmin(admin.ModelAdmin):
     list_filter = ('nombre','cuit')
 
 class AutomovilAdmin(admin.ModelAdmin):
-    list_display = ('marca', 'modelo', 'kilometraje', 'numero_chasis', 'numero_motor', 'patente','vtv','vtv__turno')
+    list_display = ('marca', 'modelo', 'kilometraje', 'numero_chasis', 'numero_motor', 'patente','vtv')
     search_fields = ('marca', 'modelo', 'numero_chasis', 'numero_motor')
     list_filter = ('marca', 'anio', 'color')
     actions = ['vtv']

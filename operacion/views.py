@@ -13,18 +13,27 @@ def barra_navegacion(request):
     return render(request, 'bnav.html', {'opciones_menu': opciones_menu})
 
 def menu_automoviles(request):
+    # Obtén todos los automóviles desde la base de datos
+    autos = Automovil.objects.all()
 
-    auto = {'marca': Automovil.marca,
-            'modelo':Automovil.modelo,
-            'anio':Automovil.anio,
-            'color':Automovil.color,
-            'km':Automovil.kilometraje,
-            'ncha':Automovil.numero_chasis,
-            'nmot':Automovil.numero_motor,
-            'pat':Automovil.patente,
-            'vtv':Automovil.vtv}
-    return render(request, 'automoviles.html', auto)
+    # Crea una lista de diccionarios con los datos de los automóviles
+    autos_data = [
+        {
+            'marca': auto.marca,
+            'modelo': auto.modelo,
+            'anio': auto.anio,
+            'color': auto.color,
+            'km': auto.kilometraje,
+            'ncha': auto.numero_chasis,
+            'nmot': auto.numero_motor,
+            'pat': auto.patente,
+            'vtv': auto.vtv,
+        }
+        for auto in autos
+    ]
 
+    # Pasar los datos al contexto
+    return render(request, 'automoviles.html', {'autos': autos_data})
 
 
 def menu_clientes(request):

@@ -1,4 +1,3 @@
-<!-- templates/mi_template.html -->
 {% load static %}
 
 <!DOCTYPE html>
@@ -6,36 +5,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{% static './style.css' %}">
-    <title>Automoviles</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <title>Automóviles</title>
 </head>
 <body class="app">
-    
     <table>
-        <caption>{{marca}} {{modelo}}</caption>
-        <tr>
-            <th>Marca</th>
-            <th>Modelo</th>
-            <th>Año</th>
-        </tr>
-        <tr>
-            <td>{{marca}}</td>
-            <td>{{modelo}}</td>
-            <td>{{anio}}</td>
-        </tr>
-        <tr>
-            <td>{{marca}}</td>
-            <td>{{modelo}}</td>
-            <td>{{anio}}</td>
-        </tr>
-        <tr>
-            <td>{{marca}}</td>
-            <td>{{modelo}}</td>
-            <td>{{anio}}</td>
-        </tr>
+        <caption>{{ marca }} {{ modelo }}</caption>
+        <thead>
+            <tr>
+                <th scope="col">Marca</th>
+                <th scope="col">Modelo</th>
+                <th scope="col">Año</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for auto in autos %}
+            <tr>
+                <td>{{ auto.marca }}</td>
+                <td>{{ auto.modelo }}</td>
+                <td>{{ auto.anio }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
-            <p>{{ caracteristica }}</p>
-    
-
+    <p>{{ caracteristica }}</p>
 </body>
 </html>
