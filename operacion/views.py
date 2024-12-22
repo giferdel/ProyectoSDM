@@ -1,7 +1,7 @@
-from django.shortcuts import render
-#from django.http import HttpResponse
-#from django.template import Template , Context
 from .models import Automovil, ClienteParticular
+from django.shortcuts import render, redirect,get_object_or_404
+from .forms import AutomovilForm
+
 
 def home(request):
     
@@ -14,11 +14,14 @@ def barra_navegacion(request):
 
 def menu_automoviles(request):
     # Obtén todos los automóviles desde la base de datos
-    autos = Automovil.objects.all()
+#    autos = Automovil.objects.all()
+    autos = Automovil.objects.filter(visibilidad=True)  # Filtra los autos visibles
+
 
     # Crea una lista de diccionarios con los datos de los automóviles
     autos_data = [
         {
+            'id': auto.id,
             'marca': auto.marca,
             'modelo': auto.modelo,
             'anio': auto.anio,
@@ -51,9 +54,23 @@ def menu_clientes(request):
    
 
 
-#def mi_vista(request):
-#    contexto = {
-#        'mensaje': 'Este es un mensaje desde la vista.',
-#        'cantidad': '18'
-#    }
-#    return render(request, 'index.html', contexto)
+
+def alta_automovil(request):
+    if request.method == 'POST':
+        form = AutomovilForm(request.POST)
+        if form.is_valid():
+            form.save()  # Guarda el nuevo objeto Automovil
+            return redirect('listado_automoviles')  #
+    else:
+        form = AutomovilForm()
+
+    return render(request, 'alta_automovil.html', {'form': form})
+
+
+
+
+def eliminar_automovil(request, auto_id):
+    auto = get_object_or_404(Automovil, id=auto_id)
+    auto.visibilidad = False  # Cambia visibilidad a False
+    auto.save()  # Guarda el cambio en la base de datos
+    return redirect('listado_automoviles')  # Redirige a la lista después

@@ -32,6 +32,8 @@ class Automovil(models.Model):
     numero_motor = models.CharField(max_length=30, unique=True)
     patente = models.CharField(max_length=10, unique=True)
     vtv = models.ForeignKey(Vtv, on_delete=models.RESTRICT)
+    visibilidad = models.BooleanField(default=True)  # Campo de visibilidad para ocultar automóviles eliminados
+
 
 
     def __str__(self):
