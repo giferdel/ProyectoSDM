@@ -74,3 +74,19 @@ def eliminar_automovil(request, auto_id):
     auto.visibilidad = False  # Cambia visibilidad a False
     auto.save()  # Guarda el cambio en la base de datos
     return redirect('listado_automoviles')  # Redirige a la lista después
+
+
+
+
+def editar_automovil(request, auto_id):
+    auto = get_object_or_404(Automovil, id=auto_id)
+
+    if request.method == 'POST':
+        form = AutomovilForm(request.POST, instance=auto)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_automoviles')  # Redirige a la lista después de guardar
+    else:
+        form = AutomovilForm(instance=auto)
+
+    return render(request, 'editar_automovil.html', {'form': form, 'auto': auto})

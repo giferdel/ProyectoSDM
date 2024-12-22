@@ -1,5 +1,6 @@
 {% load static %}
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +11,12 @@
 </head>
 <body class="app">
     <h1>Listado de Automóviles</h1>
+    <form action="{% url 'alta_automovil' %}" method="get">
+       {% csrf_token %}
+
+        <button type="submit" class="add-btn">Agregar Automóvil</button>
+    </form>
+    
     <table>
         <caption>Automóviles disponibles</caption>
         <thead>
@@ -27,6 +34,7 @@
                 <td>{{ auto.modelo }}</td>
                 <td>{{ auto.anio }}</td>
                 <td>
+
                     {% if auto.id %}
                     <form method="post" action="{% url 'eliminar_automovil' auto.id %}">
                         {% csrf_token %}
@@ -36,6 +44,8 @@
                     <p>ID no válido</p>
                     {% endif %}
                 </td>
+
+                <td> <a href="{% url 'editar_automovil' auto.id %}">Editar</a></td>
             </tr>
             {% endfor %}
         </tbody>
