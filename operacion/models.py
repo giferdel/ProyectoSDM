@@ -31,7 +31,7 @@ class Automovil(models.Model):
     numero_chasis = models.CharField(max_length=30, unique=True)
     numero_motor = models.CharField(max_length=30, unique=True)
     patente = models.CharField(max_length=10, unique=True)
-    vtv = models.ForeignKey(Vtv, on_delete=models.RESTRICT)
+    vtv = models.ForeignKey(VtvEstado, on_delete=models.RESTRICT)
     visibilidad = models.BooleanField(default=True)  # Campo de visibilidad para ocultar automóviles eliminados
 
 
@@ -79,7 +79,8 @@ class ClienteParticular(models.Model):
     direccion = models.CharField(max_length=50)
     telefono = models.CharField(max_length=50,default="")
     email = models.EmailField(blank=True)
-
+    visible = models.BooleanField(default=True)  # Campo de visibilidad
+ 
     def __str__(self):
         return f"{self.nombre} {self.apellido}"
     

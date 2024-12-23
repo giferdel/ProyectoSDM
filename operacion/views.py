@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect,get_object_or_404
 from .forms import AutomovilForm
 # views.py
 from django.contrib.auth import login, authenticate
-from .forms import CustomLoginForm
+from .forms import CustomLoginForm, ClienteForm
+
 
 
 def home(request):
@@ -18,8 +19,9 @@ def barra_navegacion(request):
 def menu_automoviles(request):
     # Obtén todos los automóviles desde la base de datos
 #    autos = Automovil.objects.all()
-    autos = Automovil.objects.filter(visibilidad=True)  # Filtra los autos visibles
 
+    autos = Automovil.objects.filter(visibilidad=True)  # Filtra los autos visibles
+  
 
     # Crea una lista de diccionarios con los datos de los automóviles
     autos_data = [
@@ -41,19 +43,6 @@ def menu_automoviles(request):
     # Pasar los datos al contexto
     return render(request, 'automoviles.html', {'autos': autos_data})
 
-
-def menu_clientes(request):
-
-    cliente = {'nombre': ClienteParticular.nombre,
-            'apellido':ClienteParticular.apellido,
-            'dni':ClienteParticular.dni,
-            'cuil':ClienteParticular.cuil,
-            'direccion':ClienteParticular.direccion,
-            'tel':ClienteParticular.telefono,
-            'email':ClienteParticular.email}
-    
-    return render(request, 'clientes.html', cliente)
-    
    
 
 
@@ -108,3 +97,35 @@ def login_view(request):
     else:
         form = CustomLoginForm()
     return render(request, 'login.html', {'form': form})
+
+
+
+##################################################################################################################################
+# CLIENTES
+##################################################################################################################################
+
+
+def listado_clientes(request):
+
+    clientes = ClienteParticular.objects.filter(visible=True)
+    return render(request, 'clientes/clientes_list.html', {'clientes': clientes})
+
+
+
+def agregar_cliente(request):
+    if request.method == 'POST':
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_clientes')  # Redirige al listado de clientes
+    else:
+        form = ClienteForm()
+    return render(request, 'clientes/agregar_cliente.html', {'form': form})
+
+
+
+def eliminar_cliente(request, pk):
+    cliente = get_object_or_404(ClienteParticular, pk=pk)
+    cliente.visible = False  # Oculta el cliente
+    cliente.save()
+    return redirect('listado_clientes')  # Redirige al listado de clientes

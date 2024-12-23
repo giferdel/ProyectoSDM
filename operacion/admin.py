@@ -42,7 +42,8 @@ class VtvAdmin(admin.ModelAdmin):
    
 
 class VtvEstadoAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id','estado')
+
 
 admin.site.register(Automovil, AutomovilAdmin)
 admin.site.register(Poliza, PolizaAdmin)

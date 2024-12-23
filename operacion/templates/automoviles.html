@@ -11,6 +11,10 @@
 </head>
 <body class="app">
     <h1>Listado de Automóviles</h1>
+
+
+
+
     <form action="{% url 'alta_automovil' %}" method="get">
        {% csrf_token %}
 
@@ -24,6 +28,7 @@
                 <th scope="col">Marca</th>
                 <th scope="col">Modelo</th>
                 <th scope="col">Año</th>
+                <th scope="col">VTV</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
@@ -33,6 +38,8 @@
                 <td>{{ auto.marca }}</td>
                 <td>{{ auto.modelo }}</td>
                 <td>{{ auto.anio }}</td>
+                <td>{{ auto.vtv }}</td>
+
                 <td>
 
                     {% if auto.id %}
