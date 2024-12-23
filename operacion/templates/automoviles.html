@@ -29,6 +29,7 @@
                 <th scope="col">Modelo</th>
                 <th scope="col">Año</th>
                 <th scope="col">VTV</th>
+                <th scope="col">Patente</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
@@ -38,6 +39,11 @@
                 <td>{{ auto.marca }}</td>
                 <td>{{ auto.modelo }}</td>
                 <td>{{ auto.anio }}</td>
+                <td> <a href="{% url 'detalle_automovil' auto.id %}">
+                    {{ auto.patente }}
+                </a></td>
+
+               
                 <td>{{ auto.vtv }}</td>
 
                 <td>

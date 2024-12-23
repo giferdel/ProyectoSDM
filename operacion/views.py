@@ -17,35 +17,12 @@ def barra_navegacion(request):
     opciones_menu = ['Automoviles', 'Clientes', 'VTV', 'Seguros','Patentes','Mantenimiento']
     return render(request, 'bnav.html', {'opciones_menu': opciones_menu})
 
+
+
 def menu_automoviles(request):
-    # Obtén todos los automóviles desde la base de datos
-#    autos = Automovil.objects.all()
 
-    autos = Automovil.objects.filter(visibilidad=True)  # Filtra los autos visibles
-  
-
-    # Crea una lista de diccionarios con los datos de los automóviles
-    autos_data = [
-        {
-            'id': auto.id,
-            'marca': auto.marca,
-            'modelo': auto.modelo,
-            'anio': auto.anio,
-            'color': auto.color,
-            'km': auto.kilometraje,
-            'ncha': auto.numero_chasis,
-            'nmot': auto.numero_motor,
-            'pat': auto.patente,
-            'vtv': auto.vtv,
-        }
-        for auto in autos
-    ]
-
-    # Pasar los datos al contexto
-    return render(request, 'automoviles.html', {'autos': autos_data})
-
-   
-
+    autos = Automovil.objects.filter(visibilidad=True)
+    return render(request, 'automoviles.html', {'autos': autos})
 
 
 def alta_automovil(request):
@@ -85,6 +62,13 @@ def editar_automovil(request, auto_id):
     return render(request, 'editar_automovil.html', {'form': form, 'auto': auto})
 
 
+def detalle_automovil(request, pk):
+    auto = get_object_or_404(Automovil, pk=pk)
+    return render(request, 'detalle_automovil.html', {'auto': auto})
+
+#############################################################################################################################################
+# LOGIN
+#############################################################################################################################################
 
 
 
