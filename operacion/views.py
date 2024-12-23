@@ -7,6 +7,7 @@ from .forms import CustomLoginForm, ClienteForm
 
 
 
+
 def home(request):
     
     return render(request, 'index.html')
@@ -129,3 +130,16 @@ def eliminar_cliente(request, pk):
     cliente.visible = False  # Oculta el cliente
     cliente.save()
     return redirect('listado_clientes')  # Redirige al listado de clientes
+
+
+
+def editar_cliente(request, pk):
+    cliente = get_object_or_404(ClienteParticular, pk=pk)
+    if request.method == 'POST':
+        form = ClienteForm(request.POST, instance=cliente)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_clientes')  # Redirigir al listado después de guardar
+    else:
+        form = ClienteForm(instance=cliente)
+    return render(request, 'clientes/editar_cliente.html', {'form': form})

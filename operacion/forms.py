@@ -17,12 +17,9 @@ class AutomovilForm(forms.ModelForm):
         }
 
 
-
-
 class CustomLoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'autofocus': True}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'autocomplete': 'current-password'}))
-
 
 
 
@@ -30,6 +27,8 @@ class ClienteForm(forms.ModelForm):
     class Meta:
         model = ClienteParticular
         fields = '__all__'  # Incluye todos los campos del modelo
+        exclude = ['visible']  # Sustituye con el nombre del campo que deseas ocultar
+
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
             'apellido': forms.TextInput(attrs={'class': 'form-control'}),
@@ -39,3 +38,10 @@ class ClienteForm(forms.ModelForm):
             'telefono': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
         }
+
+
+
+class ClienteForm(forms.ModelForm):
+    class Meta:
+        model = ClienteParticular
+        fields = ['nombre', 'apellido', 'dni', 'cuil', 'direccion', 'telefono', 'email']  # Excluir explícitamente otros campos

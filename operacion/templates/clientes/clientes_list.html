@@ -45,6 +45,9 @@
                     <td>
                         <a href="{% url 'eliminar_cliente' cliente.pk %}">Eliminar</a>
                     </td>
+                    <td>
+                        <a href="{% url 'editar_cliente' cliente.id %}">Editar</a> <!-- Botón de edición -->
+                    </td>
                 </tr>
             {% empty %}
                 <tr>
