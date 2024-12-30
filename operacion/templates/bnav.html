@@ -6,16 +6,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'style_bnav.css' %}">
     <title>Document</title>
 </head>
 <body>
-    
-    <button>Menú</button>
-        <div style="color: black;">
-            {% for opcion in opciones_menu %}
-                <a href="#">{{ opcion }}</a>
-            {% endfor %}
-        </div>
+    <article>
+        <a href="{% url 'listado_automoviles' %}">Automoviles</a>
+        <a href="{% url 'listado_clientes' %}">Clientes</a>
+        <a href="http://127.0.0.1:8080/operacion/automoviles/">VTV</a>
+        <a href="http://127.0.0.1:8080/operacion/automoviles/">Seguros</a>
+        <a href="http://127.0.0.1:8080/operacion/automoviles/">Patentes</a>
+        <a href="http://127.0.0.1:8080/operacion/automoviles/">Mantenimiento</a>
         
+    </article>
+    
 </body>
 </html>

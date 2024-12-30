@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'style_detalle.css' %}">
+    <title>Detalle del Automóvil</title>
+</head>
+<body>
+    <div class="head">{% include 'cabecera.html' %}
+        {% include 'bnav.html' %}</div>
+    
+    
+    <a href="{% url 'listado_automoviles' %}" class="btn-atras"><img src="{% static 'operacion/img/atras.svg' %}"></a>
+    <h1>Detalle del Automóvil</h1>
+    <article class="bloque">
+            <ul>
+                <li><strong>Patente:</strong> {{ auto.patente }}</li>
+                <li><strong>Marca:</strong> {{ auto.marca }}</li>
+                <li><strong>Modelo:</strong> {{ auto.modelo }}</li>
+                <li><strong>Año:</strong> {{ auto.anio }}</li>
+                <li><strong>Kilometraje:</strong> {{ auto.kilometraje }} km</li>
+                <li><strong>Nº Chasis:</strong> {{ auto.numeno_chasis }}</li>
+                <li><strong>Nº Motor:</strong> {{ auto.numero_motor }}</li>
+                <li><strong>VTV:</strong> {{ auto.vtv }}</li>
+            </ul>
+            <article class="bloque-accion">
+                <form method="post" action="{% url 'eliminar_automovil' auto.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn"><img src="{% static 'operacion/img/eliminar_blanco.svg' %}" alt=""></button>
+                </form>
+                <form method="post" action="{% url 'editar_automovil' auto.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn"><img src="{% static 'operacion/img/editar_blanco.svg' %}" alt=""></button>
+                </form>
+            </article>
+    </article>
+    
+    
+    
+</body>
+</html>

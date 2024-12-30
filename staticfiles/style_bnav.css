@@ -1,0 +1,19 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+article{
+    background-color:teal;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    a{
+        color: antiquewhite;
+        font-size: 25px;
+        text-decoration: none;
+    }
+}
+

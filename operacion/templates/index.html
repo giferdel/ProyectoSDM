@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{% static 'operacion/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'style_home.css' %}">
 
     <title>
         {% block title %}{% endblock %}
@@ -14,14 +14,54 @@
 
 </head>
 <body class="menu">
-    <a href="http://127.0.0.1:8080/operacion/automoviles/">Automoviles</a>
-    <a href="http://127.0.0.1:8080/operacion/automoviles/">Clientes</a>
-    <a href="http://127.0.0.1:8080/operacion/automoviles/">VTV</a>
-    <a href="http://127.0.0.1:8080/operacion/automoviles/">Seguros</a>
-    <a href="http://127.0.0.1:8080/operacion/automoviles/">Patentes</a>
-    <a href="http://127.0.0.1:8080/operacion/automoviles/">Mantenimiento</a>
+    <div class="head">{% include 'cabecera.html' %}
+    {% include 'bnav.html' %}</div>
+    
+    <div class="cont-home">
+        <div class="cont-lateral">
+            <a href="#gestion">Gestión</a>
+            <a href="#documentacion">Documentación</a>
+            <a href="#estadisticas">Estadísticas</a>
+            
+        </div>
+        <div class="cont-principal">
+            
+            <a id="gestion">
+                <section>
+                    <h1>Gestión</h1>
+                    <div class="contenedor">
+                        <button><a  href="{% url 'listado_automoviles' %}">Automóviles</a><hr></button>
+                        <button><a  href="">Alquileres</a><hr></button>
+                        <button><a  href="{% url 'listado_clientes' %}">Clientes</a><hr></button>        
+                    </div>
+                </section>
+            </a>
+            <a id="documentacion">
+                <section>
+                    <h1>Documentación</h1>
+                    <div class="contenedor">
+                        <button><a  href="{% url 'listado_automoviles' %}">Facturación</a><hr></button>
+                        <button><a  href="{% url 'listado_automoviles' %}">Contratos</a><hr></button>
+                        <button><a  href="{% url 'listado_clientes' %}">Bla</a><hr></button>
+                    </div>
+                </section>
+            </a>
+            <a id="estadisticas">
+                <section>
+                    <h1>Estadísticas e Informes</h1>
+                    <div class="contenedor">
+                        <button><a  href="{% url 'listado_automoviles' %}">Facturación</a><hr></button>
+                        <button><a  href="{% url 'listado_automoviles' %}">Contratos</a><hr></button>
+                        <button><a  href="{% url 'listado_clientes' %}">Bla</a><hr></button>
+                    </div>
+                </section>
+            </a>
+            
+        </div>
+    </div>
+    
 
 
-
+    <a href="#gestion" class="btn-flotante"><img src="{% static 'operacion/img/atras.svg' %}"></a>
 </body>
 </html>

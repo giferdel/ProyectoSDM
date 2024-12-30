@@ -5,7 +5,7 @@ body{
 .cabecera{
     width: 100vw;
     height: 20vh;
-    background-color: #3f5f9b;
+    background-color:antiquewhite;
     margin: 0;
     padding: 20px;
     
@@ -13,13 +13,6 @@ body{
     flex-direction: row;
     justify-content: space-between;
 
-    
-
-    h1{
-        font-size: 50px;
-        color: antiquewhite;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-    }
 }
 .cont_img{
     display: flex;

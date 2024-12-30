@@ -1,0 +1,30 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+article{
+    width: 100vw;
+    background-color:teal;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+
+    a{
+        color: rgb(240,240,240);
+        font-size: 20px;
+        text-decoration: none;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    a:hover{
+        color: rgb(240,240,240);
+        font-size: 21px;
+    }
+    a:active{
+        color: rgb(240,240,240,0.5);
+        font-size: 23px;
+    }
+}
+
