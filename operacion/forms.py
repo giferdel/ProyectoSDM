@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Automovil, ClienteParticular, ClienteEmpresa
+from .models import Turno_VTV
+
 
 class AutomovilForm(forms.ModelForm):
     class Meta:
@@ -66,3 +68,13 @@ class ClienteEmpForm(forms.ModelForm):
     class Meta:
         model = ClienteEmpresa
         fields = ['nombre', 'cuit', 'direccion', 'telefono', 'email']  # Excluir explícitamente otros campos
+
+
+
+class TurnoVTVForm(forms.ModelForm):
+    class Meta:
+        model = Turno_VTV
+        fields = ['auto', 'fecha_turno', 'lugar_verificacion', 'comentarios']
+        widgets = {
+            'fecha_turno': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        }

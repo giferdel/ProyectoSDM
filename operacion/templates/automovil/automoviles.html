@@ -15,6 +15,18 @@
     
     <a href="{% url 'home' %}" class="btn-atras"><img src="{% static 'operacion/img/atras.svg' %}"></a>
     <h1>Listado de Automóviles</h1>
+
+    <form method="get" action="">
+        <label for="estado_vtv">Filtrar por Estado de VTV:</label>
+        <select name="estado_vtv" id="estado_vtv" onchange="this.form.submit()">
+            <option value="">Todos</option>
+            {% for estado in estados_vtv %}
+                <option value="{{ estado.estado }}" {% if estado.estado == estado_seleccionado %}selected{% endif %}>
+                    {{ estado.estado }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
     
     <table>      
             <tr>
@@ -27,7 +39,8 @@
                 <th scope="col">Nº Chasis</th>
                 <th scope="col">Nº Motor</th>
                 
-                <th scope="col">VTV</th>           
+                <th scope="col">VTV</th>         
+  
                 <!-- <th scope="col">Acciones</th> -->
             </tr>
             {% for auto in autos %}
@@ -48,7 +61,7 @@
                         {% csrf_token %}
                         <button type="submit" class="btn"><img src="{% static 'operacion/img/eliminar_blanco.svg' %}" alt=""></button>
                     </form>
-                    <form method="post" action="{% url 'editar_automovil' auto.id %}">
+                    <form method="get" action="{% url 'editar_automovil' auto.id %}">
                         {% csrf_token %}
                         <button type="submit" class="btn"><img src="{% static 'operacion/img/editar_blanco.svg' %}" alt=""></button>
                     </form>

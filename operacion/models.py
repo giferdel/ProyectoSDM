@@ -32,7 +32,7 @@ class Automovil(models.Model):
     numero_chasis = models.CharField(max_length=30, unique=True)
     numero_motor = models.CharField(max_length=30, unique=True)
     patente = models.CharField(max_length=10, unique=True)
-    vtv = models.ForeignKey(VtvEstado, on_delete=models.RESTRICT)
+    vtv = models.ForeignKey(Vtv, on_delete=models.RESTRICT)
     visibilidad = models.BooleanField(default=True)  # Campo de visibilidad para ocultar automóviles eliminados
 
 
@@ -102,3 +102,24 @@ class ClienteEmpresa(models.Model):
     class Meta:
         verbose_name_plural = "Cliente empresa"
     
+
+    from django.db import models
+from django.utils import timezone
+
+class Turno_VTV(models.Model):
+    auto = models.ForeignKey(Automovil, related_name='turnos', on_delete=models.CASCADE)
+    fecha_turno = models.DateTimeField()
+    lugar_verificacion = models.CharField(max_length=255)
+    estado = models.CharField(
+        max_length=50, 
+        choices=[
+            ('pendiente', 'Pendiente'),
+            ('completado', 'Completado'),
+            ('cancelado', 'Cancelado')
+        ], 
+        default='pendiente'
+    )
+    comentarios = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f'Turno para {self.auto.patente} en {self.fecha_turno}'

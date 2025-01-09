@@ -4,6 +4,7 @@ from .views import barra_navegacion, menu_automoviles, listado_clientes, home
 from .views import alta_automovil, eliminar_automovil,editar_automovil,detalle_automovil
 from .views import agregar_cliente,eliminar_cliente,editar_cliente
 from .views import listado_clientes_empresa,agregar_empresa,eliminar_empresa,editar_empresa
+from .views import listado_turno_vtv,alta_turno_vtv,eliminar_turno_vtv,editar_turno_vtv
 
 urlpatterns = [
     path('home/', home,name='home'),
@@ -22,5 +23,14 @@ urlpatterns = [
     path('empresas/agregar/', agregar_empresa, name='agregar_empresa'),
     path('empresas/eliminar/<int:pk>/', eliminar_empresa, name='eliminar_empresa'),
     path('empresas/editar/<int:pk>/', editar_empresa, name='editar_empresa'),
+
+    path('listado_turno_vtv/', listado_turno_vtv, name='listado_turno_vtv'),
+    path('listado_turno_vtv/agregar/', alta_turno_vtv, name='agregar_turno_vtv'),
+    path('listado_turno_vtv/eliminar/<int:pk>/', eliminar_turno_vtv, name='eliminar_turno'),
+    path('editar_turno/<int:pk>/', editar_turno_vtv, name='editar_turno'),
+
+
+
+
 
 ]

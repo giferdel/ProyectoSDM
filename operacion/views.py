@@ -1,8 +1,13 @@
-from .models import Automovil, ClienteParticular, ClienteEmpresa
+from .models import Automovil, ClienteParticular, ClienteEmpresa,VtvEstado,Turno_VTV
 from django.shortcuts import render, redirect,get_object_or_404
 from .forms import AutomovilForm
 from django.contrib.auth import login, authenticate
-from .forms import CustomLoginForm, ClienteForm, ClienteEmpForm
+from .forms import CustomLoginForm, ClienteForm, ClienteEmpForm, TurnoVTVForm
+
+
+from django.db.models import Q
+
+
 
 
 def home(request):
@@ -13,9 +18,30 @@ def barra_navegacion(request):
     opciones_menu = ['Automoviles', 'Clientes', 'VTV', 'Seguros','Patentes','Mantenimiento']
     return render(request, 'bnav.html', {'opciones_menu': opciones_menu})
 
+
+####################################################################################################################################
+
 def menu_automoviles(request):
-    autos = Automovil.objects.filter(visibilidad=True)  # Filtra los autos visibles
-    return render(request, 'automovil/automoviles.html', {'autos': autos})
+    estado_vtv = request.GET.get('estado_vtv', None)  # Obtén el estado de la VTV desde los parámetros GET
+    autos = Automovil.objects.filter(visibilidad=True)
+
+    if estado_vtv:  # Aplica el filtro si se especifica un estado
+        autos = autos.filter(vtv__estado__estado=estado_vtv)
+
+    # Obtener todos los estados posibles para mostrarlos como opciones en el filtro
+    estados_vtv = VtvEstado.objects.all()
+
+    return render(request, 'automovil/automoviles.html', {
+        'autos': autos,
+        'estados_vtv': estados_vtv,
+        'estado_seleccionado': estado_vtv,
+    })
+
+
+
+# def menu_automoviles(request):
+#     autos = Automovil.objects.filter(visibilidad=True)  # Filtra los autos visibles
+#     return render(request, 'automovil/automoviles.html', {'autos': autos})
 
 
 def menu_clientes(request):
@@ -181,3 +207,40 @@ def editar_empresa(request, pk):
 
 
 ######################################################################################################################
+def listado_turno_vtv(request):
+    # Lógica para registrar turnos
+    turnos_vtv = Turno_VTV.objects.filter(estado='pendiente')
+    return render(request, 'vtv/listado_turno_vtv.html', {'turnos_vtv': turnos_vtv})
+    
+
+def alta_turno_vtv(request):
+    if request.method == 'POST':
+        form = TurnoVTVForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_turno_vtv')  # Redirige a una lista de turnos o la página que consideres apropiada
+    else:
+        form = TurnoVTVForm()
+    return render(request, 'vtv/alta_turno.html', {'form': form})
+
+def eliminar_turno_vtv(request, pk):
+    turno = get_object_or_404(Turno_VTV, pk=pk)
+    
+    if request.method == 'POST':
+        turno.estado = 'cancelado'
+        turno.save()
+        return redirect('listado_turno_vtv')  # Redirige a la lista de turnos después de cancelar uno
+
+
+def editar_turno_vtv(request, pk):
+    turno = get_object_or_404(Turno_VTV, pk=pk)
+
+    if request.method == 'POST':
+        form = TurnoVTVForm(request.POST, instance=turno)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_turno_vtv')  # Redirige a la lista de turnos después de editar uno
+    else:
+        form = TurnoVTVForm(instance=turno)
+    
+    return render(request, 'vtv/editar_turno.html', {'form': form, 'turno': turno})
