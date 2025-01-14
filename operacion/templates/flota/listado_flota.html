@@ -1,0 +1,65 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <title>Flotas</title>
+</head>
+<body class="app">
+    <div class="head">
+        {% include 'cabecera.html' %}
+        {% include 'bnav.html' %}
+    </div>
+    
+    
+    <a href="{% url 'home' %}" class="btn-atras"><img src="{% static 'operacion/img/atras.svg' %}"></a>
+    <h1>Flotas</h1>
+
+    <!-- <form method="get" action="">
+        <label class="filtro-label" for="estado_vtv">Filtrar por Estado de VTV:</label>
+        <select class="filtro-opcion" name="estado_vtv" id="estado_vtv" onchange="this.form.submit()">
+            <option  value="">Todos</option>
+            {% for estado in estados_vtv %}
+                <option value="{{ estado.estado }}" {% if estado.estado == estado_seleccionado %}selected{% endif %}>
+                    {{ estado.estado }}
+                </option>
+            {% endfor %}
+        </select>
+    </form> -->
+    
+    <table>      
+            <tr>
+                <th scope="col">Número</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Cliente</th>      
+            </tr>
+            {% for f in flota %}
+            <tr>
+                <td><a href="{% url 'listado_flota' auto.id %}" class="enlace">{{ flota.id }}</a></td>
+                <td>{{ flota.descripcion }}</td>
+                <td>{{ flota.cliente }}</td>
+                <td class="acciones">
+                    {% if auto.id %}
+                    <form method="post" action="{% url 'eliminar_automovil' auto.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn"><img src="{% static 'operacion/img/eliminar_blanco.svg' %}" alt=""></button>
+                    </form>
+                    <form method="get" action="{% url 'editar_automovil' auto.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn"><img src="{% static 'operacion/img/editar_blanco.svg' %}" alt=""></button>
+                    </form>
+                    {% else %}
+                    
+                    <p>ID no válido</p>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+    </table>
+    <a href="{% url 'agregar_flota' %}" class="btn-flotante"><img src="{% static 'operacion/img/agregar.svg' %}"></a>
+    
+</body>
+</html>

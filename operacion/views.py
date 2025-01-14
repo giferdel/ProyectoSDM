@@ -1,8 +1,8 @@
-from .models import Automovil, ClienteParticular, ClienteEmpresa,VtvEstado,Turno_VTV
+from .models import Automovil, ClienteParticular, ClienteEmpresa,VtvEstado,Turno_VTV,Flota
 from django.shortcuts import render, redirect,get_object_or_404
 from .forms import AutomovilForm
 from django.contrib.auth import login, authenticate
-from .forms import CustomLoginForm, ClienteForm, ClienteEmpForm, TurnoVTVForm
+from .forms import CustomLoginForm, ClienteForm, ClienteEmpForm, TurnoVTVForm, FlotaForm
 
 
 from django.db.models import Q
@@ -39,11 +39,6 @@ def menu_automoviles(request):
 
 
 
-# def menu_automoviles(request):
-#     autos = Automovil.objects.filter(visibilidad=True)  # Filtra los autos visibles
-#     return render(request, 'automovil/automoviles.html', {'autos': autos})
-
-
 def menu_clientes(request):
 
     cliente = {'nombre': ClienteParticular.nombre,
@@ -56,10 +51,6 @@ def menu_clientes(request):
     
     return render(request, 'clientes/clientes_list.html', cliente)
     
-   
-
-
-
 def alta_automovil(request):
     if request.method == 'POST':
         form = AutomovilForm(request.POST)
@@ -68,10 +59,9 @@ def alta_automovil(request):
             return redirect('listado_automoviles')  #
     else:
         form = AutomovilForm()
+        form.fields.pop("flota")
 
     return render(request, 'automovil/alta_automovil.html', {'form': form})
-
-
 
 
 def eliminar_automovil(request, auto_id):
@@ -95,11 +85,30 @@ def editar_automovil(request, auto_id):
     return render(request, 'automovil/editar_automovil.html', {'form': form, 'auto': auto})
 
 
-
 def detalle_automovil(request, pk):
     auto = get_object_or_404(Automovil, pk=pk)
     return render(request, 'automovil/detalle_automovil.html', {'auto': auto})
 
+#############################################################################################################################################
+# FLOTA
+#############################################################################################################################################
+
+def listado_flota(request):
+    
+    # Obtener todos los estados posibles para mostrarlos como opciones en el filtro
+    flota = Flota.objects.all()
+
+    return render(request, 'flota/listado_flota.html', {'flota': flota})
+
+def alta_flota(request):
+    if request.method == 'POST':
+        form = FlotaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_flota')  # Redirige a una lista de turnos o la página que consideres apropiada
+    else:
+        form = FlotaForm()
+    return render(request, 'flota/alta_flota.html', {'form': form})
 
 #############################################################################################################################################
 # LOGIN

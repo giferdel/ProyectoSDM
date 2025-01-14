@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Automovil, ClienteParticular, ClienteEmpresa
 from .models import Turno_VTV
+from .models import Flota
 
 
 class AutomovilForm(forms.ModelForm):
@@ -17,6 +18,13 @@ class AutomovilForm(forms.ModelForm):
 
         }
     anio = forms.CharField(label='Año')
+
+class FlotaForm(forms.ModelForm):
+    class Meta:
+        model = Flota
+        fields = '__all__'  # Incluye todos los campos del modelo
+        exclude=['visibilidad']
+    
 
 
 

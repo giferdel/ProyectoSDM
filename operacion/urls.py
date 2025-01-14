@@ -6,6 +6,7 @@ from .views import agregar_cliente,eliminar_cliente,editar_cliente
 from .views import listado_clientes_empresa,agregar_empresa,eliminar_empresa,editar_empresa
 from .views import listado_turno_vtv,alta_turno_vtv,eliminar_turno_vtv,editar_turno_vtv
 from .views import login_view
+from .views import listado_flota, alta_flota
 
 urlpatterns = [
     path('home/', home,name='home'),
@@ -31,6 +32,10 @@ urlpatterns = [
     path('editar_turno/<int:pk>/', editar_turno_vtv, name='editar_turno'),
 
     path('login/', login_view, name='login'),
+
+    path('flota', listado_flota, name='listado_flota'),
+    path('flota/agregar/', alta_flota, name='agregar_flota'),
+
 
 
 
