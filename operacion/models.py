@@ -1,6 +1,7 @@
 
 
 from django.db import models
+from django.utils import timezone
 
 class VtvEstado(models.Model):
     estado = models.CharField(max_length=50)
@@ -23,31 +24,9 @@ class Vtv(models.Model):
         verbose_name_plural = "VTV"
 
 
-class Automovil(models.Model):
-    marca = models.CharField(max_length=50)
-    modelo = models.CharField(max_length=50)
-    anio = models.PositiveIntegerField()
-    color = models.CharField(max_length=30)
-    kilometraje = models.PositiveIntegerField()
-    numero_chasis = models.CharField(max_length=30, unique=True)
-    numero_motor = models.CharField(max_length=30, unique=True)
-    patente = models.CharField(max_length=10, unique=True)
-    vtv = models.ForeignKey(Vtv, on_delete=models.RESTRICT)
-    visibilidad = models.BooleanField(default=True)  # Campo de visibilidad para ocultar automóviles eliminados
 
 
 
-    def __str__(self):
-        return f"{self.marca} {self.modelo} ({self.anio})"
-
-# Create your models here.
-    class Meta:
-        verbose_name_plural = "Automóviles"
-
-
-# Create your models here.
-    class Meta:
-        verbose_name_plural = "Flotas"
 
 
 
@@ -75,6 +54,7 @@ class Poliza(models.Model):
     def __str__(self):
         return f"{self.empresa} {self.cobertura}"
 
+    
 
     
 class ClienteParticular(models.Model):
@@ -107,9 +87,52 @@ class ClienteEmpresa(models.Model):
     class Meta:
         verbose_name_plural = "Cliente empresa"
     
+class Cliente(models.Model):
+    razon_social = models.CharField(max_length=50)
+    dni = models.PositiveBigIntegerField(unique=True)
+    cuil = models.PositiveBigIntegerField(unique=True)
+    cuit = models.PositiveBigIntegerField(unique=True)
+    direccion = models.CharField(max_length=50)
+    telefono = models.PositiveIntegerField(default=0)
+    email = models.CharField(max_length=50)
+    visible = models.BooleanField(default=True)  # Campo de visibilidad
 
-    from django.db import models
-from django.utils import timezone
+    def __str__(self):
+        return f"{self.nombre}"
+    
+    class Meta:
+        verbose_name_plural = "Cliente empresa"
+
+  
+class Flota(models.Model):
+    nombre = models.ForeignKey(Seguro, on_delete=models.RESTRICT)
+    cliente = models.ForeignKey(Cliente, on_delete=models.RESTRICT)
+
+    def __str__(self):
+        return f"{self.nombre}"
+# Create your models here.
+    class Meta:
+        verbose_name_plural = "Flotas"
+
+class Automovil(models.Model):
+    marca = models.CharField(max_length=50)
+    modelo = models.CharField(max_length=50)
+    anio = models.PositiveIntegerField()
+    color = models.CharField(max_length=30)
+    kilometraje = models.PositiveIntegerField()
+    numero_chasis = models.CharField(max_length=30, unique=True)
+    numero_motor = models.CharField(max_length=30, unique=True)
+    patente = models.CharField(max_length=10, unique=True)
+    vtv = models.ForeignKey(Vtv, on_delete=models.RESTRICT)
+    visibilidad = models.BooleanField(default=True)  # Campo de visibilidad para ocultar automóviles eliminados
+    flota = models.ForeignKey(Flota, on_delete=models.RESTRICT, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.marca} {self.modelo} ({self.anio})"
+
+# Create your models here.
+    class Meta:
+        verbose_name_plural = "Automóviles"
 
 class Turno_VTV(models.Model):
     auto = models.ForeignKey(Automovil, related_name='turnos', on_delete=models.CASCADE)
