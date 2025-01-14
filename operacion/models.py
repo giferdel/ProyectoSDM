@@ -105,7 +105,7 @@ class Cliente(models.Model):
 
   
 class Flota(models.Model):
-    nombre = models.ForeignKey(Seguro, on_delete=models.RESTRICT)
+    descripcion = models.CharField(max_length=50)
     cliente = models.ForeignKey(Cliente, on_delete=models.RESTRICT)
 
     def __str__(self):
