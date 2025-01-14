@@ -2,13 +2,32 @@ body{
     margin: 0;
     padding: 0;
     background-color: rgb(240,240,240);
-    
-
+}
+.app-login{
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center;     /* Centrar verticalmente */
+    height: 100vh;           /* Usar el 100% de la altura del viewport */
 }
 .head{
     position: sticky;
     top: 0;
     z-index: 99;
+}
+.cont-login{
+    width: 80vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    
+    background-color: rgb(42, 80, 110);
+    img{
+        width: 450px;
+        height: 260px;
+        padding: 60px;
+    }
+    
 }
 
 h1{
@@ -17,8 +36,14 @@ h1{
     margin: 40px;
 }
 
+h2{
+    color:rgb(240,240,240);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 30px;
+    text-align: center;
+}
+
 form{
-    margin-left: 30%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,7 +51,7 @@ form{
     form button{
         width: 300px;
         height: 30px;
-        background-color: #f7752a;
+        background-color: rgb(247, 117, 42);
         border-radius: 50px;
         border: 0px;
         color: rgb(240,240,240);
@@ -49,6 +74,7 @@ form p{
         color: rgb(240,240,240);
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         font-weight: lighter;
+        padding: 3px;
     }
     input{
         padding-left: 10px;
@@ -78,7 +104,7 @@ form p{
 form button{
     margin: 20px;
     width: 315px;
-    height: 30px;
+    height: 45px;
     background-color: #f7752a;
     border-radius: 50px;
     border: 0px;
@@ -88,12 +114,31 @@ form button{
     font-weight: bold;
 }
 form button:hover{
-    width: 315px;
-    height: 30px;
     background-color: #b14b10;
     border-radius: 50px;
     border: 0px;
     color: rgb(240,240,240);
+    font-size: 15px;
+}
+form a{
+    margin: 2px;
+    padding-top: 10px;
+    width: 315px;
+    height: 30px;
+    border-radius: 50px;
+    border: solid 1px #f7752a;
+    color: #f7752a;;
+    font-size: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    align-content: center;
+}
+form a:hover{
+    background-color: #f7752a;
+    color: rgb(240,240,240);
+    border-radius: 50px;
     font-size: 15px;
 }
 

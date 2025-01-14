@@ -143,3 +143,16 @@ th{
     }
 	
 }
+
+form .filtro-label{
+    color:rgb(42, 80, 110);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 25px;
+}
+form .filtro-opcion{
+    font-size: 15px;
+    color:rgb(42, 80, 110);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 5px;
+    border: solid 1px rgb(42, 80, 110);
+}

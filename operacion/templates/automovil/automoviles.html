@@ -17,9 +17,9 @@
     <h1>Listado de Automóviles</h1>
 
     <form method="get" action="">
-        <label for="estado_vtv">Filtrar por Estado de VTV:</label>
-        <select name="estado_vtv" id="estado_vtv" onchange="this.form.submit()">
-            <option value="">Todos</option>
+        <label class="filtro-label" for="estado_vtv">Filtrar por Estado de VTV:</label>
+        <select class="filtro-opcion" name="estado_vtv" id="estado_vtv" onchange="this.form.submit()">
+            <option  value="">Todos</option>
             {% for estado in estados_vtv %}
                 <option value="{{ estado.estado }}" {% if estado.estado == estado_seleccionado %}selected{% endif %}>
                     {{ estado.estado }}

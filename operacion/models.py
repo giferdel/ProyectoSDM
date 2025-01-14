@@ -45,6 +45,11 @@ class Automovil(models.Model):
         verbose_name_plural = "Automóviles"
 
 
+# Create your models here.
+    class Meta:
+        verbose_name_plural = "Flotas"
+
+
 
 class Seguro(models.Model):
     nombre = models.CharField(max_length=50)

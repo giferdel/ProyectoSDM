@@ -5,24 +5,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{% static 'style_detalle.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static './style_detalle.css' %}">
     <title>Detalle del Automóvil</title>
 </head>
 <body>
-    <div class="head">{% include 'cabecera.html' %}
-        {% include 'bnav.html' %}</div>
+    <div class="head">
+        {% include 'cabecera.html' %}
+        {% include 'bnav.html' %}
+    </div>
     
     
     <a href="{% url 'listado_automoviles' %}" class="btn-atras"><img src="{% static 'operacion/img/atras.svg' %}"></a>
-    <h1>Detalle del Automóvil</h1>
+    <h1>Detalle del Automóvil {{ auto.marca }} {{ auto.modelo }} ({{ auto.patente }}) - Flota ...</h1>
     <article class="bloque">
             <ul>
                 <li><strong>Patente:</strong> {{ auto.patente }}</li>
                 <li><strong>Marca:</strong> {{ auto.marca }}</li>
                 <li><strong>Modelo:</strong> {{ auto.modelo }}</li>
                 <li><strong>Año:</strong> {{ auto.anio }}</li>
+            </ul>
+            <ul>
                 <li><strong>Kilometraje:</strong> {{ auto.kilometraje }} km</li>
-                <li><strong>Nº Chasis:</strong> {{ auto.numeno_chasis }}</li>
+                <li><strong>Nº Chasis:</strong> {{ auto.numero_chasis }}</li>
                 <li><strong>Nº Motor:</strong> {{ auto.numero_motor }}</li>
                 <li><strong>VTV:</strong> {{ auto.vtv }}</li>
             </ul>
@@ -31,12 +35,65 @@
                     {% csrf_token %}
                     <button type="submit" class="btn"><img src="{% static 'operacion/img/eliminar_blanco.svg' %}" alt=""></button>
                 </form>
-                <form method="post" action="{% url 'editar_automovil' auto.id %}">
+                <form method="get" action="{% url 'editar_automovil' auto.id %}">
                     {% csrf_token %}
                     <button type="submit" class="btn"><img src="{% static 'operacion/img/editar_blanco.svg' %}" alt=""></button>
                 </form>
+                
             </article>
     </article>
+
+    <!-- HISTORICO -->
+    <h2>Historial del Vehículo {{ auto.marca }} {{ auto.modelo }}</h2>
+    <form method="get" action="">
+        <label class="filtro-label" for="estado_vtv">Filtrar por Fecha:</label>  <!--filtrar por fecha-->
+        <select class="filtro-opcion" name="estado_vtv" id="estado_vtv" onchange="this.form.submit()">
+            <option  value="">Todos</option>
+            {% for estado in estados_vtv %}
+                <option value="{{ estado.estado }}" {% if estado.estado == estado_seleccionado %}selected{% endif %}>
+                    {{ estado.estado }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+    
+    <table>      
+            <tr>
+                <th scope="col">Fecha</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Observación</th>
+                <th scope="col">Vencimiento</th>      
+            </tr>
+            {% for auto in autos %}
+            <tr>  <!--MODIFICAR-->
+                <td><a href="{% url 'detalle_automovil' auto.id %}" class="enlace">{{ auto.patente }}</a></td>
+                <td>{{ auto.marca }}</td>
+                <td>{{ auto.modelo }}</td>
+                <td>{{ auto.anio }}</td>
+                <td>{{ auto.color }}</td>
+                <td>{{ auto.kilometraje }}</td>
+                <td>{{ auto.numero_chasis }}</td>
+                <td>{{ auto.numero_motor }}</td>
+                
+                <td>{{ auto.vtv }}</td>
+                <td class="acciones">
+                    {% if auto.id %}
+                    <form method="post" action="{% url 'eliminar_automovil' auto.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn"><img src="{% static 'operacion/img/eliminar_blanco.svg' %}" alt=""></button>
+                    </form>
+                    <form method="get" action="{% url 'editar_automovil' auto.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn"><img src="{% static 'operacion/img/editar_blanco.svg' %}" alt=""></button>
+                    </form>
+                    {% else %}
+                    
+                    <p>ID no válido</p>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+    </table>
     
     
     

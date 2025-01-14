@@ -1,25 +1,43 @@
 
 {% load static %}
 
-{% block content %}
-  <h2>Iniciar sesión</h2>
-  
-  <form method="post">
-    {% csrf_token %}
-    
-    {% if form.errors %}
-      <ul>
-        {% for field in form %}
-          {% for error in field.errors %}
-            <li>{{ error }}</li>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{% static './style_form.css' %}">    
+
+  <title>Login</title>
+</head>
+<body class="app-login">
+  <div class="cont-login">
+    <img src="{% static 'operacion/img/LOGO_SDM_blanco.png' %}">
+
+    <form method="post">
+      <h2>Iniciar sesión</h2>
+      {% csrf_token %}
+      
+      {% if form.errors %}
+        <ul>
+          {% for field in form %}
+            {% for error in field.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
           {% endfor %}
-        {% endfor %}
-      </ul>
-    {% endif %}
-    
-    {{ form.as_p }}
-    
-    <button type="submit">Iniciar sesión</button>
-  </form>
+        </ul>
+      {% endif %}
+      
+      {{ form.as_p }}
+      
+      <button type="submit">Iniciar sesión</button>
+      <!-- <a href="{% url 'listado_automoviles' %}">Registrar nuevo Usuario</a> -->
+    </form>
+  </div>
   
-{% endblock %}
+  
+  
+</body>
+</html>
+
+  

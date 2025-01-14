@@ -37,7 +37,7 @@
                             {% csrf_token %}
                             <button type="submit" class="btn"><img src="{% static 'operacion/img/eliminar_blanco.svg' %}" alt=""></button>
                         </form>
-                        <form method="post" action="{% url 'editar_empresa' cliente.id %}">
+                        <form method="get" action="{% url 'editar_empresa' cliente.id %}">
                             {% csrf_token %}
                             <button type="submit" class="btn"><img src="{% static 'operacion/img/editar_blanco.svg' %}" alt=""></button>
                         </form>

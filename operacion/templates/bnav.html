@@ -11,20 +11,31 @@
 </head>
 <body>
     <nav class="bnav">
-        <ul>
+        <ul class="opciones">
             <li><a href="{% url 'listado_automoviles' %}">Automóviles</a></li>
-            <li><a href="{% url 'listado_clientes' %}">Clientes</a></li>
             <li class="dropdown">
-                <a href="#" class="dropbtn">VTV</a>
+                <a href="#" class="dropbtn">Clientes</a>
                 <ul class="dropdown-content">
-                    <li><a href="{% url 'listado_turno_vtv' %}">Registrar Turnos</a></li>
+                    <li><a href="{% url 'cliente_empresa' %}">Cliente Empresa</a></li>
+                    <li><a href="{% url 'listado_clientes' %}">Cliente Persona</a></li>
+                    
                     <!-- Agregar otras opciones de VTV aquí si es necesario -->
                 </ul>
+            </li>
+            <li class="dropdown">
+                    <a href="#" class="dropbtn">VTV</a>
+                    <ul class="dropdown-content">
+                        <li><a href="{% url 'listado_turno_vtv' %}">Registrar Turnos</a></li>
+                        <li><a href="https://www.suvtv.com.ar/turnos/">Turnos CABA</a></li>
+                        <li><a href="https://portal.vtv.gba.gob.ar/cpanel/">Turnos GBA</a></li>
+                        <!-- Agregar otras opciones de VTV aquí si es necesario -->
+                    </ul>                
             </li>
             <li><a href="">Seguros</a></li>
             <li><a href="">Patentes</a></li>
             <li><a href="">Mantenimiento</a></li>
         </ul>
+        
     </nav>
     
 </body>

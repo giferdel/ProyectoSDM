@@ -9,25 +9,9 @@
     
 
     <title>Listado de Turnos VTV Pendientes</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-        th {
-            background-color: #f2f2f2;
-            text-align: left;
-        }
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-    </style>
+    
 </head>
-<body>
+<body class="app">
     <div class="head">{% include 'cabecera.html' %}
         {% include 'bnav.html' %}</div>
     
@@ -35,15 +19,12 @@
     <a href="{% url 'home' %}" class="btn-atras"><img src="{% static 'operacion/img/atras.svg' %}"></a>
     <h1>Turnos de VTV Pendientes</h1>
     <table>
-        <thead>
             <tr>
                 <th>Automóvil</th>
                 <th>Fecha del Turno</th>
                 <th>Lugar de Verificación</th>
                 <th>Comentarios</th>
             </tr>
-        </thead>
-        <tbody>
             {% for turno in turnos_vtv %}
                 <tr>
                     <td>{{ turno.auto.patente }}</td>
@@ -55,7 +36,7 @@
                             {% csrf_token %}
                             <button type="submit" class="btn"><img src="{% static 'operacion/img/eliminar_blanco.svg' %}" alt=""></button>
                         </form>
-                        <form method="post" action="{% url 'editar_turno' turno.id %}">
+                        <form method="get" action="{% url 'editar_turno' turno.id %}">
                             {% csrf_token %}
                             <button type="submit" class="btn"><img src="{% static 'operacion/img/editar_blanco.svg' %}" alt=""></button>
                         </form>
@@ -68,7 +49,7 @@
                     <td colspan="4">No hay turnos pendientes</td>
                 </tr>
             {% endfor %}
-        </tbody>
     </table>
+    <a href="{% url 'agregar_turno_vtv' %}" class="btn-flotante"><img src="{% static 'operacion/img/agregar.svg' %}"></a>
 </body>
 </html>
