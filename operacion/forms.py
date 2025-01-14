@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Automovil, ClienteParticular, ClienteEmpresa
+from .models import Automovil, Cliente 
 from .models import Turno_VTV
 from .models import Flota
 
@@ -37,7 +37,7 @@ class CustomLoginForm(AuthenticationForm):
 
 class ClienteForm(forms.ModelForm):
     class Meta:
-        model = ClienteParticular
+        model = Cliente
         fields = '__all__'  # Incluye todos los campos del modelo
         exclude = ['visible']  # Sustituye con el nombre del campo que deseas ocultar
 
@@ -53,14 +53,10 @@ class ClienteForm(forms.ModelForm):
 
 
 
+
 class ClienteForm(forms.ModelForm):
     class Meta:
-        model = ClienteParticular
-        fields = ['nombre', 'apellido', 'dni', 'cuil', 'direccion', 'telefono', 'email']  # Excluir explícitamente otros campos
-
-class ClienteEmpForm(forms.ModelForm):
-    class Meta:
-        model = ClienteEmpresa
+        model = Cliente
         fields = '__all__'  # Incluye todos los campos del modelo
         exclude = ['visible']  # Sustituye con el nombre del campo que deseas ocultar
 
@@ -71,11 +67,6 @@ class ClienteEmpForm(forms.ModelForm):
             'telefono': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
         }
-
-class ClienteEmpForm(forms.ModelForm):
-    class Meta:
-        model = ClienteEmpresa
-        fields = ['nombre', 'cuit', 'direccion', 'telefono', 'email']  # Excluir explícitamente otros campos
 
 
 
