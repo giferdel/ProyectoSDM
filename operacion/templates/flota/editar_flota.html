@@ -1,0 +1,58 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static './style_form.css' %}">    
+
+    <title>Editar Cliente</title>
+</head>
+<body class="app">
+    <div class="head">
+        {% include 'cabecera.html' %}
+        {% include 'bnav.html' %}
+    </div>
+
+    <a href="{% url 'listado_flota' %}" class="btn-atras"><img src="{% static 'operacion/img/atras.svg' %}"></a>
+    <h1>Editar Flota</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar cambios</button>
+        <a href="{% url 'listado_flota' %}">Cancelar</a>
+    </form>
+
+    <h2>Automóviles Asociados</h2>
+    <ul>
+        {% for auto in automoviles_asociados %}
+            <li>
+                {{ auto.nombre }} - {{ auto.modelo }}
+                <form method="post" action="{% url 'eliminar_asociacion' pk=flota.id auto_id=auto.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Eliminar</button>
+                </form>
+            </li>
+        {% empty %}
+            <li>No hay automóviles asociados a esta flota.</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Automóviles Restantes</h2>
+    <form method="post" action="{% url 'asociar_automovil' pk=flota.id %}">
+        {% csrf_token %}
+        <label for="automovil_select">Selecciona un automóvil para asociar:</label>
+        <select name="automovil_id" id="automovil_select">
+            {% for auto in automoviles_restantes %}
+                <option value="{{ auto.id }}">{{ auto.nombre }} - {{ auto.modelo }} (Patente: {{ auto.patente }})</option>
+            {% empty %}
+                <option disabled>No hay automóviles restantes.</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Asociar</button>
+    </form>
+    
+
+</body>
+</html>

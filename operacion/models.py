@@ -55,37 +55,6 @@ class Poliza(models.Model):
         return f"{self.empresa} {self.cobertura}"
 
     
-
-    
-class ClienteParticular(models.Model):
-    nombre = models.CharField(max_length=50)
-    apellido = models.CharField(max_length=50)
-    dni = models.PositiveBigIntegerField(unique=True)
-    cuil = models.PositiveBigIntegerField(unique=True)
-    direccion = models.CharField(max_length=50)
-    telefono = models.CharField(max_length=50,default="")
-    email = models.EmailField(blank=True)
-    visible = models.BooleanField(default=True)  # Campo de visibilidad
- 
-    def __str__(self):
-        return f"{self.nombre} {self.apellido}"
-    
-    class Meta:
-        verbose_name_plural = "Cliente particular"
-    
-class ClienteEmpresa(models.Model):
-    nombre = models.CharField(max_length=50)
-    cuit = models.PositiveBigIntegerField(unique=True)
-    direccion = models.CharField(max_length=50)
-    telefono = models.PositiveIntegerField(default=0)
-    email = models.CharField(max_length=50)
-    visible = models.BooleanField(default=True)  # Campo de visibilidad
-
-    def __str__(self):
-        return f"{self.nombre}"
-    
-    class Meta:
-        verbose_name_plural = "Cliente empresa"
     
 class Cliente(models.Model):
     razon_social = models.CharField(max_length=50)
@@ -98,7 +67,7 @@ class Cliente(models.Model):
     visible = models.BooleanField(default=True)  # Campo de visibilidad
 
     def __str__(self):
-        return f"{self.nombre}"
+        return f"{self.razon_social}"
     
     class Meta:
         verbose_name_plural = "Cliente empresa"
@@ -107,9 +76,11 @@ class Cliente(models.Model):
 class Flota(models.Model):
     descripcion = models.CharField(max_length=50)
     cliente = models.ForeignKey(Cliente, on_delete=models.RESTRICT)
+    disponible = models.BooleanField(default=True)
+
 
     def __str__(self):
-        return f"{self.nombre}"
+        return f"{self.descripcion}"
 # Create your models here.
     class Meta:
         verbose_name_plural = "Flotas"

@@ -17,8 +17,7 @@
     <h1>Listado de Clientes</h1>
     <table>
             <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
+                <th>Razon Social</th>
                 <th>DNI</th>
                 <th>CUIL</th>
                 <th>Dirección</th>
@@ -30,8 +29,7 @@
         
             {% for cliente in clientes %}
                 <tr>
-                    <td>{{ cliente.nombre }}</td>
-                    <td>{{ cliente.apellido }}</td>
+                    <td>{{ cliente.razon_social }}</td>
                     <td>{{ cliente.dni }}</td>
                     <td>{{ cliente.cuil }}</td>
                     <td>{{ cliente.direccion }}</td>

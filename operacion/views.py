@@ -9,7 +9,6 @@ from django.db.models import Q
 
 
 
-
 def home(request):
     
     return render(request, 'index.html')
@@ -110,6 +109,12 @@ def alta_flota(request):
         form = FlotaForm()
     return render(request, 'flota/alta_flota.html', {'form': form})
 
+
+def eliminar_flota(request, pk):
+    flota = get_object_or_404(Flota, pk=pk)
+    flota.delete()
+    return redirect('listado_flota')  # Redirige a la lista después de cancelar uno
+
 #############################################################################################################################################
 # LOGIN
 #############################################################################################################################################
@@ -171,49 +176,6 @@ def editar_cliente(request, pk):
         form = ClienteForm(instance=cliente)
     return render(request, 'clientes/editar_cliente.html', {'form': form})
 
-##################################################################################################################################
-# CLIENTES EMPRESA
-##################################################################################################################################
-
-
-# def listado_clientes_empresa(request):
-
-#     clientes_empresa = ClienteEmpresa.objects.filter(visible=True)
-#     return render(request, 'empresa/clientes_empresa.html', {'clientes_empresa': clientes_empresa})
-
-# def agregar_empresa(request):
-#     if request.method == 'POST':
-#         form = ClienteEmpForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('cliente_empresa')  # Redirige al listado de clientes
-#     else:
-#         form = ClienteEmpForm()
-#     return render(request, 'empresa/agregar_cliente_empresa.html', {'form': form})
-
-
-
-# def eliminar_empresa(request, pk):
-#     cliente = get_object_or_404(ClienteEmpresa, pk=pk)
-#     cliente.visible = False  # Oculta el cliente
-#     cliente.save()
-#     return redirect('cliente_empresa')  # Redirige al listado de clientes
-
-
-
-# def editar_empresa(request, pk):
-#     cliente = get_object_or_404(ClienteEmpresa, pk=pk)
-#     if request.method == 'POST':
-#         form = ClienteEmpForm(request.POST, instance=cliente)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('cliente_empresa')  # Redirigir al listado después de guardar
-#     else:
-#         form = ClienteEmpForm(instance=cliente)
-#     return render(request, 'empresa/editar_cliente_empresa.html', {'form': form})
-
-
-
 
 ######################################################################################################################
 def listado_turno_vtv(request):
@@ -253,3 +215,54 @@ def editar_turno_vtv(request, pk):
         form = TurnoVTVForm(instance=turno)
     
     return render(request, 'vtv/editar_turno.html', {'form': form, 'turno': turno})
+
+
+def asociar_automovil(request, pk):
+    if request.method == 'POST':
+        flota = get_object_or_404(Flota, pk=pk)
+        automovil_id = request.POST.get('automovil_id')
+        automovil = get_object_or_404(Automovil, id=automovil_id)
+        automovil.flota = flota
+        automovil.save()
+
+        flota.disponible = True
+        flota.save()
+
+
+        return redirect('editar_flota', pk=pk)
+
+def editar_flota(request, pk):
+    flota = get_object_or_404(Flota, pk=pk)
+    automoviles_asociados = Automovil.objects.filter(flota=flota)
+    automoviles_restantes = Automovil.objects.exclude(flota=flota)
+
+    if request.method == 'POST':
+        form = FlotaForm(request.POST, instance=flota)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_flota')  # Redirigir al listado después de guardar
+    else:
+        form = FlotaForm(instance=flota)
+    return render(request, 'flota/editar_flota.html', {
+        'form': form,
+        'flota': flota,
+        'automoviles_asociados': automoviles_asociados,
+        'automoviles_restantes': automoviles_restantes,
+})
+
+
+def eliminar_asociacion(request, pk, auto_id):
+    flota = get_object_or_404(Flota, pk=pk)
+    automovil = get_object_or_404(Automovil, id=auto_id)
+    
+    # Desasociar el automóvil de la flota
+    if automovil.flota == flota:
+        automovil.flota = None
+        automovil.save()
+
+    # Verificar si quedan automóviles asociados a la flota
+    if not Automovil.objects.filter(flota=flota).exists():
+        flota.disponible = True
+        flota.save()
+
+    return redirect('editar_flota', pk=pk)

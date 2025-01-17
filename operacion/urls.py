@@ -3,10 +3,9 @@ from django.urls import path
 from .views import barra_navegacion, menu_automoviles, home
 from .views import alta_automovil, eliminar_automovil,editar_automovil,detalle_automovil
 from .views import listado_clientes,agregar_cliente,eliminar_cliente,editar_cliente
-#from .views import listado_clientes_empresa,agregar_empresa,eliminar_empresa,editar_empresa
 from .views import listado_turno_vtv,alta_turno_vtv,eliminar_turno_vtv,editar_turno_vtv
 from .views import login_view
-from .views import listado_flota, alta_flota
+from .views import listado_flota, alta_flota,eliminar_flota,editar_flota,asociar_automovil,eliminar_asociacion
 
 urlpatterns = [
     path('home/', home,name='home'),
@@ -33,8 +32,14 @@ urlpatterns = [
 
     path('login/', login_view, name='login'),
 
-    path('flota', listado_flota, name='listado_flota'),
+    path('flota/', listado_flota, name='listado_flota'),
     path('flota/agregar/', alta_flota, name='agregar_flota'),
+    path('flota/eliminar/<int:pk>/', eliminar_flota, name='eliminar_flota'),
+    path('flota/<int:pk>/', editar_flota, name='editar_flota'),
+    path('lofta/<int:pk>/asociar_automovil/', asociar_automovil, name='asociar_automovil'),
+    path('flota/<int:pk>/eliminar_asociacion/<int:auto_id>/', eliminar_asociacion, name='eliminar_asociacion'),
+
+
 
 
 

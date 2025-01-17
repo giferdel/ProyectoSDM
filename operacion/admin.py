@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Automovil,Seguro, ClienteParticular, ClienteEmpresa, Vtv, Coberturas, Poliza, VtvEstado
+from .models import Automovil,Seguro, Vtv, Coberturas, Poliza, VtvEstado
 
 
 
@@ -12,15 +12,7 @@ class CoberturasAdmin(admin.ModelAdmin):
 class PolizaAdmin(admin.ModelAdmin):
     list_display = ('empresa', 'cobertura', 'franquicia')
 
-class ClienteParticularAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'apellido', 'dni', 'cuil', 'direccion', 'telefono', 'email')
-    search_fields = ('apellido', 'dni', 'cuil')
-    list_filter = ('apellido', 'dni', 'cuil')
 
-class ClienteEmpresaAdmin(admin.ModelAdmin):
-    list_display = ('nombre','cuit', 'direccion', 'telefono', 'email')
-    search_fields = ('nombre','cuit')
-    list_filter = ('nombre','cuit')
 
 class AutomovilAdmin(admin.ModelAdmin):
     list_display = ('marca', 'modelo', 'kilometraje', 'numero_chasis', 'numero_motor', 'patente','vtv')
@@ -48,8 +40,6 @@ admin.site.register(Automovil, AutomovilAdmin)
 admin.site.register(Poliza, PolizaAdmin)
 admin.site.register(Coberturas, CoberturasAdmin)
 admin.site.register(Seguro, SeguroAdmin)
-admin.site.register(ClienteParticular, ClienteParticularAdmin)
-admin.site.register(ClienteEmpresa, ClienteEmpresaAdmin)
 admin.site.register(Vtv,VtvAdmin)
 admin.site.register(VtvEstado,VtvEstadoAdmin)
 
