@@ -1,9 +1,9 @@
-from .models import Automovil, Cliente,VtvEstado,Turno_VTV,Flota
+from .models import Automovil, Cliente,VtvEstado,Turno_VTV,Flota,Titular
 from django.shortcuts import render, redirect,get_object_or_404
 from .forms import AutomovilForm
 from django.contrib.auth import login, authenticate
-from .forms import CustomLoginForm, ClienteForm, TurnoVTVForm, FlotaForm
-
+from .forms import CustomLoginForm, ClienteForm, TurnoVTVForm, FlotaForm, TitularForm
+from django.contrib import messages
 
 from django.db.models import Q
 
@@ -20,22 +20,32 @@ def barra_navegacion(request):
 
 ####################################################################################################################################
 
+
+
+
 def menu_automoviles(request):
+    flota_id = request.GET.get('flota_id', None)  # Obtén el estado de la VTV desde los parámetros GET
     estado_vtv = request.GET.get('estado_vtv', None)  # Obtén el estado de la VTV desde los parámetros GET
-    autos = Automovil.objects.filter(visibilidad=True)
+
+    automoviles = Automovil.objects.filter(visibilidad=True)
+#     # Obtener todos los estados posibles para mostrarlos como opciones en el filtro
+    estados_vtv = VtvEstado.objects.all()
+    flotas = Flota.objects.all()
 
     if estado_vtv:  # Aplica el filtro si se especifica un estado
-        autos = autos.filter(vtv__estado__estado=estado_vtv)
+        automoviles = automoviles.filter(vtv__estado__estado=estado_vtv)
 
-    # Obtener todos los estados posibles para mostrarlos como opciones en el filtro
-    estados_vtv = VtvEstado.objects.all()
+    if flota_id:
+        automoviles = automoviles.filter(flota__id=flota_id)
+
 
     return render(request, 'automovil/automoviles.html', {
-        'autos': autos,
+        'autos': automoviles,
         'estados_vtv': estados_vtv,
+        'flotas': flotas,
         'estado_seleccionado': estado_vtv,
+        'flota_seleccionada': flota_id,
     })
-
 
 
 def menu_clientes(request):
@@ -92,28 +102,7 @@ def detalle_automovil(request, pk):
 # FLOTA
 #############################################################################################################################################
 
-def listado_flota(request):
-    
-    # Obtener todos los estados posibles para mostrarlos como opciones en el filtro
-    flota = Flota.objects.all()
 
-    return render(request, 'flota/listado_flota.html', {'flota': flota})
-
-def alta_flota(request):
-    if request.method == 'POST':
-        form = FlotaForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('listado_flota')  # Redirige a una lista de turnos o la página que consideres apropiada
-    else:
-        form = FlotaForm()
-    return render(request, 'flota/alta_flota.html', {'form': form})
-
-
-def eliminar_flota(request, pk):
-    flota = get_object_or_404(Flota, pk=pk)
-    flota.delete()
-    return redirect('listado_flota')  # Redirige a la lista después de cancelar uno
 
 #############################################################################################################################################
 # LOGIN
@@ -176,7 +165,8 @@ def editar_cliente(request, pk):
         form = ClienteForm(instance=cliente)
     return render(request, 'clientes/editar_cliente.html', {'form': form})
 
-
+#####################################################################################################################
+# vtv
 ######################################################################################################################
 def listado_turno_vtv(request):
     # Lógica para registrar turnos
@@ -217,6 +207,42 @@ def editar_turno_vtv(request, pk):
     return render(request, 'vtv/editar_turno.html', {'form': form, 'turno': turno})
 
 
+
+
+###########################################################################################################################
+# FLOTA
+###########################################################################################################################
+
+def listado_flota(request):
+    
+    # Obtener todos los estados posibles para mostrarlos como opciones en el filtro
+    flota = Flota.objects.all()
+
+    return render(request, 'flota/listado_flota.html', {'flota': flota})
+
+def alta_flota(request):
+    if request.method == 'POST':
+        form = FlotaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_flota')  # Redirige a una lista de turnos o la página que consideres apropiada
+    else:
+        form = FlotaForm()
+    return render(request, 'flota/alta_flota.html', {'form': form})
+
+
+def eliminar_flota(request, pk):
+    flota = get_object_or_404(Flota, pk=pk)
+    if not Automovil.objects.filter(flota=flota).exists():
+        flota.delete()
+        messages.success(request, "La flota ha sido eliminada con éxito.")
+    else:
+        messages.error(request, "No se puede eliminar la flota porque tiene automóviles asociados.")
+
+        
+    return redirect('listado_flota')  # Redirige a la lista después de cancelar uno
+
+
 def asociar_automovil(request, pk):
     if request.method == 'POST':
         flota = get_object_or_404(Flota, pk=pk)
@@ -233,8 +259,8 @@ def asociar_automovil(request, pk):
 
 def editar_flota(request, pk):
     flota = get_object_or_404(Flota, pk=pk)
-    automoviles_asociados = Automovil.objects.filter(flota=flota)
-    automoviles_restantes = Automovil.objects.exclude(flota=flota)
+    automoviles_asociados = Automovil.objects.filter(flota=flota).filter(visibilidad=True)
+    automoviles_restantes = Automovil.objects.exclude(flota=flota).filter(visibilidad=True)
 
     if request.method == 'POST':
         form = FlotaForm(request.POST, instance=flota)
@@ -266,3 +292,45 @@ def eliminar_asociacion(request, pk, auto_id):
         flota.save()
 
     return redirect('editar_flota', pk=pk)
+
+
+####################################################################################################################
+
+
+
+
+def listado_titular(request):
+
+    titulares = Titular.objects.all()
+    return render(request, 'titular/titular_list.html', {'titulares': titulares})
+
+
+def agregar_titular(request):
+    if request.method == 'POST':
+        form = TitularForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('titular_listado')  # Redirige al listado de clientes
+    else:
+        form = TitularForm()
+    return render(request, 'titular/agregar_titular.html', {'form': form})
+
+
+
+def eliminar_titular(request, pk):
+    cliente = get_object_or_404(Titular, pk=pk)
+    cliente.delete()
+    return redirect('titular_listado')  # Redirige al listado de clientes
+
+
+
+def editar_titular(request, pk):
+    cliente = get_object_or_404(Titular, pk=pk)
+    if request.method == 'POST':
+        form = TitularForm(request.POST, instance=Titular)
+        if form.is_valid():
+            form.save()
+            return redirect('titular_listado')  # Redirigir al listado después de guardar
+    else:
+        form = TitularForm(instance=Titular)
+    return render(request, 'titular/editar_titular.html', {'form': form})

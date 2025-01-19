@@ -26,6 +26,17 @@
                 </option>
             {% endfor %}
         </select>
+
+        <label class="filtro-label" for="flota_id">Filtrar por Flota:</label>
+        <select class="filtro-opcion" name="flota_id" id="flota_id" onchange="this.form.submit()">
+            <option value="">Todas</option>
+            {% for flota in flotas %}
+                <option value="{{ flota.id }}" {% if flota.id|stringformat:"s" == flota_seleccionada %}selected{% endif %}>
+                    {{ flota.descripcion }}
+                </option>
+            {% endfor %}
+        </select>
+
     </form>
     
     <table>      
@@ -35,7 +46,7 @@
                 <th scope="col">Modelo</th>
                 <th scope="col">Año</th>
                 <th scope="col">Color</th>
-                <th scope="col">Kilometraje</th>
+                <th scope="col">Flota</th>
                 <th scope="col">Nº Chasis</th>
                 <th scope="col">Nº Motor</th>
                 
@@ -50,7 +61,7 @@
                 <td>{{ auto.modelo }}</td>
                 <td>{{ auto.anio }}</td>
                 <td>{{ auto.color }}</td>
-                <td>{{ auto.kilometraje }}</td>
+                <td>{{ auto.flota }}</td>
                 <td>{{ auto.numero_chasis }}</td>
                 <td>{{ auto.numero_motor }}</td>
                 

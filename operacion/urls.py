@@ -6,6 +6,9 @@ from .views import listado_clientes,agregar_cliente,eliminar_cliente,editar_clie
 from .views import listado_turno_vtv,alta_turno_vtv,eliminar_turno_vtv,editar_turno_vtv
 from .views import login_view
 from .views import listado_flota, alta_flota,eliminar_flota,editar_flota,asociar_automovil,eliminar_asociacion
+from .views import listado_titular,agregar_titular,eliminar_titular,editar_titular
+
+
 
 urlpatterns = [
     path('home/', home,name='home'),
@@ -20,10 +23,10 @@ urlpatterns = [
     path('clientes/eliminar/<int:pk>/', eliminar_cliente, name='eliminar_cliente'),
     path('clientes/editar/<int:pk>/', editar_cliente, name='editar_cliente'),
 
-    # path('empresas/', listado_clientes_empresa, name='cliente_empresa'),
-    # path('empresas/agregar/', agregar_empresa, name='agregar_empresa'),
-    # path('empresas/eliminar/<int:pk>/', eliminar_empresa, name='eliminar_empresa'),
-    # path('empresas/editar/<int:pk>/', editar_empresa, name='editar_empresa'),
+    path('titular/', listado_titular, name='titular_listado'),
+    path('titular/agregar/', agregar_titular, name='agregar_titular'),
+    path('titular/eliminar/<int:pk>/', eliminar_titular, name='eliminar_titular'),
+    path('titular/editar/<int:pk>/', editar_titular, name='editar_titular'),
 
     path('listado_turno_vtv/', listado_turno_vtv, name='listado_turno_vtv'),
     path('listado_turno_vtv/agregar/', alta_turno_vtv, name='agregar_turno_vtv'),
@@ -36,7 +39,7 @@ urlpatterns = [
     path('flota/agregar/', alta_flota, name='agregar_flota'),
     path('flota/eliminar/<int:pk>/', eliminar_flota, name='eliminar_flota'),
     path('flota/<int:pk>/', editar_flota, name='editar_flota'),
-    path('lofta/<int:pk>/asociar_automovil/', asociar_automovil, name='asociar_automovil'),
+    path('flota/<int:pk>/asociar_automovil/', asociar_automovil, name='asociar_automovil'),
     path('flota/<int:pk>/eliminar_asociacion/<int:auto_id>/', eliminar_asociacion, name='eliminar_asociacion'),
 
 

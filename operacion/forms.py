@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Automovil, Cliente 
 from .models import Turno_VTV
-from .models import Flota
+from .models import Flota,Titular
 
 
 class AutomovilForm(forms.ModelForm):
@@ -25,7 +25,12 @@ class FlotaForm(forms.ModelForm):
         fields = '__all__'  # Incluye todos los campos del modelo
         exclude=['visibilidad']
     
-
+class TitularForm(forms.ModelForm):
+    class Meta:
+        model = Titular
+        fields = '__all__'  # Incluye todos los campos del modelo
+ 
+    
 
 
 
@@ -77,3 +82,5 @@ class TurnoVTVForm(forms.ModelForm):
         widgets = {
             'fecha_turno': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
         }
+
+

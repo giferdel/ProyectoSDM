@@ -23,11 +23,16 @@ class Vtv(models.Model):
     class Meta:
         verbose_name_plural = "VTV"
 
+class Titular(models.Model):
+    razon_social = models.CharField(max_length=255, blank=True, null=True)  # Razón social para personas jurídicas
+    cuit = models.CharField(max_length=13, unique=True)  # CUIT/CUIL único
+    direccion = models.CharField(max_length=255)
+    telefono = models.CharField(max_length=20)
+    
 
-
-
-
-
+    def __str__(self):
+        return f"{self.razon_social}"
+      
 
 
 class Seguro(models.Model):
@@ -55,7 +60,6 @@ class Poliza(models.Model):
         return f"{self.empresa} {self.cobertura}"
 
     
-    
 class Cliente(models.Model):
     razon_social = models.CharField(max_length=50)
     dni = models.PositiveBigIntegerField(unique=True)
@@ -81,9 +85,10 @@ class Flota(models.Model):
 
     def __str__(self):
         return f"{self.descripcion}"
-# Create your models here.
+
     class Meta:
         verbose_name_plural = "Flotas"
+
 
 class Automovil(models.Model):
     marca = models.CharField(max_length=50)
@@ -97,6 +102,8 @@ class Automovil(models.Model):
     vtv = models.ForeignKey(Vtv, on_delete=models.RESTRICT)
     visibilidad = models.BooleanField(default=True)  # Campo de visibilidad para ocultar automóviles eliminados
     flota = models.ForeignKey(Flota, on_delete=models.RESTRICT, blank=True, null=True)
+    titular = models.ForeignKey(Titular, on_delete=models.CASCADE, related_name='titular',null=True, blank=True)
+
 
     def __str__(self):
         return f"{self.marca} {self.modelo} ({self.anio})"
@@ -122,3 +129,26 @@ class Turno_VTV(models.Model):
 
     def __str__(self):
         return f'Turno para {self.auto.patente} en {self.fecha_turno}'
+
+
+class Mantenimiento(models.Model):
+    automovil = models.ForeignKey(Automovil, on_delete=models.CASCADE, related_name='mantenimientos')
+    descripcion = models.TextField()
+    fecha_inicio_mantenimiento = models.DateField(null=True, blank=True)
+    fecha_fin_mantenimiento = models.DateField(null=True, blank=True)
+    kilometraje = models.IntegerField()
+    costo = models.DecimalField(max_digits=10, decimal_places=2,null=True, blank=True)
+    proximo_mantenimiento = models.DateField(null=True, blank=True)
+    tipo_mantenimiento = models.CharField(max_length=50, choices=[
+        ('preventivo', 'Preventivo'),
+        ('correctivo', 'Correctivo'),
+    ])
+
+    def __str__(self):
+        return f"Mantenimiento {self.tipo_mantenimiento} - {self.fecha_inicio_mantenimiento} - {self.automovil}"
+
+    class Meta:
+        ordering = ['fecha_inicio_mantenimiento']
+
+
+    
