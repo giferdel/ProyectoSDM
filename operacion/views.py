@@ -295,9 +295,8 @@ def eliminar_asociacion(request, pk, auto_id):
 
 
 ####################################################################################################################
-
-
-
+# TITULAR
+####################################################################################################################
 
 def listado_titular(request):
 
@@ -325,12 +324,12 @@ def eliminar_titular(request, pk):
 
 
 def editar_titular(request, pk):
-    cliente = get_object_or_404(Titular, pk=pk)
+    titular = get_object_or_404(Titular, pk=pk)
     if request.method == 'POST':
-        form = TitularForm(request.POST, instance=Titular)
+        form = TitularForm(request.POST, instance=titular)
         if form.is_valid():
             form.save()
             return redirect('titular_listado')  # Redirigir al listado después de guardar
     else:
-        form = TitularForm(instance=Titular)
+        form = TitularForm(instance=titular)
     return render(request, 'titular/editar_titular.html', {'form': form})
