@@ -2,6 +2,8 @@
 
 from django.db import models
 from django.utils import timezone
+from datetime import timedelta
+
 
 class VtvEstado(models.Model):
     estado = models.CharField(max_length=50)
@@ -18,7 +20,7 @@ class Vtv(models.Model):
     estado = models.ForeignKey(VtvEstado, on_delete=models.RESTRICT)
 
     def __str__(self):
-        return f"{self.estado}"
+        return f"{self.estado} {self.turno} {self.vencimiento}"
 
     class Meta:
         verbose_name_plural = "VTV"
@@ -112,20 +114,38 @@ class Automovil(models.Model):
     class Meta:
         verbose_name_plural = "Automóviles"
 
+
 class Turno_VTV(models.Model):
-    auto = models.ForeignKey(Automovil, related_name='turnos', on_delete=models.CASCADE)
+    auto = models.ForeignKey(Automovil, on_delete=models.CASCADE, related_name="turnos")
     fecha_turno = models.DateTimeField()
     lugar_verificacion = models.CharField(max_length=255)
-    estado = models.CharField(
-        max_length=50, 
+    comentarios = models.TextField(blank=True, null=True)
+    estado = models.CharField(max_length=50, 
         choices=[
             ('pendiente', 'Pendiente'),
             ('completado', 'Completado'),
             ('cancelado', 'Cancelado')
         ], 
-        default='pendiente'
-    )
-    comentarios = models.TextField(blank=True, null=True)
+        default='pendiente')
+    vencimiento = models.DateField()
+    def calcular_vencimiento(self):
+        """ Calcula la fecha de vencimiento de la VTV (1 año después de la fecha del turno). """
+        return self.fecha_turno + timedelta(days=365)
+
+# class Turno_VTV(models.Model):
+#     auto = models.ForeignKey(Automovil, related_name='turnos', on_delete=models.CASCADE)
+#     fecha_turno = models.DateTimeField()
+#     lugar_verificacion = models.CharField(max_length=255)
+#     estado = models.CharField(
+#         max_length=50, 
+#         choices=[
+#             ('pendiente', 'Pendiente'),
+#             ('completado', 'Completado'),
+#             ('cancelado', 'Cancelado')
+#         ], 
+#         default='pendiente'
+#     )
+#     comentarios = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f'Turno para {self.auto.patente} en {self.fecha_turno}'

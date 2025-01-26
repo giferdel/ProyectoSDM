@@ -17,7 +17,10 @@ urlpatterns = [
     path('automoviles/alta/', alta_automovil, name='alta_automovil'),
     path('automoviles/eliminar/<int:auto_id>/', eliminar_automovil, name='eliminar_automovil'),
     path('automoviles/editar/<int:auto_id>/', editar_automovil, name='editar_automovil'),
+    # path('automoviles/detalle/<int:pk>/', detalle_automovil, name='detalle_automovil'),
     path('automoviles/detalle/<int:pk>/', detalle_automovil, name='detalle_automovil'),
+
+    
     path('clientes/', listado_clientes, name='listado_clientes'),
     path('clientes/agregar/', agregar_cliente, name='agregar_cliente'),
     path('clientes/eliminar/<int:pk>/', eliminar_cliente, name='eliminar_cliente'),
@@ -32,6 +35,7 @@ urlpatterns = [
     path('listado_turno_vtv/agregar/', alta_turno_vtv, name='agregar_turno_vtv'),
     path('listado_turno_vtv/eliminar/<int:pk>/', eliminar_turno_vtv, name='eliminar_turno'),
     path('editar_turno/<int:pk>/', editar_turno_vtv, name='editar_turno'),
+    path('automovil/<int:auto_id>/', detalle_automovil, name='detalle_automovil'),
 
     path('login/', login_view, name='login'),
 

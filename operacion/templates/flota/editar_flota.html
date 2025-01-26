@@ -14,44 +14,55 @@
         {% include 'cabecera.html' %}
         {% include 'bnav.html' %}
     </div>
-
-    <a href="{% url 'listado_flota' %}" class="btn-atras"><img src="{% static 'operacion/img/atras.svg' %}"></a>
-    <h1>Editar Flota</h1>
+    <h1>Editar Flota {{ flota.id }}</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Guardar cambios</button>
         <a href="{% url 'listado_flota' %}">Cancelar</a>
     </form>
-
-    <h2>Automóviles Asociados</h2>
-    <ul>
-        {% for auto in automoviles_asociados %}
-            <li>
-                {{ auto.nombre }} - {{ auto.modelo }}
-                <form method="post" action="{% url 'eliminar_asociacion' pk=flota.id auto_id=auto.id %}" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit">Eliminar</button>
-                </form>
-            </li>
+    <section class="tablas">
+        <h2>Automóviles Asociados</h2>
+        <table>
+            <tr>
+                <th>Automóvil</th>
+            </tr>
+            {% for auto in automoviles_asociados %}
+            <tr>
+                <td>
+                    {{ auto.marca }} - {{ auto.modelo }}
+                </td>
+                <td>
+                    <form class="acciones" method="post" action="{% url 'eliminar_asociacion' pk=flota.id auto_id=auto.id %}">
+                        {% csrf_token %}
+                        <button class="btn" type="submit"><img src="{% static 'operacion/img/eliminar_blanco.svg' %}" alt=""></button>
+                    </form>
+                </td>
+            </tr>
         {% empty %}
-            <li>No hay automóviles asociados a esta flota.</li>
+            <tr>
+                <td>
+                  No hay automóviles asociados a esta flota.  
+                </td>
+            </tr>
         {% endfor %}
-    </ul>
+        </table>
     
-    <h2>Automóviles Restantes</h2>
+    
     <form method="post" action="{% url 'asociar_automovil' pk=flota.id %}">
+        <h2>Automóviles Restantes</h2>
         {% csrf_token %}
         <label for="automovil_select">Selecciona un automóvil para asociar:</label>
         <select name="automovil_id" id="automovil_select">
             {% for auto in automoviles_restantes %}
-                <option value="{{ auto.id }}">{{ auto.nombre }} - {{ auto.modelo }} (Patente: {{ auto.patente }})</option>
+                <option value="{{ auto.id }}">{{ auto.marca }} - {{ auto.modelo }} (Patente: {{ auto.patente }})</option>
             {% empty %}
                 <option disabled>No hay automóviles restantes.</option>
             {% endfor %}
         </select>
         <button type="submit">Asociar</button>
     </form>
+</section>
     
 
 </body>

@@ -94,13 +94,10 @@ def editar_automovil(request, auto_id):
     return render(request, 'automovil/editar_automovil.html', {'form': form, 'auto': auto})
 
 
-def detalle_automovil(request, pk):
-    auto = get_object_or_404(Automovil, pk=pk)
-    return render(request, 'automovil/detalle_automovil.html', {'auto': auto})
-
-#############################################################################################################################################
-# FLOTA
-#############################################################################################################################################
+def detalle_automovil(request, auto_id):
+    auto = get_object_or_404(Automovil, id=auto_id)
+    turnos = Turno_VTV.objects.filter(automovil=auto).order_by('-fecha_turno')  # Obtener todos los turnos del auto
+    return render(request, 'automovil/detalle_automovil.html', {'auto': auto , 'turno':turnos})
 
 
 
