@@ -127,10 +127,7 @@ class Turno_VTV(models.Model):
             ('cancelado', 'Cancelado')
         ], 
         default='pendiente')
-    vencimiento = models.DateField()
-    def calcular_vencimiento(self):
-        """ Calcula la fecha de vencimiento de la VTV (1 año después de la fecha del turno). """
-        return self.fecha_turno + timedelta(days=365)
+    
 
 # class Turno_VTV(models.Model):
 #     auto = models.ForeignKey(Automovil, related_name='turnos', on_delete=models.CASCADE)

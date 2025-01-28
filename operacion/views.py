@@ -4,6 +4,7 @@ from .forms import AutomovilForm
 from django.contrib.auth import login, authenticate
 from .forms import CustomLoginForm, ClienteForm, TurnoVTVForm, FlotaForm, TitularForm
 from django.contrib import messages
+from django.utils.dateparse import parse_date
 
 from django.db.models import Q
 
@@ -96,8 +97,18 @@ def editar_automovil(request, auto_id):
 
 def detalle_automovil(request, auto_id):
     auto = get_object_or_404(Automovil, id=auto_id)
-    turnos = Turno_VTV.objects.filter(automovil=auto).order_by('-fecha_turno')  # Obtener todos los turnos del auto
+    turnos = Turno_VTV.objects.filter(auto=auto).order_by('-fecha_turno')  # Obtener todos los turnos del auto
+
+    # Obtener la fecha del filtro del formulario
+    fecha_filtro = request.GET.get('fecha_turno')
+    
+    if fecha_filtro:  # Si se ha seleccionado una fecha
+        fecha_filtro = parse_date(fecha_filtro)  # Convertir la fecha en formato válido
+        if fecha_filtro:
+            turnos = turnos.filter(fecha_turno__date=fecha_filtro)  # Filtrar por la fecha exacta
+
     return render(request, 'automovil/detalle_automovil.html', {'auto': auto , 'turno':turnos})
+
 
 
 

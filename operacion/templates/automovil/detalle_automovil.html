@@ -48,7 +48,7 @@
     <form method="get" action="">
         <label class="filtro-label" for="estado_vtv">Filtrar por Fecha:</label>  <!--filtrar por fecha-->
         <select class="filtro-opcion" name="estado_vtv" id="estado_vtv" onchange="this.form.submit()">
-            <option  value="">Todos</option>
+            <option  value="">Todo</option>
             {% for estado in estados_vtv %}
                 <option value="{{ estado.estado }}" {% if estado.estado == estado_seleccionado %}selected{% endif %}>
                     {{ estado.estado }}
@@ -56,27 +56,31 @@
             {% endfor %}
         </select>
     </form>
-    
+    <form method="get" action="">
+        <label class="filtro-label" for="fecha_turno">Filtrar por Fecha:</label>
+        <input type="date" name="fecha_turno" id="fecha_turno" value="{{ request.GET.fecha_turno }}">
+        <button type="submit">Filtrar</button>
+    </form>
     <table>      
             <tr>
                 <th scope="col">Fecha</th>
                 <th scope="col">Observación</th>
                 <th scope="col">Estado</th>
-                <th scope="col">Vencimiento</th>      
+                <!-- <th scope="col">Vencimiento</th>       -->
             </tr>
             
             {% for turno in turnos %}
-    <tr>
-        <td>{{ turno.fecha_turno|date:"d/m/Y H:i" }}</td> <!-- Ahora sí se mostrará la fecha -->
-        <td>{{ turno.comentarios|default:"Sin comentarios" }}</td>   
-        <td>{{ turno.estado }}</td>
-        <td>{{ turno.vencimiento|date:"d/m/Y" }}</td>
-    </tr>
-    {% empty %}
-    <tr>
-        <td colspan="4">No hay turnos registrados para este vehículo.</td>
-    </tr>
-    {% endfor %}
+            <tr>
+                <td>{{ turno.fecha_turno|date:"d/m/Y H:i" }}</td> <!-- Ahora sí se mostrará la fecha -->
+                <td>{{ turno.comentarios|default:"Sin comentarios" }}</td>   
+                <td>{{ turno.estado }}</td>
+                <!-- <td>{{ turno.vencimiento|date:"d/m/Y" }}</td> -->
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No hay turnos registrados para este vehículo.</td>
+            </tr>
+            {% endfor %}
     </table>
     
     
