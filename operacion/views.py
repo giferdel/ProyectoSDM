@@ -1,19 +1,23 @@
-from .models import Automovil, Cliente,VtvEstado,Turno_VTV,Flota,Titular
+from .models import Automovil, Cliente,VtvEstado,Turno_VTV,Flota,Titular,Aseguradora,PolizaSeguro
+
 from django.shortcuts import render, redirect,get_object_or_404
 from .forms import AutomovilForm
 from django.contrib.auth import login, authenticate
-from .forms import CustomLoginForm, ClienteForm, TurnoVTVForm, FlotaForm, TitularForm
+from .forms import CustomLoginForm, ClienteForm, TurnoVTVForm, FlotaForm, TitularForm,AseguradoraForm,PolizaForm
 from django.contrib import messages
 from django.utils.dateparse import parse_date
-
+from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q
 
+from django.contrib.auth.decorators import login_required
 
 
+
+@login_required
 def home(request):
     
     return render(request, 'index.html')
-
+@login_required
 def barra_navegacion(request):
     opciones_menu = ['Automoviles', 'Clientes', 'VTV', 'Seguros','Patentes','Mantenimiento']
     return render(request, 'bnav.html', {'opciones_menu': opciones_menu})
@@ -23,7 +27,7 @@ def barra_navegacion(request):
 
 
 
-
+@login_required
 def menu_automoviles(request):
     flota_id = request.GET.get('flota_id', None)  # Obtén el estado de la VTV desde los parámetros GET
     estado_vtv = request.GET.get('estado_vtv', None)  # Obtén el estado de la VTV desde los parámetros GET
@@ -48,7 +52,7 @@ def menu_automoviles(request):
         'flota_seleccionada': flota_id,
     })
 
-
+@login_required
 def menu_clientes(request):
 
     cliente = {'nombre': Cliente.nombre,
@@ -60,7 +64,8 @@ def menu_clientes(request):
             'email':Cliente.email}
     
     return render(request, 'clientes/clientes_list.html', cliente)
-    
+
+@login_required
 def alta_automovil(request):
     if request.method == 'POST':
         form = AutomovilForm(request.POST)
@@ -73,14 +78,14 @@ def alta_automovil(request):
 
     return render(request, 'automovil/alta_automovil.html', {'form': form})
 
-
+@login_required
 def eliminar_automovil(request, auto_id):
     auto = get_object_or_404(Automovil, id=auto_id)
     auto.visibilidad = False  # Cambia visibilidad a False
     auto.save()  # Guarda el cambio en la base de datos
     return redirect('listado_automoviles')  # Redirige a la lista después
 
-
+@login_required
 def editar_automovil(request, auto_id):
     auto = get_object_or_404(Automovil, id=auto_id)
 
@@ -94,7 +99,7 @@ def editar_automovil(request, auto_id):
 
     return render(request, 'automovil/editar_automovil.html', {'form': form, 'auto': auto})
 
-
+@login_required
 def detalle_automovil(request, auto_id):
     auto = get_object_or_404(Automovil, id=auto_id)
     turnos = Turno_VTV.objects.filter(auto=auto).order_by('-fecha_turno')  # Obtener todos los turnos del auto
@@ -135,13 +140,14 @@ def login_view(request):
 # CLIENTES
 ##################################################################################################################################
 
-
+@login_required
 def listado_clientes(request):
 
     clientes = Cliente.objects.filter(visible=True)
     return render(request, 'clientes/clientes_list.html', {'clientes': clientes})
 
 
+@login_required
 def agregar_cliente(request):
     if request.method == 'POST':
         form = ClienteForm(request.POST)
@@ -153,7 +159,7 @@ def agregar_cliente(request):
     return render(request, 'clientes/agregar_cliente.html', {'form': form})
 
 
-
+@login_required
 def eliminar_cliente(request, pk):
     cliente = get_object_or_404(Cliente, pk=pk)
     cliente.visible = False  # Oculta el cliente
@@ -161,7 +167,7 @@ def eliminar_cliente(request, pk):
     return redirect('listado_clientes')  # Redirige al listado de clientes
 
 
-
+@login_required
 def editar_cliente(request, pk):
     cliente = get_object_or_404(Cliente, pk=pk)
     if request.method == 'POST':
@@ -176,12 +182,13 @@ def editar_cliente(request, pk):
 #####################################################################################################################
 # vtv
 ######################################################################################################################
+@login_required
 def listado_turno_vtv(request):
     # Lógica para registrar turnos
     turnos_vtv = Turno_VTV.objects.filter(estado='pendiente')
     return render(request, 'vtv/listado_turno_vtv.html', {'turnos_vtv': turnos_vtv})
     
-
+@login_required
 def alta_turno_vtv(request):
     if request.method == 'POST':
         form = TurnoVTVForm(request.POST)
@@ -192,6 +199,7 @@ def alta_turno_vtv(request):
         form = TurnoVTVForm()
     return render(request, 'vtv/alta_turno.html', {'form': form})
 
+@login_required
 def eliminar_turno_vtv(request, pk):
     turno = get_object_or_404(Turno_VTV, pk=pk)
     
@@ -200,7 +208,7 @@ def eliminar_turno_vtv(request, pk):
         turno.save()
         return redirect('listado_turno_vtv')  # Redirige a la lista de turnos después de cancelar uno
 
-
+@login_required
 def editar_turno_vtv(request, pk):
     turno = get_object_or_404(Turno_VTV, pk=pk)
 
@@ -221,6 +229,7 @@ def editar_turno_vtv(request, pk):
 # FLOTA
 ###########################################################################################################################
 
+@login_required
 def listado_flota(request):
     
     # Obtener todos los estados posibles para mostrarlos como opciones en el filtro
@@ -228,6 +237,7 @@ def listado_flota(request):
 
     return render(request, 'flota/listado_flota.html', {'flota': flota})
 
+@login_required
 def alta_flota(request):
     if request.method == 'POST':
         form = FlotaForm(request.POST)
@@ -238,7 +248,7 @@ def alta_flota(request):
         form = FlotaForm()
     return render(request, 'flota/alta_flota.html', {'form': form})
 
-
+@login_required
 def eliminar_flota(request, pk):
     flota = get_object_or_404(Flota, pk=pk)
     if not Automovil.objects.filter(flota=flota).exists():
@@ -250,7 +260,7 @@ def eliminar_flota(request, pk):
         
     return redirect('listado_flota')  # Redirige a la lista después de cancelar uno
 
-
+@login_required
 def asociar_automovil(request, pk):
     if request.method == 'POST':
         flota = get_object_or_404(Flota, pk=pk)
@@ -265,6 +275,7 @@ def asociar_automovil(request, pk):
 
         return redirect('editar_flota', pk=pk)
 
+@login_required
 def editar_flota(request, pk):
     flota = get_object_or_404(Flota, pk=pk)
     automoviles_asociados = Automovil.objects.filter(flota=flota).filter(visibilidad=True)
@@ -284,7 +295,7 @@ def editar_flota(request, pk):
         'automoviles_restantes': automoviles_restantes,
 })
 
-
+@login_required
 def eliminar_asociacion(request, pk, auto_id):
     flota = get_object_or_404(Flota, pk=pk)
     automovil = get_object_or_404(Automovil, id=auto_id)
@@ -306,12 +317,13 @@ def eliminar_asociacion(request, pk, auto_id):
 # TITULAR
 ####################################################################################################################
 
+@login_required
 def listado_titular(request):
 
     titulares = Titular.objects.all()
     return render(request, 'titular/titular_list.html', {'titulares': titulares})
 
-
+@login_required
 def agregar_titular(request):
     if request.method == 'POST':
         form = TitularForm(request.POST)
@@ -323,14 +335,14 @@ def agregar_titular(request):
     return render(request, 'titular/agregar_titular.html', {'form': form})
 
 
-
+@login_required
 def eliminar_titular(request, pk):
     cliente = get_object_or_404(Titular, pk=pk)
     cliente.delete()
     return redirect('titular_listado')  # Redirige al listado de clientes
 
 
-
+@login_required
 def editar_titular(request, pk):
     titular = get_object_or_404(Titular, pk=pk)
     if request.method == 'POST':
@@ -341,3 +353,104 @@ def editar_titular(request, pk):
     else:
         form = TitularForm(instance=titular)
     return render(request, 'titular/editar_titular.html', {'form': form})
+
+
+
+####################################################################################################################
+# ASEGURADORAS
+####################################################################################################################
+
+@login_required
+def listado_aseguradoras(request):
+
+    aseguradora = Aseguradora.objects.all()
+    return render(request, 'seguros/aseguradoras/Aseguradora_list.html', {'Aseguradoras': aseguradora})
+
+
+@login_required
+def agregar_aseguradoras(request):
+    if request.method == 'POST':
+        form = AseguradoraForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('aseguradoras_listado')  # Redirige al listado de clientes
+    else:
+        form = AseguradoraForm()
+    return render(request, 'seguros/aseguradoras/agregar_Aseguradora.html', {'form': form})
+
+
+@login_required
+def eliminar_aseguradoras(request, pk):
+    aseguradora = get_object_or_404(Aseguradora, pk=pk)
+    aseguradora.delete()
+    return redirect('aseguradoras_listado')  # Redirige al listado de clientes
+
+
+@login_required
+def editar_aseguradoras(request, pk):
+    aseguradora = get_object_or_404(Aseguradora, pk=pk)
+    if request.method == 'POST':
+        form = AseguradoraForm(request.POST, instance=aseguradora)
+        if form.is_valid():
+            form.save()
+            return redirect('aseguradoras_listado')  # Redirigir al listado después de guardar
+    else:
+        form = AseguradoraForm(instance=aseguradora)
+    return render(request, 'seguros/aseguradoras/editar_aseguradora.html', {'form': form})
+
+###################################################################################################################
+# POLIZA
+###################################################################################################################
+
+@login_required
+def listado_poliza(request):
+    
+    poliza = PolizaSeguro.objects.all()
+    return render(request, 'seguros/polizas/Poliza_list.html', {'polizas': poliza})
+
+@login_required
+def agregar_poliza(request):
+    if request.method == 'POST':
+        form = PolizaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_poliza')  # Redirige a una lista de turnos o la página que consideres apropiada
+    else:
+        form = PolizaForm()
+    return render(request, 'seguros/polizas/agregar_Poliza.html', {'form': form})
+
+
+@login_required
+def eliminar_poliza(request, pk):
+    poliza = get_object_or_404(PolizaSeguro, pk=pk)
+    poliza.delete()
+    return redirect('listado_poliza')  # Redirige al listado de clientes
+
+@login_required
+def editar_poliza(request, pk):
+    poliza = get_object_or_404(PolizaSeguro, pk=pk)
+    if request.method == 'POST':
+        form = PolizaForm(request.POST, instance=poliza)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_poliza')  # Redirigir al listado después de guardar
+    else:
+        form = PolizaForm(instance=poliza)
+    return render(request, 'seguros/polizas/editar_Poliza.html', {'form': form})
+
+
+###################################################################################################################
+#  LOGIN
+###################################################################################################################
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # Inicia sesión automáticamente después del registro
+            return redirect('home')  # Redirige a la página principal
+    else:
+        form = UserCreationForm()
+    return render(request, 'signup.html', {'form': form})

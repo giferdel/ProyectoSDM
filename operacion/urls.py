@@ -1,4 +1,6 @@
 from django.urls import path
+from django.contrib.auth import views as auth_views
+
 
 from .views import barra_navegacion, menu_automoviles, home
 from .views import alta_automovil, eliminar_automovil,editar_automovil,detalle_automovil
@@ -7,6 +9,10 @@ from .views import listado_turno_vtv,alta_turno_vtv,eliminar_turno_vtv,editar_tu
 from .views import login_view
 from .views import listado_flota, alta_flota,eliminar_flota,editar_flota,asociar_automovil,eliminar_asociacion
 from .views import listado_titular,agregar_titular,eliminar_titular,editar_titular
+from .views import listado_aseguradoras,agregar_aseguradoras,eliminar_aseguradoras,editar_aseguradoras
+from .views import listado_poliza,agregar_poliza,eliminar_poliza,editar_poliza
+
+
 
 
 
@@ -47,8 +53,20 @@ urlpatterns = [
     path('flota/<int:pk>/eliminar_asociacion/<int:auto_id>/', eliminar_asociacion, name='eliminar_asociacion'),
 
 
+    path('seguros/aseguradoras', listado_aseguradoras, name='aseguradoras_listado'),
+    path('seguros/aseguradoras/agregar/', agregar_aseguradoras, name='agregar_aseguradoras'),
+    path('seguros/aseguradoras/eliminar/<int:pk>/', eliminar_aseguradoras, name='eliminar_aseguradoras'),
+    path('seguros/aseguradoras/editar/<int:pk>/', editar_aseguradoras, name='editar_aseguradoras'),
 
 
+
+    path('seguros/poliza', listado_poliza, name='listado_poliza'),
+    path('seguros/poliza/agregar/', agregar_poliza, name='agregar_poliza'),
+    path('seguros/poliza/eliminar/<int:pk>/', eliminar_poliza, name='eliminar_poliza'),
+    path('seguros/poliza/editar/<int:pk>/', editar_poliza, name='editar_poliza'),
+
+    path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 
 
 ]

@@ -25,7 +25,18 @@
                         <!-- Agregar otras opciones de VTV aquí si es necesario -->
                     </ul>                
             </li>
-            <li><a href="">Seguros</a></li>
+
+            <li class="dropdown">
+                <a href="#" class="dropbtn">Seguros</a>
+                <ul class="dropdown-content">
+                    <li><a href="{% url 'aseguradoras_listado' %}">Aseguradoras</a></li>
+                    <li><a href="{% url 'listado_poliza' %}">Polizas</a></li>
+   
+                    <!-- Agregar otras opciones de VTV aquí si es necesario -->
+                </ul>                
+           </li>
+   
+           
             <li><a href="">Patentes</a></li>
             <li><a href="">Mantenimiento</a></li>
             <li><a href="{% url 'listado_flota' %}">Flota</a></li>

@@ -16,9 +16,9 @@
 
     <form method="post">
       <h2>Iniciar sesión</h2>
-      {% csrf_token %}
+      <!-- {% csrf_token %} -->
       
-      {% if form.errors %}
+      <!-- {% if form.errors %}
         <ul>
           {% for field in form %}
             {% for error in field.errors %}
@@ -28,9 +28,18 @@
         </ul>
       {% endif %}
       
-      {{ form.as_p }}
+      {{ form.as_p }} -->
+
+
+
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Iniciar sesión</button>
+
+    </form>
       
-      <button type="submit">Iniciar sesión</button>
       <!-- <a href="{% url 'listado_automoviles' %}">Registrar nuevo Usuario</a> -->
     </form>
   </div>

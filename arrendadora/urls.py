@@ -16,10 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from django.shortcuts import redirect
 from django.conf import settings
 from django.conf.urls.static import static
 
+def redirect_to_home(request):
+    return redirect('home')  # Cambia 'inicio' por el nombre de tu URL de destino
+
+
 urlpatterns = [
+    path('', redirect_to_home),  # Redirige la raíz a otra página
     path('admin/', admin.site.urls),
     path('operacion/', include('operacion.urls')),
 
@@ -29,3 +35,6 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     
 
+admin.site.site_header = "SDM administración"
+admin.site.site_title = "SOLUCIONES DE MOVILIDAD SA"
+admin.site.index_title = "Bienvenido al panel de administración de SDM"

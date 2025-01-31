@@ -20,7 +20,7 @@ class Vtv(models.Model):
     estado = models.ForeignKey(VtvEstado, on_delete=models.RESTRICT)
 
     def __str__(self):
-        return f"{self.estado}"
+        return f"{self.estado} {self.turno} {self.vencimiento}"
 
     class Meta:
         verbose_name_plural = "VTV"
@@ -53,6 +53,14 @@ class Coberturas(models.Model):
     class Meta:
         verbose_name_plural = "Coberturas"
         
+class Poliza(models.Model):
+    empresa = models.ForeignKey(Seguro, on_delete=models.RESTRICT)
+    cobertura = models.ForeignKey(Coberturas, on_delete=models.RESTRICT)
+    franquicia = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"{self.empresa} {self.cobertura}"
+
     
 class Cliente(models.Model):
     razon_social = models.CharField(max_length=50)
@@ -94,7 +102,6 @@ class Automovil(models.Model):
     numero_motor = models.CharField(max_length=30, unique=True)
     patente = models.CharField(max_length=10, unique=True)
     vtv = models.ForeignKey(Vtv, on_delete=models.RESTRICT)
-    poliza = models.ForeignKey('PolizaSeguro', on_delete=models.RESTRICT, blank=True, null=True)
     visibilidad = models.BooleanField(default=True)  # Campo de visibilidad para ocultar automóviles eliminados
     flota = models.ForeignKey(Flota, on_delete=models.RESTRICT, blank=True, null=True)
     titular = models.ForeignKey(Titular, on_delete=models.CASCADE, related_name='titular',null=True, blank=True)
@@ -102,11 +109,6 @@ class Automovil(models.Model):
 
     def __str__(self):
         return f"{self.marca} {self.modelo} ({self.anio})"
-    
-
-    def save(self, *args, **kwargs):
-        self.patente = self.patente.upper()
-        super().save(*args, **kwargs)
 
 # Create your models here.
     class Meta:
@@ -127,7 +129,23 @@ class Turno_VTV(models.Model):
         default='pendiente')
     
 
+# class Turno_VTV(models.Model):
+#     auto = models.ForeignKey(Automovil, related_name='turnos', on_delete=models.CASCADE)
+#     fecha_turno = models.DateTimeField()
+#     lugar_verificacion = models.CharField(max_length=255)
+#     estado = models.CharField(
+#         max_length=50, 
+#         choices=[
+#             ('pendiente', 'Pendiente'),
+#             ('completado', 'Completado'),
+#             ('cancelado', 'Cancelado')
+#         ], 
+#         default='pendiente'
+#     )
+#     comentarios = models.TextField(blank=True, null=True)
 
+    def __str__(self):
+        return f'Turno para {self.auto.patente} en {self.fecha_turno}'
 
 
 class Mantenimiento(models.Model):
@@ -179,7 +197,7 @@ class PolizaSeguro(models.Model):
     numero_poliza = models.CharField(max_length=50, verbose_name="Número de póliza")
     fecha_inicio = models.DateField(verbose_name="Fecha de inicio de la póliza")
     fecha_fin = models.DateField(verbose_name="Fecha de vencimiento de la póliza")
-    cobertura = models.ForeignKey(Coberturas, on_delete=models.RESTRICT, verbose_name="Cobertura de la póliza")
+    cobertura = models.TextField(verbose_name="Cobertura de la póliza", blank=True, null=True)
     # costo = models.DecimalField(
     #     max_digits=10,
     #     decimal_places=2,
@@ -194,21 +212,3 @@ class PolizaSeguro(models.Model):
     class Meta:
         verbose_name = "Póliza de seguro"
         verbose_name_plural = "Pólizas de seguro"
-
-
-class Servicio(models.Model):
-    nombre = models.CharField(max_length=100)  # Nombre del servicio (ej: "Cambio de aceite")
-    descripcion = models.TextField(blank=True, null=True)  # Descripción opcional del servicio
-
-    def __str__(self):
-        return self.nombre
-    
-
-class HistorialMantenimiento(models.Model):
-    vehiculo = models.ForeignKey(Automovil, on_delete=models.CASCADE, related_name='historial')  # Relación con el vehículo
-    fecha_ultimo_servicio = models.DateField(blank=True, null=True)  # Fecha del último servicio
-    km_ultimo_servicio = models.PositiveIntegerField(blank=True, null=True)  # Kilometraje del último servicio
- 
-
-    def __str__(self):
-        return f"Historial de {self.vehiculo} - Último servicio: {self.fecha_ultimo_servicio}"

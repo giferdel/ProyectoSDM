@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='turno_vtv',
             name='vencimiento',
-            field=models.DateField(default=0),
+            field=models.DateField(default='2025-01-01'),
             preserve_default=False,
         ),
     ]

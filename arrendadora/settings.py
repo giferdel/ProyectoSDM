@@ -33,9 +33,11 @@ MEDIA_URL = '/media/'  # URL base para los archivos multimedia
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Carpeta donde se almacenan
 
 # Application definition
+SITE_ID = 1  # El ID del sitio que configuraste en el panel de administración
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'django.contrib.sites',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
