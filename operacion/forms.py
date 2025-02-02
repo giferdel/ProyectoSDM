@@ -1,8 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Automovil, Cliente 
+from .models import Automovil, Cliente , Servicio
 from .models import Turno_VTV
-from .models import Flota,Titular,Aseguradora,PolizaSeguro
+from .models import Flota,Titular,Aseguradora,PolizaSeguro,HistorialMantenimiento
 
 
 class AutomovilForm(forms.ModelForm):
@@ -97,3 +97,12 @@ class PolizaForm(forms.ModelForm):
         model = PolizaSeguro
         fields = '__all__'  # Incluye todos los campos del modelo
 
+class ServicioForm(forms.ModelForm):
+    class Meta:
+        model = Servicio
+        fields = '__all__'  # Incluye todos los campos del modelo
+
+class MantenimientoForm(forms.ModelForm):
+    class Meta:
+        model = HistorialMantenimiento
+        fields = '__all__'  # Incluye todos los campos del modelo

@@ -98,6 +98,11 @@ class Automovil(models.Model):
     visibilidad = models.BooleanField(default=True)  # Campo de visibilidad para ocultar automóviles eliminados
     flota = models.ForeignKey(Flota, on_delete=models.RESTRICT, blank=True, null=True)
     titular = models.ForeignKey(Titular, on_delete=models.CASCADE, related_name='titular',null=True, blank=True)
+    fecha_ultimo_servicio = models.DateField(blank=True, null=True)  # Fecha del último servicio
+    km_ultimo_servicio = models.PositiveIntegerField(blank=True, null=True)  # Kilometraje del último servicio
+    fecha_ultimo_siniestro = models.DateTimeField(blank=True, null=True)
+
+ 
 
 
     def __str__(self):
@@ -206,9 +211,49 @@ class Servicio(models.Model):
 
 class HistorialMantenimiento(models.Model):
     vehiculo = models.ForeignKey(Automovil, on_delete=models.CASCADE, related_name='historial')  # Relación con el vehículo
-    fecha_ultimo_servicio = models.DateField(blank=True, null=True)  # Fecha del último servicio
-    km_ultimo_servicio = models.PositiveIntegerField(blank=True, null=True)  # Kilometraje del último servicio
- 
+    servicio_realizado = models.ForeignKey(Servicio, on_delete=models.RESTRICT)  # Servicio realizado
+    fecha_servicio_inicio = models.DateField(blank=False, null=False)  # Fecha del último servicio
+    fecha_servicio_fin = models.DateField(blank=True, null=True)  # Fecha del último servicio
+    km_servicio = models.PositiveIntegerField(blank=False, null=False)  # Kilometraje del último servicio
+    costo_servicio = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)  # Costo del servicio
+    detalle = models.TextField(blank=True, null=True)  # Detalle del servicio
+    comentarios = models.TextField(blank=True, null=True)  # Comentarios adicionales
+
 
     def __str__(self):
-        return f"Historial de {self.vehiculo} - Último servicio: {self.fecha_ultimo_servicio}"
+        return f"Historial de {self.vehiculo} - Último servicio: {self.fecha_servicio_inicio}"
+
+
+
+class Marca(models.Model):
+    nombre = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.nombre
+
+class Modelo(models.Model):
+    nombre = models.CharField(max_length=50)
+    marca = models.ForeignKey(Marca, on_delete=models.CASCADE, related_name="modelos")
+
+    def __str__(self):
+        return f"{self.nombre} - {self.marca.nombre}"
+    
+class TipoSiniestro(models.Model):
+    nombre = models.CharField(max_length=50, unique=True)
+    descripcion = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.nombre
+    
+class Siniestro(models.Model):
+    vehiculo = models.ForeignKey(Automovil, on_delete=models.CASCADE, related_name="siniestros")
+    tipo = models.ForeignKey(TipoSiniestro, on_delete=models.CASCADE, related_name="siniestros")
+    descripcion = models.TextField(blank=True, null=True)
+    fecha = models.DateTimeField(auto_now_add=True)
+    ubicacion = models.CharField(max_length=255, blank=True, null=True)
+    severidad_daños = models.CharField(max_length=10, choices=[('leve', 'Leve'), ('moderado', 'Moderado'), ('severo', 'Severo')])
+    costo_estimado = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    cobertura_seguro = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.tipo.nombre} - {self.vehiculo} ({self.fecha.strftime('%Y-%m-%d')})"

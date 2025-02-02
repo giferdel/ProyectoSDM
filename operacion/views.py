@@ -1,9 +1,9 @@
-from .models import Automovil, Cliente,VtvEstado,Turno_VTV,Flota,Titular,Aseguradora,PolizaSeguro
+from .models import Automovil, Cliente,VtvEstado,Turno_VTV,Flota,Titular,Aseguradora,PolizaSeguro,Servicio,HistorialMantenimiento
 
 from django.shortcuts import render, redirect,get_object_or_404
 from .forms import AutomovilForm
 from django.contrib.auth import login, authenticate
-from .forms import CustomLoginForm, ClienteForm, TurnoVTVForm, FlotaForm, TitularForm,AseguradoraForm,PolizaForm
+from .forms import CustomLoginForm, ClienteForm, TurnoVTVForm, FlotaForm, TitularForm,AseguradoraForm,PolizaForm,ServicioForm,MantenimientoForm
 from django.contrib import messages
 from django.utils.dateparse import parse_date
 from django.contrib.auth.forms import UserCreationForm
@@ -179,6 +179,58 @@ def editar_cliente(request, pk):
         form = ClienteForm(instance=cliente)
     return render(request, 'clientes/editar_cliente.html', {'form': form})
 
+
+
+
+
+#####################################################################################################################
+
+# SERVICIOS
+#####################################################################################################################
+
+
+@login_required
+def listado_servicios(request):
+
+    servicios = Servicio.objects.all()
+    return render(request, 'servicios/servicios_list.html', {'servicios': servicios})
+
+
+@login_required
+def agregar_servicios(request):
+    if request.method == 'POST':
+        form = ServicioForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_servicios')  # Redirige al listado de clientes
+    else:
+        form = ServicioForm()
+    return render(request, 'servicios/agregar_servicios.html', {'form': form})
+
+
+@login_required
+def eliminar_servicios(request, pk):
+    servicio = get_object_or_404(Servicio, pk=pk)
+    servicio.delete()
+    return redirect('listado_servicios')  # Redirige al listado de clientes
+
+
+
+@login_required
+def editar_servicios(request, pk):
+    servicio = get_object_or_404(Servicio, pk=pk)
+    if request.method == 'POST':
+        form = ServicioForm(request.POST, instance=servicio)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_servicios')  # Redirigir al listado después de guardar
+    else:
+        form = ServicioForm(instance=servicio)
+    return render(request, 'servicios/editar_servicios.html', {'form': form})
+
+
+
+
 #####################################################################################################################
 # vtv
 ######################################################################################################################
@@ -337,8 +389,8 @@ def agregar_titular(request):
 
 @login_required
 def eliminar_titular(request, pk):
-    cliente = get_object_or_404(Titular, pk=pk)
-    cliente.delete()
+    titular = get_object_or_404(Titular, pk=pk)
+    titular.delete()
     return redirect('titular_listado')  # Redirige al listado de clientes
 
 
@@ -437,6 +489,43 @@ def editar_poliza(request, pk):
     else:
         form = PolizaForm(instance=poliza)
     return render(request, 'seguros/polizas/editar_Poliza.html', {'form': form})
+
+
+
+
+###################################################################################################################
+#  MANTENIEMIENTO
+###################################################################################################################
+
+def listado_mantenimiento(request):
+    mantenimientos = HistorialMantenimiento.objects.all()
+    return render(request, 'mantenimiento/listado_mantenimiento.html', {'mantenimientos': mantenimientos})
+
+def agregar_mantenimiento(request):
+    if request.method == 'POST':
+        form = MantenimientoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_mantenimiento')  # Redirige al listado de clientes
+    else:
+        form = MantenimientoForm()
+    return render(request, 'mantenimiento/agregar_mantenimiento.html', {'form': form})
+
+def eliminar_mantenimiento(request, pk):
+    mantenimiento = get_object_or_404(HistorialMantenimiento, pk=pk)
+    mantenimiento.delete()
+    return redirect('listado_mantenimiento')  # Redirige al listado de clientes
+
+def editar_mantenimiento(request, pk):
+    mantenimiento = get_object_or_404(HistorialMantenimiento, pk=pk)
+    if request.method == 'POST':
+        form = MantenimientoForm(request.POST, instance=mantenimiento)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_mantenimiento')  # Redirigir al listado después de guardar
+    else:
+        form = MantenimientoForm(instance=mantenimiento)
+    return render(request, 'mantenimiento/editar_mantenimiento.html', {'form': form})
 
 
 ###################################################################################################################

@@ -38,7 +38,17 @@
    
            
             <li><a href="">Patentes</a></li>
-            <li><a href="">Mantenimiento</a></li>
+            <li><a href="">Multas</a></li>
+
+            <li class="dropdown">
+                <a href="#" class="dropbtn">Taller</a>
+                <ul class="dropdown-content">
+                    <li><a href="{% url 'listado_servicios' %}">Servicios</a></li>
+                    <li><a href="{% url 'listado_mantenimiento' %}">Mantenimiento</a></li>
+   
+                    <!-- Agregar otras opciones de VTV aquí si es necesario -->
+                </ul>                
+           </li>
             <li><a href="{% url 'listado_flota' %}">Flota</a></li>
 
         </ul>

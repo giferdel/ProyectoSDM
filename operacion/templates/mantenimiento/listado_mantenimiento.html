@@ -1,0 +1,66 @@
+
+<!-- templates/mi_template.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static './style.css' %}">
+    <title>Listado de mantenimientos</title>
+</head>
+<body class="app">
+    <div class="head">{% include 'cabecera.html' %}
+        {% include 'bnav.html' %}</div>
+    <a href="{% url 'home' %}" class="btn-atras"><img src="{% static 'operacion/img/atras.svg' %}"></a>
+    <h1>Listado de mantenimientos</h1>
+    <table>
+            <tr>
+
+              
+                <th>vehiculo</th>
+                <th>servicio realizado</th>
+                <th>fecha servicio inicio</th>
+                <th>fecha servicio fin</th>
+                <th>km servicio</th>
+                <th>costo servicio</th>
+                <!-- <th>Acciones</th> -->
+
+            </tr>
+        
+            {% for mantenimiento in mantenimientos %}
+                <tr>
+                    <td>{{ mantenimiento.vehiculo }}</td>
+                    <td>{{ mantenimiento.servicio_realizado }}</td>
+                    <td>{{ mantenimiento.fecha_servicio_inicio }}</td>
+                    <td>{{ mantenimiento.fecha_servicio_fin }}</td>
+                    <td>{{ mantenimiento.km_servicio }}</td>
+                    <td>{{ mantenimiento.costo_servicio }}</td>
+                    <td class="acciones">
+                        <form method="post" action="{% url 'eliminar_mantenimiento' mantenimiento.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn"><img src="{% static 'operacion/img/eliminar_blanco.svg' %}" alt=""></button>
+                        </form>
+                        <form method="get" action="{% url 'editar_mantenimiento' mantenimiento.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn"><img src="{% static 'operacion/img/editar_blanco.svg' %}" alt=""></button>
+                        </form>
+                        
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="7">No hay Mantenimientos registrados.</td>
+                </tr>
+            {% endfor %}
+        
+    </table>
+    <a href="{% url 'agregar_mantenimiento' %}" class="btn-flotante">
+        <img src="{% static 'operacion/img/agregar.svg' %}">
+        <form action="{% url 'agregar_mantenimiento' %}" method="get">
+            {% csrf_token %}
+         </form>
+    </a>
+</body>
+</html>

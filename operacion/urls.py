@@ -11,6 +11,10 @@ from .views import listado_flota, alta_flota,eliminar_flota,editar_flota,asociar
 from .views import listado_titular,agregar_titular,eliminar_titular,editar_titular
 from .views import listado_aseguradoras,agregar_aseguradoras,eliminar_aseguradoras,editar_aseguradoras
 from .views import listado_poliza,agregar_poliza,eliminar_poliza,editar_poliza
+from .views import listado_servicios,agregar_servicios,eliminar_servicios,editar_servicios
+from .views import listado_mantenimiento,agregar_mantenimiento,eliminar_mantenimiento,editar_mantenimiento
+
+
 
 
 
@@ -64,6 +68,21 @@ urlpatterns = [
     path('seguros/poliza/agregar/', agregar_poliza, name='agregar_poliza'),
     path('seguros/poliza/eliminar/<int:pk>/', eliminar_poliza, name='eliminar_poliza'),
     path('seguros/poliza/editar/<int:pk>/', editar_poliza, name='editar_poliza'),
+
+
+    path('servicios/', listado_servicios, name='listado_servicios'),
+    path('servicios/agregar/', agregar_servicios, name='agregar_servicios'),
+    path('servicios/eliminar/<int:pk>/', eliminar_servicios, name='eliminar_servicios'),
+    path('servicios/editar/<int:pk>/', editar_servicios, name='editar_servicios'),
+
+
+
+
+    path('mantenimiento/', listado_mantenimiento, name='listado_mantenimiento'),
+    path('mantenimiento/agregar/', agregar_mantenimiento, name='agregar_mantenimiento'),
+    path('mantenimiento/eliminar/<int:pk>/', eliminar_mantenimiento, name='eliminar_mantenimiento'),
+    path('mantenimiento/editar/<int:pk>/', editar_mantenimiento, name='editar_mantenimiento'),
+
 
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
