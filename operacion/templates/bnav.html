@@ -12,10 +12,20 @@
 <body>
     <nav class="bnav">
         <ul class="opciones">
-            <li><a href="{% url 'titular_listado' %}">Titulares</a></li>
+            <!-- <li><a href="{% url 'titular_listado' %}">Titulares</a></li> -->
 
-            <li><a href="{% url 'listado_automoviles' %}">Automóviles</a></li>
+            <!-- <li><a href="{% url 'listado_automoviles' %}">Automóviles</a></li> -->
             <li><a href="{% url 'listado_clientes' %}">Clientes</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropbtn">Vehículos</a>
+                <ul class="dropdown-content">
+                    <li><a href="{% url 'listado_automoviles' %}">Automóviles</a></li>
+                    <li><a href="{% url 'listado_flota' %}">Flotas</a></li>
+                    <li><a href="{% url 'titular_listado' %}">Titulares</a></li>
+                    <!-- Agregar otras opciones de VTV aquí si es necesario -->
+                </ul>                
+        </li>
+            
             <li class="dropdown">
                     <a href="#" class="dropbtn">VTV</a>
                     <ul class="dropdown-content">
@@ -49,7 +59,7 @@
                     <!-- Agregar otras opciones de VTV aquí si es necesario -->
                 </ul>                
            </li>
-            <li><a href="{% url 'listado_flota' %}">Flota</a></li>
+            <!-- <li><a href="{% url 'listado_flota' %}">Flota</a></li> -->
 
         </ul>
         

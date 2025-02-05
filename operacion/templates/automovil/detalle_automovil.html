@@ -30,11 +30,17 @@
                 <li><strong>Nº Motor:</strong> {{ auto.numero_motor }}</li>
                 <li><strong>VTV:</strong> {{ auto.vtv }}</li>
             </ul>
+            <ul>
+                <li><strong>Póliza:</strong> {{ auto.poliza }} km</li>
+                <li><strong>Titular:</strong> {{ auto.titular }}</li>
+                <li><strong>Fecha de último servicio:</strong> {{ auto.fecha_ultimo_servicio }}</li>
+                <li><strong>Fecha de último siniestro:</strong> {{ auto.fecha_ultimo_siniestro }}</li>
+            </ul>
             <article class="bloque-accion">
-                <form method="post" action="{% url 'eliminar_automovil' auto.id %}">
+                <!-- <form method="post" action="{% url 'eliminar_automovil' auto.id %}">
                     {% csrf_token %}
                     <button type="submit" class="btn"><img src="{% static 'operacion/img/eliminar_blanco.svg' %}" alt=""></button>
-                </form>
+                </form> -->
                 <form method="get" action="{% url 'editar_automovil' auto.id %}">
                     {% csrf_token %}
                     <button type="submit" class="btn"><img src="{% static 'operacion/img/editar_blanco.svg' %}" alt=""></button>

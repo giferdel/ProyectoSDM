@@ -17,27 +17,33 @@ body{
     justify-content: center; /* Centrar horizontalmente */
     align-items: center;     /* Centrar verticalmente */
     height: 100vh;           /* Usar el 100% de la altura del viewport */
+
+    .cont-login{
+        width: 80vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-content: center;
+        
+        background-color: rgb(42, 80, 110);
+        img{
+            width: 450px;
+            height: 260px;
+            padding: 60px;
+        }
+        form h2{
+            color: rgb(240, 240, 240);
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        
+    }
 }
 .head{
     position: sticky;
     top: 0;
     z-index: 99;
 }
-.cont-login{
-    width: 80vw;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-content: center;
-    
-    background-color: rgb(42, 80, 110);
-    img{
-        width: 450px;
-        height: 260px;
-        padding: 60px;
-    }
-    
-}
+
 
 h1{
     color:rgb(42, 80, 110);
