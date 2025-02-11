@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'style_form.css' %}">
-    <title>Agregar Cliente</title>
+    <title>Agregar Servicio</title>
     
 </head>
 <body class="app">
@@ -15,7 +15,7 @@
         {% include 'bnav.html' %}
     </div>
     
-    <h1>Agregar Cliente</h1>
+    <h1>Agregar Servicio</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

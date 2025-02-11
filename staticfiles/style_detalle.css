@@ -157,4 +157,32 @@ th{
 }
 
 
-
+form .filtro-label{
+    color:rgb(42, 80, 110);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 25px;
+}
+form .filtro-opcion{
+    font-size: 15px;
+    color:var(--foreground);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 5px;
+    border: solid 1px var(--foreground); 
+}
+.filtro-fecha input{
+    font-size: 15px;
+    padding: 5px;
+    margin-top: 5px;
+    background-color: var(--background);
+    color: var(--foreground);
+    border: 1px solid var(--foreground);
+}
+.filtro-fecha button{
+    height: 30px;
+    font-size: 15px;
+    padding: 5px;
+    margin: 5px;
+    background-color: #f7752a;
+    color: rgb(240, 240, 240);
+    border: none;
+}

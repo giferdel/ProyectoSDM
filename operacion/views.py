@@ -102,17 +102,17 @@ def editar_automovil(request, auto_id):
 @login_required
 def detalle_automovil(request, auto_id):
     auto = get_object_or_404(Automovil, id=auto_id)
-    turnos = Turno_VTV.objects.filter(auto=auto).order_by('-fecha_turno')  # Obtener todos los turnos del auto
-
-    # Obtener la fecha del filtro del formulario
-    fecha_filtro = request.GET.get('fecha_turno')
+    turnos = Turno_VTV.objects.filter(auto=auto_id).order_by('-fecha_turno')  # Obtener todos los turnos del auto
     
-    if fecha_filtro:  # Si se ha seleccionado una fecha
-        fecha_filtro = parse_date(fecha_filtro)  # Convertir la fecha en formato válido
-        if fecha_filtro:
-            turnos = turnos.filter(fecha_turno__date=fecha_filtro)  # Filtrar por la fecha exacta
+    # Obtener la fecha del filtro del formulario
+    # fecha_filtro = request.GET.get('fecha_turno')
+    
+    # if fecha_filtro:  # Si se ha seleccionado una fecha
+    #     fecha_filtro = parse_date(fecha_filtro)  # Convertir la fecha en formato válido
+    #     if fecha_filtro:
+    #         turnos = turnos.filter(fecha_turno__date=fecha_filtro)  # Filtrar por la fecha exacta
 
-    return render(request, 'automovil/detalle_automovil.html', {'auto': auto , 'turno':turnos})
+    return render(request, 'automovil/detalle_automovil.html', {'auto': auto , 'turnos':turnos})
 
 
 

@@ -23,26 +23,29 @@
         {% include 'bnav.html' %}
     </div>
     
-    
     <a href="{% url 'home' %}" class="btn-atras"><img src="{% static 'operacion/img/atras.svg' %}"></a>
-    <h1>Polizas</h1>
-
-    
+    <h1>Pólizas</h1>
     <table>      
             <tr>
-            
-                <th scope="col">activa</th>
-                <th scope="col">aseguradora</th>
-                <th scope="col">numero_poliza</th>
-                <th scope="col">fecha_inicio</th>      
-                <th scope="col">fecha_fin</th>      
-                <th scope="col">cobertura</th>      
+                <th scope="col">Activa</th>
+                <th scope="col">Aseguradora</th>
+                <th scope="col">Número de póliza</th>
+                <th scope="col">Fecha de inicio</th>      
+                <th scope="col">Fecha de fin</th>      
+                <th scope="col">Cobertura</th>      
                 
 
             </tr>
             {% for poliza in polizas  %}
             <tr>
-                <td>{{ poliza.activa }}</td>
+                <td>
+                    {% if poliza.activa %}
+                        <img src="{% static 'operacion/img/check.svg' %}" alt="Habilitada">
+                    {% else %}
+                        <img src="{% static 'operacion/img/cancel.svg' %}" alt="No Habilitada">
+                        
+                    {% endif %}
+                </td>
                 <td>{{ poliza.aseguradora }}</td>
                 <td>{{ poliza.numero_poliza }}</td>
                 <td>{{ poliza.fecha_inicio }}</td>

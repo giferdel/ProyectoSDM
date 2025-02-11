@@ -51,22 +51,7 @@
 
     <!-- HISTORICO -->
     <h2>Historial del Vehículo {{ auto.marca }} {{ auto.modelo }}</h2>
-    <form method="get" action="">
-        <label class="filtro-label" for="estado_vtv">Filtrar por Fecha:</label>  <!--filtrar por fecha-->
-        <select class="filtro-opcion" name="estado_vtv" id="estado_vtv" onchange="this.form.submit()">
-            <option  value="">Todo</option>
-            {% for estado in estados_vtv %}
-                <option value="{{ estado.estado }}" {% if estado.estado == estado_seleccionado %}selected{% endif %}>
-                    {{ estado.estado }}
-                </option>
-            {% endfor %}
-        </select>
-    </form>
-    <form method="get" action="">
-        <label class="filtro-label" for="fecha_turno">Filtrar por Fecha:</label>
-        <input type="date" name="fecha_turno" id="fecha_turno" value="{{ request.GET.fecha_turno }}">
-        <button type="submit">Filtrar</button>
-    </form>
+    
     <table>      
             <tr>
                 <th scope="col">Fecha</th>
