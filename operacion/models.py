@@ -124,7 +124,7 @@ class Automovil(models.Model):
 
 
     def __str__(self):
-        return f"{self.marca} {self.modelo} ({self.patente})"
+        return f"{self.marca} ({self.patente})"
     
 
     def save(self, *args, **kwargs):
@@ -295,3 +295,22 @@ class Siniestro(models.Model):
 
     def __str__(self):
         return f"{self.tipo.nombre} - {self.vehiculo} ({self.fecha.strftime('%Y-%m-%d')})"
+    
+
+
+class Infracciones(models.Model):
+    auto = models.ForeignKey(Automovil, on_delete=models.CASCADE, verbose_name="Auto asociado", related_name="actas")
+    numero = models.CharField(max_length=20, unique=True, verbose_name="Número de acta")
+    fecha = models.DateTimeField(verbose_name="Fecha y hora del acta")
+    infraccion = models.TextField(verbose_name="Descripción de la infracción")
+    monto = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Monto de la multa")
+    puntos_descontar = models.IntegerField(default=0, verbose_name="Puntos a descontar")
+    puntos_reasignar = models.IntegerField(default=0, verbose_name="Puntos a reasignar")
+    lugar = models.CharField(max_length=255, verbose_name="Lugar de la infracción")
+    estado = models.TextField(verbose_name="Estado del acta")
+    legajo = models.CharField(max_length=20, verbose_name="Número de legajo")
+
+   #foto = models.ImageField(upload_to='actas/', null=True, blank=True, verbose_name="Foto de la infracción")
+
+    def __str__(self):
+        return f"Acta {self.numero} - {self.fecha}"

@@ -22,7 +22,7 @@
                     <li><a href="{% url 'listado_automoviles' %}">Automóviles</a></li>
                     <li><a href="{% url 'listado_flota' %}">Flotas</a></li>
                     <li><a href="{% url 'titular_listado' %}">Titulares</a></li>
-                    <li><a href="{% url 'titular_listado' %}">Siniestros</a></li>
+                    <li><a href="{% url 'listado_siniestro' %}">Siniestros</a></li>
 
                     <!-- Agregar otras opciones de VTV aquí si es necesario -->
                 </ul>                
@@ -50,7 +50,7 @@
    
            
             <li><a href="">Patentes</a></li>
-            <li><a href="">Multas</a></li>
+            <li><a href="{% url 'listado_infracciones' %}">Multas</a></li>
 
             <li class="dropdown">
                 <a href="#" class="dropbtn">Taller</a>

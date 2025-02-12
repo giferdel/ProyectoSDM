@@ -15,9 +15,20 @@ from .views import listado_poliza,agregar_poliza,eliminar_poliza,editar_poliza
 from .views import listado_servicios,agregar_servicios,eliminar_servicios,editar_servicios
 from .views import listado_mantenimiento,agregar_mantenimiento,eliminar_mantenimiento,editar_mantenimiento
 
+from .views import (
+    listado_siniestro,
+    agregar_siniestro,
+    eliminar_siniestro,
+    editar_siniestro
+)
 
 
-
+from .views import (
+    listado_infracciones,
+    agregar_infraccion,
+    eliminar_infraccion,
+    editar_infraccion,
+)
 
 
 
@@ -30,10 +41,13 @@ urlpatterns = [
     path('automoviles/alta/', alta_automovil, name='alta_automovil'),
     path('automoviles/eliminar/<int:auto_id>/', eliminar_automovil, name='eliminar_automovil'),
     path('automoviles/editar/<int:auto_id>/', editar_automovil, name='editar_automovil'),
-    # path('automoviles/detalle/<int:pk>/', detalle_automovil, name='detalle_automovil'),
     path('automoviles/detalle/<int:pk>/', detalle_automovil, name='detalle_automovil'),
 
-    
+    path('infracciones/', listado_infracciones, name='listado_infracciones'),
+    path('infracciones/agregar/', agregar_infraccion, name='agregar_infraccion'),
+    path('infracciones/eliminar/<int:pk>/', eliminar_infraccion, name='eliminar_infraccion'),
+    path('infracciones/editar/<int:pk>/', editar_infraccion, name='editar_infraccion'),
+
     path('clientes/', listado_clientes, name='listado_clientes'),
     path('clientes/agregar/', agregar_cliente, name='agregar_cliente'),
     path('clientes/eliminar/<int:pk>/', eliminar_cliente, name='eliminar_cliente'),
@@ -86,6 +100,17 @@ urlpatterns = [
     path('mantenimiento/eliminar/<int:pk>/', eliminar_mantenimiento, name='eliminar_mantenimiento'),
     path('mantenimiento/editar/<int:pk>/', editar_mantenimiento, name='editar_mantenimiento'),
 
+    
+
+    path('mantenimiento/', listado_mantenimiento, name='listado_mantenimiento'),
+    path('mantenimiento/agregar/', agregar_mantenimiento, name='agregar_mantenimiento'),
+    path('mantenimiento/eliminar/<int:pk>/', eliminar_mantenimiento, name='eliminar_mantenimiento'),
+    path('mantenimiento/editar/<int:pk>/', editar_mantenimiento, name='editar_mantenimiento'),
+
+    path('siniestro/', listado_siniestro, name='listado_siniestro'),
+    path('siniestro/agregar/', agregar_siniestro, name='agregar_siniestro'),
+    path('siniestro/eliminar/<int:pk>/', eliminar_siniestro, name='eliminar_siniestro'),
+    path('siniestro/editar/<int:pk>/', editar_siniestro, name='editar_siniestro'),
 
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),

@@ -1,9 +1,14 @@
 from .models import Automovil, Cliente,VtvEstado,Turno_VTV,Flota,Titular,Aseguradora,PolizaSeguro,Servicio,HistorialMantenimiento
+from .models import Siniestro, Infracciones
+from .forms import InfraccionesForm
+
 
 from django.shortcuts import render, redirect,get_object_or_404
 from .forms import AutomovilForm
 from django.contrib.auth import login, authenticate
 from .forms import CustomLoginForm, ClienteForm, TurnoVTVForm, FlotaForm, TitularForm,AseguradoraForm,PolizaForm,ServicioForm,MantenimientoForm
+from .forms import SiniestroForm
+
 from django.contrib import messages
 from django.utils.dateparse import parse_date
 from django.contrib.auth.forms import UserCreationForm
@@ -11,7 +16,90 @@ from django.db.models import Q
 
 from django.contrib.auth.decorators import login_required
 
+###########################################################################################################
+# INFRACCIONES
+###########################################################################################################
 
+# Vista para listar todas las infracciones
+@login_required
+def listado_infracciones(request):
+    infracciones = Infracciones.objects.all()
+    return render(request, 'infracciones/infraccion_list.html', {'infracciones': infracciones})
+
+# Vista para agregar una nueva infracción
+@login_required
+def agregar_infraccion(request):
+    if request.method == 'POST':
+        form = InfraccionesForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_infracciones')  # Redirige al listado de infracciones
+    else:
+        form = InfraccionesForm()
+    return render(request, 'infracciones/agregar_infraccion.html', {'form': form})
+
+# Vista para editar una infracción existente
+@login_required
+def editar_infraccion(request, pk):
+    infraccion = get_object_or_404(Infracciones, pk=pk)
+    if request.method == 'POST':
+        form = InfraccionesForm(request.POST, instance=infraccion)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_infracciones')  # Redirige al listado después de guardar
+    else:
+        form = InfraccionesForm(instance=infraccion)
+    return render(request, 'infracciones/editar_infraccion.html', {'form': form})
+
+# Vista para eliminar una infracción
+@login_required
+def eliminar_infraccion(request, pk):
+    infraccion = get_object_or_404(Infracciones, pk=pk)
+    infraccion.delete()
+    return redirect('listado_infracciones')  # Redirige al listado de infracciones
+
+
+
+####################################################################################################################################
+# SINIESTROS
+####################################################################################################################################
+
+@login_required
+def listado_siniestro(request):
+    siniestros = Siniestro.objects.all()
+    return render(request, 'seguros/siniestros/siniestro_list.html', {'siniestros': siniestros})
+
+@login_required
+def agregar_siniestro(request):
+    if request.method == 'POST':
+        form = SiniestroForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_siniestro')  # Redirige al listado de siniestros
+    else:
+        form = SiniestroForm()
+    return render(request, 'seguros/siniestros/agregar_siniestro.html', {'form': form})
+
+@login_required
+def eliminar_siniestro(request, pk):
+    siniestro = get_object_or_404(Siniestro, pk=pk)
+    siniestro.delete()
+    return redirect('listado_siniestro')  # Redirige al listado de siniestros
+
+@login_required
+def editar_siniestro(request, pk):
+    siniestro = get_object_or_404(Siniestro, pk=pk)
+    if request.method == 'POST':
+        form = SiniestroForm(request.POST, instance=siniestro)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_siniestro')  # Redirige al listado después de guardar
+    else:
+        form = SiniestroForm(instance=siniestro)
+    return render(request, 'seguros/siniestros/editar_siniestro.html', {'form': form})
+
+
+####################################################################################################################################
 
 @login_required
 def home(request):
