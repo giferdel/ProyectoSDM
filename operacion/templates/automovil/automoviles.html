@@ -44,27 +44,15 @@
                 <th scope="col">Nº Patente</th>
                 <th scope="col">Marca</th>
                 <th scope="col">Modelo</th>
-                <th scope="col">Año</th>
-                <th scope="col">Color</th>
                 <th scope="col">Flota</th>
-                <th scope="col">Nº Chasis</th>
-                <th scope="col">Nº Motor</th>
-                
-                <th scope="col">VTV</th>         
-  
-                <!-- <th scope="col">Acciones</th> -->
+                <th scope="col">VTV</th>    
             </tr>
             {% for auto in autos %}
             <tr>
                 <td><a href="{% url 'detalle_automovil' auto.id %}" class="enlace">{{ auto.patente }}</a></td>
                 <td>{{ auto.marca }}</td>
                 <td>{{ auto.modelo }}</td>
-                <td>{{ auto.anio }}</td>
-                <td>{{ auto.color }}</td>
                 <td>{{ auto.flota }}</td>
-                <td>{{ auto.numero_chasis }}</td>
-                <td>{{ auto.numero_motor }}</td>
-                
                 <td>{{ auto.vtv }}</td>
                 <td class="acciones">
                     {% if auto.id %}

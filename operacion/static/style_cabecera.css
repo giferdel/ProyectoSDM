@@ -2,9 +2,13 @@ body{
     margin: 0;
     padding: 0;
 }
+
+  
+
+
 .cabecera{
     height: 100px;
-    background-color:rgb(240, 240, 240);
+    background-color:var(--background);
     margin: 0;
     padding: 0;
     
@@ -16,7 +20,7 @@ body{
 }
 
 .cont_img{
-    background-color: transparent;
+    background-color: var(--background);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -27,11 +31,12 @@ body{
 }
 
 .cont_login{
-    background-color: transparent;
+    background-color: var(--background);
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     margin-right: 20px;
+
 
     /* boton menu */
     a{

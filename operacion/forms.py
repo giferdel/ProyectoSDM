@@ -5,6 +5,7 @@ from .models import Turno_VTV
 from .models import Flota,Titular,Aseguradora,PolizaSeguro,HistorialMantenimiento
 
 
+
 class AutomovilForm(forms.ModelForm):
     class Meta:
         model = Automovil
@@ -102,7 +103,20 @@ class ServicioForm(forms.ModelForm):
         model = Servicio
         fields = '__all__'  # Incluye todos los campos del modelo
 
+
 class MantenimientoForm(forms.ModelForm):
     class Meta:
         model = HistorialMantenimiento
         fields = '__all__'  # Incluye todos los campos del modelo
+        widgets = {
+            'fecha_inicio_mantenimiento': forms.DateInput(
+                attrs={'type': 'date', 'class': 'form-control'}
+            ),
+
+
+            'fecha_fin_mantenimiento': forms.DateInput(
+                attrs={'type': 'date'}
+            ),
+        }
+
+    

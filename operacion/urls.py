@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
 
@@ -21,6 +22,8 @@ from .views import listado_mantenimiento,agregar_mantenimiento,eliminar_mantenim
 
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
+
     path('home/', home,name='home'),
     path('menu/', barra_navegacion, name='bnav'),
     path('automoviles/', menu_automoviles,name='listado_automoviles'),

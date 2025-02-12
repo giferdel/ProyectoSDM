@@ -15,16 +15,30 @@
         {% include 'bnav.html' %}</div>
     <a href="{% url 'home' %}" class="btn-atras"><img src="{% static 'operacion/img/atras.svg' %}"></a>
     <h1>Listado de mantenimientos</h1>
+    <form method="get" action="">
+        <label class="filtro-label" for="estado_vtv">Filtrar por Fecha:</label>  <!--filtrar por fecha-->
+        <select class="filtro-opcion" name="estado_vtv" id="estado_vtv" onchange="this.form.submit()">
+            <option  value="">Todo</option>
+            {% for estado in estados_vtv %}
+                <option value="{{ estado.estado }}" {% if estado.estado == estado_seleccionado %}selected{% endif %}>
+                    {{ estado.estado }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+    <form class="filtro-fecha" method="get" action="">
+        <label class="filtro-label" for="fecha_turno">Filtrar por Fecha:</label>
+        <input type="date" name="fecha_turno" id="fecha_turno" value="{{ request.GET.fecha_turno }}">
+        <button type="submit">Filtrar</button>
+    </form>
     <table>
             <tr>
-
-              
-                <th>vehiculo</th>
-                <th>servicio realizado</th>
-                <th>fecha servicio inicio</th>
-                <th>fecha servicio fin</th>
-                <th>km servicio</th>
-                <th>costo servicio</th>
+                <th>Vehículo</th>
+                <th>Servicio realizado</th>
+                <th>Fecha inicio de servicio </th>
+                <th>fecha fin de servicio </th>
+                <th>Km servicio</th>
+                <th>Costo servicio</th>
                 <!-- <th>Acciones</th> -->
 
             </tr>

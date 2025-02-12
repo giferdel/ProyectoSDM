@@ -3,8 +3,23 @@
 from django.db import models
 from django.utils import timezone
 from datetime import timedelta
+from django.core.exceptions import ValidationError
 
 
+
+class Marca(models.Model):
+    nombre = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.nombre
+
+class Modelo(models.Model):
+    nombre = models.CharField(max_length=50)
+    marca = models.ForeignKey(Marca, on_delete=models.CASCADE, related_name="modelos")
+
+    def __str__(self):
+        return f"{self.nombre} - {self.marca.nombre}"
+    
 class VtvEstado(models.Model):
     estado = models.CharField(max_length=50)
 
@@ -24,6 +39,10 @@ class Vtv(models.Model):
 
     class Meta:
         verbose_name_plural = "VTV"
+
+
+    ########################################################################################################
+
 
 class Titular(models.Model):
     razon_social = models.CharField(max_length=255, blank=True, null=True)  # Razón social para personas jurídicas
@@ -85,8 +104,7 @@ class Flota(models.Model):
 
 
 class Automovil(models.Model):
-    marca = models.CharField(max_length=50)
-    modelo = models.CharField(max_length=50)
+    marca = models.ForeignKey('Marca', on_delete=models.RESTRICT, blank=False, null=False)
     anio = models.PositiveIntegerField()
     color = models.CharField(max_length=30)
     kilometraje = models.PositiveIntegerField()
@@ -106,7 +124,7 @@ class Automovil(models.Model):
 
 
     def __str__(self):
-        return f"{self.marca} {self.modelo} ({self.anio})"
+        return f"{self.marca} {self.modelo} ({self.patente})"
     
 
     def save(self, *args, **kwargs):
@@ -116,6 +134,7 @@ class Automovil(models.Model):
 # Create your models here.
     class Meta:
         verbose_name_plural = "Automóviles"
+
 
 
 class Turno_VTV(models.Model):
@@ -131,7 +150,6 @@ class Turno_VTV(models.Model):
         ], 
         default='pendiente')
     
-
 
 
 
@@ -219,24 +237,44 @@ class HistorialMantenimiento(models.Model):
     detalle = models.TextField(blank=True, null=True)  # Detalle del servicio
     comentarios = models.TextField(blank=True, null=True)  # Comentarios adicionales
 
+    def clean(self):
+        """
+        Valida que el kilometraje ingresado sea mayor que el último registrado para el automóvil.
+        """
+        try:
+            ultimo_mantenimiento = HistorialMantenimiento.objects.filter(vehiculo=self.vehiculo).latest('fecha_servicio_inicio')
+        except HistorialMantenimiento.DoesNotExist:
+            ultimo_mantenimiento = None  # Si no hay registros, se asigna None
+
+        if ultimo_mantenimiento:
+            if self.km_servicio <= ultimo_mantenimiento.km_servicio:
+                raise ValidationError(
+                    f"El kilometraje debe ser mayor que el último registrado: {ultimo_mantenimiento.km_servicio} km."
+                )
+        
+        print(self.vehiculo.patente)
+        auto = Automovil.objects.get(patente=self.vehiculo.patente)
+
+        if ultimo_mantenimiento == None:
+           auto.kilometraje = self.km_servicio
+        else:
+            auto.kilometraje = ultimo_mantenimiento.km_servicio
+        
+        auto.save()
+
+    def save(self, *args, **kwargs):
+        """
+        Llama a clean() antes de guardar para asegurar la validación.
+        """
+        self.clean()
+        super().save(*args, **kwargs)
+
+
 
     def __str__(self):
         return f"Historial de {self.vehiculo} - Último servicio: {self.fecha_servicio_inicio}"
 
 
-
-class Marca(models.Model):
-    nombre = models.CharField(max_length=50, unique=True)
-
-    def __str__(self):
-        return self.nombre
-
-class Modelo(models.Model):
-    nombre = models.CharField(max_length=50)
-    marca = models.ForeignKey(Marca, on_delete=models.CASCADE, related_name="modelos")
-
-    def __str__(self):
-        return f"{self.nombre} - {self.marca.nombre}"
     
 class TipoSiniestro(models.Model):
     nombre = models.CharField(max_length=50, unique=True)
