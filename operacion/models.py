@@ -7,6 +7,13 @@ from django.core.exceptions import ValidationError
 
 
 
+class EstadoAutomovil(models.Model):
+    nombre = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.nombre
+
+
 class Marca(models.Model):
     nombre = models.CharField(max_length=50, unique=True)
 
@@ -104,7 +111,8 @@ class Flota(models.Model):
 
 
 class Automovil(models.Model):
-    marca = models.ForeignKey('Marca', on_delete=models.RESTRICT, blank=False, null=False)
+    marca = models.ForeignKey('Modelo', on_delete=models.RESTRICT, blank=False, null=False)
+    Estado = models.ForeignKey(EstadoAutomovil, on_delete=models.RESTRICT, blank=True, null=True)
     anio = models.PositiveIntegerField()
     color = models.CharField(max_length=30)
     kilometraje = models.PositiveIntegerField()

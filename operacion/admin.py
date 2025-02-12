@@ -1,6 +1,8 @@
 from django.contrib import admin
-from .models import  Coberturas, VtvEstado,Marca,Modelo,TipoSiniestro
+from .models import  Coberturas, VtvEstado,Marca,Modelo,TipoSiniestro,EstadoAutomovil
 
+class EstadoAutomovilAdmin(admin.ModelAdmin):
+    pass
 
 class MarcaAdmin(admin.ModelAdmin):
     pass
@@ -23,5 +25,6 @@ admin.site.register(VtvEstado,VtvEstadoAdmin)
 admin.site.register(Marca,MarcaAdmin)
 admin.site.register(Modelo,ModeloAdmin)
 admin.site.register(TipoSiniestro,TipoSiniestroAdmin)
+admin.site.register(EstadoAutomovil,EstadoAutomovilAdmin)
 
 # Register your models here.
