@@ -102,6 +102,7 @@ def eliminar_infraccion(request, pk):
 ####################################################################################################################################
 # SINIESTROS
 ####################################################################################################################################
+from django.db.models import F  # Para actualizaciones eficientes
 
 @login_required
 def listado_siniestro(request):
@@ -114,6 +115,17 @@ def agregar_siniestro(request):
         form = SiniestroForm(request.POST)
         if form.is_valid():
             form.save()
+            automovil = form.cleaned_data['vehiculo']  # Extrae el valor del campo
+            fecha_siniestro = form.cleaned_data['fecha']  # Extrae el valor del campo
+
+            
+            if automovil:
+                # Incrementar el campo uso en 1 de forma eficiente
+                Automovil.objects.filter(id=automovil.id).update(cantidad_de_sinistros=F('cantidad_de_sinistros') + 1)
+                Automovil.objects.filter(id=automovil.id).update(fecha_ultimo_siniestro = fecha_siniestro)
+
+        
+
             return redirect('listado_siniestro')  # Redirige al listado de siniestros
     else:
         form = SiniestroForm()
@@ -122,7 +134,12 @@ def agregar_siniestro(request):
 @login_required
 def eliminar_siniestro(request, pk):
     siniestro = get_object_or_404(Siniestro, pk=pk)
+    automovil = siniestro.vehiculo  # Obtener el automóvil asociado al siniestro
     siniestro.delete()
+
+    Automovil.objects.filter(id=automovil.id).update(cantidad_de_sinistros=F('cantidad_de_sinistros') - 1)
+        
+
     return redirect('listado_siniestro')  # Redirige al listado de siniestros
 
 @login_required

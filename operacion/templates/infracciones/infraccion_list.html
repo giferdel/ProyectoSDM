@@ -20,7 +20,9 @@
     <h1>Listado de Infracciones</h1>
     <table>
         <tr>
-            <th>Descripción</th>
+            <th>Auto</th>
+            <th>Infraccion</th>
+            <th>Lugar</th>
             <th>Monto</th>
             <th>Fecha</th>
             <!-- <th>Acciones</th> -->
@@ -28,7 +30,9 @@
         
         {% for infraccion in infracciones %}
             <tr>
-                <td>{{ infraccion.descripcion }}</td>
+                <td>{{ infraccion.auto }}</td>
+                <td>{{ infraccion.infraccion }}</td>
+                <td>{{ infraccion.lugar }}</td>
                 <td>${{ infraccion.monto }}</td>
                 <td>{{ infraccion.fecha }}</td>
 

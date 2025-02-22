@@ -10,36 +10,30 @@ class InfraccionesForm(forms.ModelForm):
         model = Infracciones
         fields = '__all__'  # Incluye todos los campos del modelo
         widgets = {
-            'fecha_infraccion': forms.DateInput(
-                attrs={'type': 'date', 'class': 'form-control'}
-            ),
-            'fecha_denuncia': forms.DateInput(
-                attrs={'type': 'date', 'class': 'form-control'}
-            ),
-            'fecha_cierre': forms.DateInput(
+            'fecha': forms.DateInput(
                 attrs={'type': 'date', 'class': 'form-control'}
             ),
             'monto': forms.NumberInput(attrs={'min': 0}),
             'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
         }
 
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)       
+        self.fields['auto'].queryset = Automovil.objects.filter(visibilidad=True)
+
 class SiniestroForm(forms.ModelForm):
     class Meta:
         model = Siniestro
         fields = '__all__'  # Incluye todos los campos del modelo
         widgets = {
-            'fecha_siniestro': forms.DateInput(
+            'fecha': forms.DateInput(
                 attrs={'type': 'date', 'class': 'form-control'}
-            ),
-            'fecha_denuncia': forms.DateInput(
-                attrs={'type': 'date', 'class': 'form-control'}
-            ),
-            'fecha_cierre': forms.DateInput(
-                attrs={'type': 'date', 'class': 'form-control'}
-            ),
-            'monto': forms.NumberInput(attrs={'min': 0}),
-            'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
-        }    
+            ),        }
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)       
+        self.fields['vehiculo'].queryset = Automovil.objects.filter(visibilidad=True)
 
 class AutomovilForm(forms.ModelForm):
     class Meta:
@@ -86,25 +80,6 @@ class CustomLoginForm(AuthenticationForm):
 
 
 
-# class ClienteForm(forms.ModelForm):
-#     class Meta:
-#         model = Cliente
-#         fields = '__all__'  # Incluye todos los campos del modelo
-#         exclude = ['visible']  # Sustituye con el nombre del campo que deseas ocultar
-
-#         widgets = {
-#             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
-#             'apellido': forms.TextInput(attrs={'class': 'form-control'}),
-#             'dni': forms.NumberInput(attrs={'class': 'form-control'}),
-#             'cuil': forms.NumberInput(attrs={'class': 'form-control'}),
-#             'direccion': forms.TextInput(attrs={'class': 'form-control'}),
-#             'telefono': forms.TextInput(attrs={'class': 'form-control'}),
-#             'email': forms.EmailInput(attrs={'class': 'form-control'}),
-#         }
-
-
-
-
 class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
@@ -129,12 +104,25 @@ class TurnoVTVForm(forms.ModelForm):
             'fecha_turno': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)       
+        self.fields['auto'].queryset = Automovil.objects.filter(visibilidad=True)
 
 
 class PolizaForm(forms.ModelForm):
     class Meta:
         model = PolizaSeguro
         fields = '__all__'  # Incluye todos los campos del modelo
+
+        widgets = {
+            'fecha_inicio': forms.DateInput(
+                attrs={'type': 'date', 'class': 'form-control'}
+            ),
+            'fecha_fin': forms.DateInput(
+                attrs={'type': 'date', 'class': 'form-control'}
+            ),
+
+        }
 
 class ServicioForm(forms.ModelForm):
     class Meta:
@@ -171,3 +159,7 @@ class ContratoForm(forms.ModelForm):
         #     'monto': forms.NumberInput(attrs={'min': 0}),
         #     'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
         # }
+
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)       
+            self.fields['auto'].queryset = Automovil.objects.filter(visibilidad=True)

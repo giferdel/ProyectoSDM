@@ -46,6 +46,8 @@
                 <th scope="col">Estado</th>
                 <th scope="col">Flota</th>
                 <th scope="col">VTV</th>    
+                <th scope="col">Cantidad de Siniestros</th>    
+
             </tr>
             {% for auto in autos %}
             <tr>
@@ -59,6 +61,10 @@
                     {% endif %}
                     </td>
                 <td>{{ auto.vtv }}</td>
+                <td>{{ auto.cantidad_de_sinistros }}</td>
+
+                
+
                 <td class="acciones">
                     {% if auto.id %}
                     <form method="post" action="{% url 'eliminar_automovil' auto.id %}">

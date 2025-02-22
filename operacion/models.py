@@ -110,6 +110,9 @@ class Flota(models.Model):
         verbose_name_plural = "Flotas"
 
 
+
+
+    
 class Automovil(models.Model):
     marca = models.ForeignKey('Modelo', on_delete=models.RESTRICT, blank=False, null=False)
     Estado = models.ForeignKey(EstadoAutomovil, on_delete=models.RESTRICT, blank=True, null=True)
@@ -127,8 +130,9 @@ class Automovil(models.Model):
     fecha_ultimo_servicio = models.DateField(blank=True, null=True)  # Fecha del último servicio
     km_ultimo_servicio = models.PositiveIntegerField(blank=True, null=True)  # Kilometraje del último servicio
     fecha_ultimo_siniestro = models.DateTimeField(blank=True, null=True)
+    cantidad_de_sinistros = models.PositiveIntegerField(default=0)
 
- 
+
 
 
     def __str__(self):
@@ -295,7 +299,7 @@ class Siniestro(models.Model):
     vehiculo = models.ForeignKey(Automovil, on_delete=models.CASCADE, related_name="siniestros", verbose_name="Vehículo")
     tipo = models.ForeignKey(TipoSiniestro, on_delete=models.CASCADE, related_name="siniestros")
     descripcion = models.TextField(blank=True, null=True, verbose_name="Descripción")
-    fecha = models.DateTimeField(auto_now_add=True)
+    fecha = models.DateField(null=True, blank=True, verbose_name="Fecha del siniestro")
     ubicacion = models.CharField(max_length=255, blank=True, null=True, verbose_name="Ubicación")
     severidad_daños = models.CharField(max_length=10, choices=[('leve', 'Leve'), ('moderado', 'Moderado'), ('severo', 'Severo')])
     costo_estimado = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
