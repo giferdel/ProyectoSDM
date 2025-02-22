@@ -1,13 +1,11 @@
 from .models import Automovil, Cliente,VtvEstado,Turno_VTV,Flota,Titular,Aseguradora,PolizaSeguro,Servicio,HistorialMantenimiento
-from .models import Siniestro, Infracciones
+from .models import Siniestro, Infracciones,Contrato
 from .forms import InfraccionesForm
-
-
 from django.shortcuts import render, redirect,get_object_or_404
 from .forms import AutomovilForm
 from django.contrib.auth import login, authenticate
 from .forms import CustomLoginForm, ClienteForm, TurnoVTVForm, FlotaForm, TitularForm,AseguradoraForm,PolizaForm,ServicioForm,MantenimientoForm
-from .forms import SiniestroForm
+from .forms import SiniestroForm,ContratoForm
 
 from django.contrib import messages
 from django.utils.dateparse import parse_date
@@ -15,6 +13,47 @@ from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q
 
 from django.contrib.auth.decorators import login_required
+
+
+
+###########################################################################################################
+# CONTRATO
+###########################################################################################################
+
+@login_required
+def listado_contrato(request):
+    contratos = Contrato.objects.all()
+    return render(request, 'contrato/listado_contrato.html', {'contratos': contratos})
+
+@login_required
+def agregar_contrato(request):
+    if request.method == 'POST':
+        form = ContratoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_contrato')
+    else:
+        form = ContratoForm()    
+    return render(request, 'contrato/agregar_contrato.html', {'form': form})
+
+@login_required
+def eliminar_contrato(request, pk):
+    contrato = get_object_or_404(Contrato, pk=pk)
+    contrato.delete()
+    return redirect('listado_contrato')
+
+@login_required
+def editar_contrato(request, pk):
+    contrato = get_object_or_404(Contrato, pk=pk)
+    if request.method == 'POST':
+        form = ContratoForm(request.POST, instance=contrato)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_contrato')
+    else:
+        form = ContratoForm(instance=contrato)
+    return render(request, 'contrato/editar_contrato.html', {'form': form})
+
 
 ###########################################################################################################
 # INFRACCIONES

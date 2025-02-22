@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Automovil, Cliente , Servicio
 from .models import Turno_VTV
-from .models import Flota,Titular,Aseguradora,PolizaSeguro,HistorialMantenimiento,Siniestro,Infracciones
+from .models import Flota,Titular,Aseguradora,PolizaSeguro,HistorialMantenimiento,Siniestro,Infracciones,Contrato
 
 
 class InfraccionesForm(forms.ModelForm):
@@ -157,4 +157,17 @@ class MantenimientoForm(forms.ModelForm):
             ),
         }
 
-    
+class ContratoForm(forms.ModelForm):
+    class Meta:
+        model = Contrato
+        fields = '__all__'  # Incluye todos los campos del modelo
+        # widgets = {
+        #     'fecha_inicio_contrato': forms.DateInput(
+        #         attrs={'type': 'date', 'class': 'form-control'}
+        #     ),
+        #     'fecha_fin_contrato': forms.DateInput(
+        #         attrs={'type': 'date', 'class': 'form-control'}
+        #     ),
+        #     'monto': forms.NumberInput(attrs={'min': 0}),
+        #     'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+        # }

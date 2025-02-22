@@ -322,3 +322,15 @@ class Infracciones(models.Model):
 
     def __str__(self):
         return f"Acta {self.numero} - {self.fecha}"
+    
+
+class Contrato(models.Model):
+    cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
+    auto = models.ForeignKey('Automovil', on_delete=models.CASCADE, blank=True, null=True)
+    flota = models.ForeignKey('Flota', on_delete=models.CASCADE, blank=True, null=True)
+    contrato_firmado = models.BooleanField(default=False)
+    fecha_contrato_firmado = models.DateField(null=True, blank=True)
+    facturacion = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Contrato de {self.cliente} - {self.auto}"

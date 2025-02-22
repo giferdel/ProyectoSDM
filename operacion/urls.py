@@ -15,6 +15,8 @@ from .views import listado_poliza,agregar_poliza,eliminar_poliza,editar_poliza
 from .views import listado_servicios,agregar_servicios,eliminar_servicios,editar_servicios
 from .views import listado_mantenimiento,agregar_mantenimiento,eliminar_mantenimiento,editar_mantenimiento
 
+from .views import listado_contrato,agregar_contrato,eliminar_contrato,editar_contrato
+
 from .views import (
     listado_siniestro,
     agregar_siniestro,
@@ -115,6 +117,14 @@ urlpatterns = [
 
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+
+    
+    path('contrato/', listado_contrato, name='listado_contrato'),
+    path('contrato/agregar/', agregar_contrato, name='agregar_contrato'),
+    path('contrato/eliminar/<int:pk>/', eliminar_contrato, name='eliminar_contrato'),
+    path('contrato/editar/<int:pk>/', editar_contrato, name='editar_contrato'),
+
+
 
 
 ]
