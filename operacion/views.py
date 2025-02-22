@@ -672,8 +672,29 @@ def agregar_mantenimiento(request):
     if request.method == 'POST':
         form = MantenimientoForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('listado_mantenimiento')  # Redirige al listado de clientes
+            vehiculo = form.cleaned_data['vehiculo']  # Extrae el valor del campo
+
+            km_servicio = form.cleaned_data['km_servicio']  # Extrae el valor del campo
+            fecha_servicio = form.cleaned_data['fecha_servicio_inicio']  # Extrae el valor del campo
+
+
+            if vehiculo:
+                # Incrementar el campo uso en 1 de forma eficiente
+                auto = Automovil.objects.get(id=vehiculo.id)
+                km_servicio_registrados= auto.kilometraje
+                print(km_servicio_registrados)
+
+                if km_servicio < km_servicio_registrados:
+                    messages.error(request, "El kilometraje ingresado es menor al registrado.")
+                    return render(request, 'mantenimiento/agregar_mantenimiento.html', {'form': form})
+                else:
+                
+                    Automovil.objects.filter(id=vehiculo.id).update(kilometraje = km_servicio)
+                    Automovil.objects.filter(id=vehiculo.id).update(km_ultimo_servicio = km_servicio)                
+                    Automovil.objects.filter(id=vehiculo.id).update(fecha_ultimo_servicio = fecha_servicio)
+
+                    form.save()
+                    return redirect('listado_mantenimiento')  # Redirige al listado de clientes
     else:
         form = MantenimientoForm()
     return render(request, 'mantenimiento/agregar_mantenimiento.html', {'form': form})

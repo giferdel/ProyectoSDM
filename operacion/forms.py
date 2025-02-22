@@ -135,30 +135,25 @@ class MantenimientoForm(forms.ModelForm):
         model = HistorialMantenimiento
         fields = '__all__'  # Incluye todos los campos del modelo
         widgets = {
-            'fecha_inicio_mantenimiento': forms.DateInput(
+            'fecha_servicio_inicio': forms.DateInput(
                 attrs={'type': 'date', 'class': 'form-control'}
             ),
 
 
-            'fecha_fin_mantenimiento': forms.DateInput(
+            'fecha_servicio_fin': forms.DateInput(
                 attrs={'type': 'date'}
             ),
         }
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)       
+        self.fields['vehiculo'].queryset = Automovil.objects.filter(visibilidad=True)
 
 class ContratoForm(forms.ModelForm):
     class Meta:
         model = Contrato
         fields = '__all__'  # Incluye todos los campos del modelo
-        # widgets = {
-        #     'fecha_inicio_contrato': forms.DateInput(
-        #         attrs={'type': 'date', 'class': 'form-control'}
-        #     ),
-        #     'fecha_fin_contrato': forms.DateInput(
-        #         attrs={'type': 'date', 'class': 'form-control'}
-        #     ),
-        #     'monto': forms.NumberInput(attrs={'min': 0}),
-        #     'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
-        # }
+      
 
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)       
