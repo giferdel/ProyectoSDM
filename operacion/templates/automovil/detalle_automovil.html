@@ -16,7 +16,7 @@
     
     
     <a href="{% url 'listado_automoviles' %}" class="btn-atras"><img src="{% static 'operacion/img/atras.svg' %}"></a>
-    <h1>Detalle del Automóvil {{ auto.marca }} {{ auto.modelo }} ({{ auto.patente }}) - Flota {{auto.flota_id}}</h1>
+    <h1>Detalle del Automóvil <br> {{ auto.marca }} {{ auto.modelo }} ({{ auto.patente }}) - Flota {{auto.flota_id}}</h1>
     <article class="bloque">
             <ul>
                 <li><strong>Patente:</strong> {{ auto.patente }}</li>
@@ -33,8 +33,18 @@
             <ul>
                 <li><strong>Póliza:</strong> {{ auto.poliza }} km</li>
                 <li><strong>Titular:</strong> {{ auto.titular }}</li>
-                <li><strong>Fecha de último servicio:</strong> {{ auto.fecha_ultimo_servicio }}</li>
-                <li><strong>Fecha de último siniestro:</strong> {{ auto.fecha_ultimo_siniestro }}</li>
+                <li><strong>Último servicio:</strong> {% if auto.fecha_ultimo_servicio %}
+                    {{ auto.fecha_ultimo_servicio }}
+                    {% else %}
+                    <p>Sin informar</p>
+                    {% endif %}
+                </li>
+                <li><strong>Último siniestro:</strong> {% if auto.fecha_ultimo_siniestro %}
+                    {{ auto.fecha_ultimo_siniestro }}
+                    {% else %}
+                    <p>Sin informar</p>
+                    {% endif %}
+                    </li>
             </ul>
             <article class="bloque-accion">
                 <!-- <form method="post" action="{% url 'eliminar_automovil' auto.id %}">
@@ -50,7 +60,7 @@
     </article>
 
     <!-- HISTORICO -->
-    <h2>Historial del Vehículo {{ auto.marca }} {{ auto.modelo }}</h2>
+    <h2>Historial del Vehículo <br> {{ auto.marca }} {{ auto.modelo }}</h2>
     
     <table>      
             <tr>

@@ -45,7 +45,7 @@ class AutomovilForm(forms.ModelForm):
     class Meta:
         model = Automovil
         fields = '__all__'  # Incluye todos los campos del modelo
-        exclude=['visibilidad']
+        exclude=['visibilidad', 'fecha_ultimo_servicio', 'fecha_ultimo_siniestro', 'km_ultimo_servicio']
         widgets = {
 
             'anio': forms.NumberInput(attrs={'min': 1900, 'max': 2100}),
@@ -60,6 +60,9 @@ class FlotaForm(forms.ModelForm):
         model = Flota
         fields = '__all__'  # Incluye todos los campos del modelo
         exclude=['visibilidad']
+        widgets = {
+            'descripcion': forms.TextInput(attrs={'placeholder': 'Cantidad de unidades y descripción'}),
+        }
     
 class TitularForm(forms.ModelForm):
     class Meta:
@@ -83,21 +86,21 @@ class CustomLoginForm(AuthenticationForm):
 
 
 
-class ClienteForm(forms.ModelForm):
-    class Meta:
-        model = Cliente
-        fields = '__all__'  # Incluye todos los campos del modelo
-        exclude = ['visible']  # Sustituye con el nombre del campo que deseas ocultar
+# class ClienteForm(forms.ModelForm):
+#     class Meta:
+#         model = Cliente
+#         fields = '__all__'  # Incluye todos los campos del modelo
+#         exclude = ['visible']  # Sustituye con el nombre del campo que deseas ocultar
 
-        widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
-            'apellido': forms.TextInput(attrs={'class': 'form-control'}),
-            'dni': forms.NumberInput(attrs={'class': 'form-control'}),
-            'cuil': forms.NumberInput(attrs={'class': 'form-control'}),
-            'direccion': forms.TextInput(attrs={'class': 'form-control'}),
-            'telefono': forms.TextInput(attrs={'class': 'form-control'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control'}),
-        }
+#         widgets = {
+#             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+#             'apellido': forms.TextInput(attrs={'class': 'form-control'}),
+#             'dni': forms.NumberInput(attrs={'class': 'form-control'}),
+#             'cuil': forms.NumberInput(attrs={'class': 'form-control'}),
+#             'direccion': forms.TextInput(attrs={'class': 'form-control'}),
+#             'telefono': forms.TextInput(attrs={'class': 'form-control'}),
+#             'email': forms.EmailInput(attrs={'class': 'form-control'}),
+#         }
 
 
 

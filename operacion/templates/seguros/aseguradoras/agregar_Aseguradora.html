@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'style_form.css' %}">
-    <title>Alta de Flota</title>
+    <title>Alta de Aseguradoras</title>
 </head>
 <body class="app">
     <div class="head">
@@ -14,13 +14,13 @@
         {% include 'bnav.html' %}
     </div>
     
-    <h1>Registrar nueva Flota</h1>
+    <h1>Registrar Aseguradora</h1>
     
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }} <!-- Genera los campos del formulario -->
         <button type="submit">Guardar</button>
-        <a href="{% url 'listado_flota' %}">Cancelar</a>
+        <a href="{% url 'aseguradoras_listado' %}">Cancelar</a>
     </form>
     
     

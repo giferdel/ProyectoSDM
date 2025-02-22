@@ -64,6 +64,7 @@ body{
     flex-direction: column;
     align-content: flex-end;
     position: relative;
+    
     section{
         margin: 150px 0 0 200px;
         height: 100vh;
@@ -83,6 +84,44 @@ body{
         margin: 10px;
         padding: 15px;
         color: var(--foreground);
+    }
+
+    .cont-widget{
+        margin-left: 250px;
+        margin-top: 120px;
+        width: 60vw;
+        display: flex;
+        flex-direction: row;
+        justify-items:last baseline;
+        align-content: center;
+    } 
+    .widget{
+        margin: 0px 20px 0px 20px;
+        padding: 20px;
+        width: 60vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        background-color: var(--foreground);
+
+        .h2-widget{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 30px;
+            font-variant:small-caps;
+            font-weight: lighter;
+            color: var(--background);
+        }
+        iframe{
+            width: 27vw;
+            height: 250px;
+            margin: 10px;
+            border: transparent;
+
+        }
+        fxwidget-erp {
+            width: 300px;
+        }
     }
 }
 

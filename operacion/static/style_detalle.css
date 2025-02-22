@@ -72,19 +72,24 @@ h1{
 ul{
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content:space-around;
     align-items: left;
     padding: 10px;
     margin-top: -16px;
     width: 100vw;
     background-color: rgb(42, 80, 110, 0.7);
-    li{
-        list-style-type: none;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-        color: rgb(240, 240, 240);
-        font-size: 17px;
+        li{
+            list-style-type: none;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            color: rgb(240, 240, 240);
+            font-size: 17px;
+            p{
+                margin: 0px;
+            }
+        }
+        
+
     }
-}
 }
 
 /* HISTORICO */

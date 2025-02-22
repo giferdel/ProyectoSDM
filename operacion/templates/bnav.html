@@ -12,7 +12,7 @@
 <body>
     <nav class="bnav">
         <ul class="opciones">
-            <!-- <li><a href="{% url 'titular_listado' %}">Titulares</a></li> -->
+            <li><a href="{% url 'home' %}">Home</a></li>
 
             <!-- <li><a href="{% url 'listado_automoviles' %}">Automóviles</a></li> -->
             <li><a href="{% url 'listado_clientes' %}">Clientes</a></li>
@@ -32,8 +32,8 @@
                     <a href="#" class="dropbtn">VTV</a>
                     <ul class="dropdown-content">
                         <li><a href="{% url 'listado_turno_vtv' %}">Registrar Turnos</a></li>
-                        <li><a href="https://www.suvtv.com.ar/turnos/">Turnos CABA</a></li>
-                        <li><a href="https://portal.vtv.gba.gob.ar/cpanel/">Turnos GBA</a></li>
+                        <li><a href="https://www.suvtv.com.ar/turnos/" target="_blank" rel="noopener noreferrer">Turnos CABA</a></li>
+                        <li><a href="https://portal.vtv.gba.gob.ar/cpanel/login" target="_blank" rel="noopener noreferrer">Turnos GBA</a></li>
                         <!-- Agregar otras opciones de VTV aquí si es necesario -->
                     </ul>                
             </li>
@@ -42,7 +42,7 @@
                 <a href="#" class="dropbtn">Seguros</a>
                 <ul class="dropdown-content">
                     <li><a href="{% url 'aseguradoras_listado' %}">Aseguradoras</a></li>
-                    <li><a href="{% url 'listado_poliza' %}">Polizas</a></li>
+                    <li><a href="{% url 'listado_poliza' %}">Pólizas</a></li>
    
                     <!-- Agregar otras opciones de VTV aquí si es necesario -->
                 </ul>                

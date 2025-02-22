@@ -125,6 +125,7 @@ def menu_automoviles(request):
     estados_vtv = VtvEstado.objects.all()
     flotas = Flota.objects.all()
 
+
     if estado_vtv:  # Aplica el filtro si se especifica un estado
         automoviles = automoviles.filter(vtv__estado__estado=estado_vtv)
 
@@ -191,6 +192,7 @@ def editar_automovil(request, auto_id):
 def detalle_automovil(request, auto_id):
     auto = get_object_or_404(Automovil, id=auto_id)
     turnos = Turno_VTV.objects.filter(auto=auto_id).order_by('-fecha_turno')  # Obtener todos los turnos del auto
+    # siniestros = Siniestro.objects.filter(auto=auto_id).order_by('-fecha_ultimo_siniestro')  
     
     # Obtener la fecha del filtro del formulario
     # fecha_filtro = request.GET.get('fecha_turno')
@@ -200,7 +202,7 @@ def detalle_automovil(request, auto_id):
     #     if fecha_filtro:
     #         turnos = turnos.filter(fecha_turno__date=fecha_filtro)  # Filtrar por la fecha exacta
 
-    return render(request, 'automovil/detalle_automovil.html', {'auto': auto , 'turnos':turnos})
+    return render(request, 'automovil/detalle_automovil.html', {'auto': auto , 'turnos':turnos })
 
 
 
@@ -451,6 +453,27 @@ def eliminar_asociacion(request, pk, auto_id):
         flota.save()
 
     return redirect('editar_flota', pk=pk)
+
+@login_required
+def detalle_flota(request, pk):
+    flota = get_object_or_404(Flota, pk=pk) 
+    automoviles_asociados = Automovil.objects.filter(flota=flota).filter(visibilidad=True)
+    automoviles_restantes = Automovil.objects.exclude(flota=flota).filter(visibilidad=True)
+
+    if request.method == 'POST':
+        form = FlotaForm(request.POST, instance=flota)
+        if form.is_valid():
+            form.save()
+            return redirect('detalle_flota')  # Redirigir al listado después de guardar
+    else:
+        form = FlotaForm(instance=flota)
+    return render(request, 'flota/detalle_flota.html', {
+        'form': form,
+        'flota': flota,
+        'automoviles_asociados': automoviles_asociados,
+        'automoviles_restantes': automoviles_restantes,
+})
+
 
 
 ####################################################################################################################

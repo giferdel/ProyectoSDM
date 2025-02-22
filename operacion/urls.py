@@ -8,7 +8,7 @@ from .views import alta_automovil, eliminar_automovil,editar_automovil,detalle_a
 from .views import listado_clientes,agregar_cliente,eliminar_cliente,editar_cliente
 from .views import listado_turno_vtv,alta_turno_vtv,eliminar_turno_vtv,editar_turno_vtv
 from .views import login_view
-from .views import listado_flota, alta_flota,eliminar_flota,editar_flota,asociar_automovil,eliminar_asociacion
+from .views import listado_flota, alta_flota,eliminar_flota,editar_flota,asociar_automovil,eliminar_asociacion, detalle_flota
 from .views import listado_titular,agregar_titular,eliminar_titular,editar_titular
 from .views import listado_aseguradoras,agregar_aseguradoras,eliminar_aseguradoras,editar_aseguradoras
 from .views import listado_poliza,agregar_poliza,eliminar_poliza,editar_poliza
@@ -67,6 +67,7 @@ urlpatterns = [
     path('login/', login_view, name='login'),
 
     path('flota/', listado_flota, name='listado_flota'),
+    path('flota/detalle/<int:pk>/', detalle_flota, name='detalle_flota'),
     path('flota/agregar/', alta_flota, name='agregar_flota'),
     path('flota/eliminar/<int:pk>/', eliminar_flota, name='eliminar_flota'),
     path('flota/<int:pk>/', editar_flota, name='editar_flota'),

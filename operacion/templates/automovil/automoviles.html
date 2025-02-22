@@ -52,7 +52,12 @@
                 <td><a href="{% url 'detalle_automovil' auto.id %}" class="enlace">{{ auto.patente }}</a></td>
                 <td>{{ auto.marca }}</td>
                 <td>{{ auto.Estado }}</td>
-                <td>{{ auto.flota }}</td>
+                <td>{% if auto.flota %}
+                    {{ auto.flota }}
+                    {% else %}
+                    <p>Sin asignar</p>
+                    {% endif %}
+                    </td>
                 <td>{{ auto.vtv }}</td>
                 <td class="acciones">
                     {% if auto.id %}

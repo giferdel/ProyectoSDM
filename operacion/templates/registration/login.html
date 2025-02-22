@@ -21,11 +21,11 @@
         {% csrf_token %}
         <!-- {{ form.as_p }} -->
         <label for="id_username">Usuario:</label>
-        <input type="text" name="username" id="id_username" required>
+        <input class="input-login" type="text" name="username" id="id_username" required>
   
         <label for="id_password">Contraseña:</label>
         <div class="password-container">
-          <input type="password" name="password" id="id_password" required>
+          <input class="input-login" type="password" name="password" id="id_password" required>
           <span class="toggle-password" onclick="togglePassword()">
             <img id="eyeIcon" class="visible" src="{% static 'operacion/img/eye_open.svg' %}">
           </span>

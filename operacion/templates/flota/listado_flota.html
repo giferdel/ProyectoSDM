@@ -27,32 +27,53 @@
     <a href="{% url 'home' %}" class="btn-atras"><img src="{% static 'operacion/img/atras.svg' %}"></a>
     <h1>Flotas</h1>
 
-    
+    <!-- FILTRO POR DISPONIBILIDAD DE FLOTA -->
+    <form method="get" action="{{ request.path }}">
+        <label class="filtro-label" for="flota_disponible">Filtrar por Disponibilidad:</label>
+        <select class="filtro-opcion" name="flota_disponible"  onchange="this.form.submit()">
+            <option  value="">Todos</option>
+            <!-- {% for f in flota %} -->
+                <option value="{{ f.disponible }}" {% if f.disponible == f_seleccionado %}selected{% endif %}>
+                    {% if f.disponible %}Disponible{% else %}No Disponible{% endif %}
+                     <!-- {{ f.disponible }} -->
+                </option>
+            <!-- {% endfor %} -->
+        </select>
+    </form>
+
+   
+
     <table>      
             <tr>
                 <th scope="col">Número</th>
                 <th scope="col">Descripción</th>
                 <th scope="col">Cliente</th>      
+                <th scope="col">Disponibilidad</th>      
+
             </tr>
             {% for f in flota %}
             <tr>
-                <td>{{ f.id }}</td>
+                <td><a class="enlace" href="{% url 'detalle_flota' f.id%}">{{ f.id }}</a></td>
                 <td>{{ f.descripcion }}</td>
                 <td>{{ f.cliente }}</td>
-                
-
+                <td>{% if f.disponible %}
+                    <img src="{% static 'operacion/img/check.svg' %}" alt="Disponible">
+                {% else %}
+                    <img src="{% static 'operacion/img/cancel.svg' %}" alt="No Disponible">
+                    
+                {% endif %}
+                </td>
                 <td class="acciones">
                     {% if f.id %}
-                    <form method="post" action="{% url 'eliminar_flota' f.id %}">
+                    <form method="post" action="{% url 'eliminar_flota' f.id%}">
                         {% csrf_token %}
                         <button type="submit" class="btn"><img src="{% static 'operacion/img/eliminar_blanco.svg' %}" alt=""></button>
                     </form>
-                    <form method="get" action="{% url 'editar_flota' f.id %}">
+                    <form method="get" action="{% url 'editar_flota' f.id%}">
                         {% csrf_token %}
                         <button type="submit" class="btn"><img src="{% static 'operacion/img/editar_blanco.svg' %}" alt=""></button>
                     </form>
                     {% else %}
-                    
                     <p>ID no válido</p>
                     {% endif %}
                 </td>

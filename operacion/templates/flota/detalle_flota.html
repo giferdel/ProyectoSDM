@@ -5,35 +5,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{% static './style_form.css' %}">    
-
-    <title>Editar Cliente</title>
+    <link rel="stylesheet" type="text/css" href="{% static './style.css' %}">
+    <title>Detalle de Flota</title>
 </head>
-<body class="app">
+<body>
     <div class="head">
         {% include 'cabecera.html' %}
         {% include 'bnav.html' %}
-        <a href="{% url 'listado_flota' %}" class="btn-atras"><img src="{% static 'operacion/img/atras.svg' %}"></a>
-
     </div>
-
+    
+    
+    <a href="{% url 'listado_flota' %}" class="btn-atras"><img src="{% static 'operacion/img/atras.svg' %}"></a>
+    <h1>Detalle de Flota {{flota.id}}</h1>
+    <h2>Automóviles Asociados</h2>
     <section class="tablas">
         
-        <h2>Automóviles Asociados</h2>
         <table class="tabla-flota">
             <tr>
                 <th>Automóvil</th>
+                <th>Patente</th>
             </tr>
             {% for auto in automoviles_asociados %}
             <tr>
                 <td>
-                    {{ auto.marca }} - {{ auto.modelo }} - Patente {{ auto.patente }}
+                    {{ auto.marca }} - {{ auto.modelo }} 
                 </td>
                 <td>
-                    <form class="acciones" method="post" action="{% url 'eliminar_asociacion' pk=flota.id auto_id=auto.id %}">
-                        {% csrf_token %}
-                        <button class="btn" type="submit"><img src="{% static 'operacion/img/eliminar_blanco.svg' %}" alt=""></button>
-                    </form>
+                    {{ auto.patente }}
                 </td>
             </tr>
         {% empty %}
@@ -46,7 +44,7 @@
         </table>
     
     
-    <form method="post" action="{% url 'asociar_automovil' pk=flota.id %}">
+    <!-- <form method="post" action="{% url 'asociar_automovil' pk=flota.id %}">
         <h2>Automóviles Restantes</h2>
         {% csrf_token %}
         <label for="automovil_select">Selecciona un automóvil para asociar:</label>
@@ -58,17 +56,10 @@
             {% endfor %}
         </select>
         <button type="submit">Asociar</button>
-    </form>
+    </form> -->
 </section>
-    <h1>Editar Flota {{ flota.id }}</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Guardar cambios</button>
-        <a href="{% url 'listado_flota' %}">Cancelar</a>
-    </form>
     
     
-
+    
 </body>
 </html>

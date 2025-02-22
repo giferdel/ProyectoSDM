@@ -81,13 +81,13 @@ class Coberturas(models.Model):
         
     
 class Cliente(models.Model):
-    razon_social = models.CharField(max_length=50)
-    dni = models.PositiveBigIntegerField(unique=True)
+    razon_social = models.CharField(max_length=50, verbose_name="Razón Social")
+    dni = models.PositiveBigIntegerField(unique=True, verbose_name="D.N.I.")
     cuil = models.PositiveBigIntegerField(unique=True)
     cuit = models.PositiveBigIntegerField(unique=True)
-    direccion = models.CharField(max_length=50)
-    telefono = models.PositiveIntegerField(default=0)
-    email = models.CharField(max_length=50)
+    direccion = models.CharField(max_length=50, verbose_name="Dirección")
+    telefono = models.PositiveIntegerField(default=0, verbose_name="Teléfono")
+    email = models.CharField(max_length=50, verbose_name="E-mail")
     visible = models.BooleanField(default=True)  # Campo de visibilidad
 
     def __str__(self):
@@ -98,13 +98,13 @@ class Cliente(models.Model):
 
   
 class Flota(models.Model):
-    descripcion = models.CharField(max_length=50)
+    descripcion = models.CharField(max_length=1500, verbose_name="Descripción")
     cliente = models.ForeignKey(Cliente, on_delete=models.RESTRICT)
     disponible = models.BooleanField(default=True)
 
 
     def __str__(self):
-        return f"{self.descripcion}"
+        return f"{self.descripcion} {self.disponible}"
 
     class Meta:
         verbose_name_plural = "Flotas"
@@ -116,11 +116,11 @@ class Automovil(models.Model):
     anio = models.PositiveIntegerField()
     color = models.CharField(max_length=30)
     kilometraje = models.PositiveIntegerField()
-    numero_chasis = models.CharField(max_length=30, unique=True)
-    numero_motor = models.CharField(max_length=30, unique=True)
+    numero_chasis = models.CharField(max_length=30, verbose_name="Nº de Chasis", unique=True)
+    numero_motor = models.CharField(max_length=30, verbose_name="Nº de Motor", unique=True)
     patente = models.CharField(max_length=10, unique=True)
     vtv = models.ForeignKey(Vtv, on_delete=models.RESTRICT)
-    poliza = models.ForeignKey('PolizaSeguro', on_delete=models.RESTRICT, blank=True, null=True)
+    poliza = models.ForeignKey('PolizaSeguro',verbose_name="Póliza", on_delete=models.RESTRICT, blank=True, null=True)
     visibilidad = models.BooleanField(default=True)  # Campo de visibilidad para ocultar automóviles eliminados
     flota = models.ForeignKey(Flota, on_delete=models.RESTRICT, blank=True, null=True)
     titular = models.ForeignKey(Titular, on_delete=models.CASCADE, related_name='titular',null=True, blank=True)
@@ -147,8 +147,8 @@ class Automovil(models.Model):
 
 class Turno_VTV(models.Model):
     auto = models.ForeignKey(Automovil, on_delete=models.CASCADE, related_name="turnos")
-    fecha_turno = models.DateTimeField()
-    lugar_verificacion = models.CharField(max_length=255)
+    fecha_turno = models.DateTimeField(verbose_name="Fecha del Turno")
+    lugar_verificacion = models.CharField(max_length=255, verbose_name="Lugar de Verificación")
     comentarios = models.TextField(blank=True, null=True)
     estado = models.CharField(max_length=50, 
         choices=[
@@ -188,7 +188,7 @@ class Aseguradora(models.Model):
     telefono = models.CharField(max_length=20, verbose_name="Teléfono de contacto")
     email = models.EmailField(verbose_name="Correo electrónico")
     sitio_web = models.URLField(verbose_name="Sitio web", blank=True, null=True)
-    direccion = models.TextField(verbose_name="Dirección", blank=True, null=True)
+    direccion = models.CharField(max_length=150, verbose_name="Dirección de la aseguradora", blank=True, null=True)
 
     def __str__(self):
         return self.nombre
@@ -207,7 +207,7 @@ class PolizaSeguro(models.Model):
         verbose_name="Aseguradora",
         related_name='polizas'
     )
-    numero_poliza = models.CharField(max_length=50, verbose_name="Número de póliza")
+    numero_poliza = models.CharField(max_length=50, verbose_name="Nº de póliza")
     fecha_inicio = models.DateField(verbose_name="Fecha de inicio de la póliza")
     fecha_fin = models.DateField(verbose_name="Fecha de vencimiento de la póliza")
     cobertura = models.ForeignKey(Coberturas, on_delete=models.RESTRICT, verbose_name="Cobertura de la póliza")
@@ -229,14 +229,14 @@ class PolizaSeguro(models.Model):
 
 class Servicio(models.Model):
     nombre = models.CharField(max_length=100)  # Nombre del servicio (ej: "Cambio de aceite")
-    descripcion = models.TextField(blank=True, null=True)  # Descripción opcional del servicio
+    descripcion = models.TextField(blank=True, null=True, verbose_name="Descripción")  # Descripción opcional del servicio
 
     def __str__(self):
         return self.nombre
     
 
 class HistorialMantenimiento(models.Model):
-    vehiculo = models.ForeignKey(Automovil, on_delete=models.CASCADE, related_name='historial')  # Relación con el vehículo
+    vehiculo = models.ForeignKey(Automovil, on_delete=models.CASCADE, related_name='historial', verbose_name="Vehículo")  # Relación con el vehículo
     servicio_realizado = models.ForeignKey(Servicio, on_delete=models.RESTRICT)  # Servicio realizado
     fecha_servicio_inicio = models.DateField(blank=False, null=False)  # Fecha del último servicio
     fecha_servicio_fin = models.DateField(blank=True, null=True)  # Fecha del último servicio
@@ -286,17 +286,17 @@ class HistorialMantenimiento(models.Model):
     
 class TipoSiniestro(models.Model):
     nombre = models.CharField(max_length=50, unique=True)
-    descripcion = models.TextField(blank=True, null=True)
+    descripcion = models.TextField(blank=True, null=True, verbose_name="Descripción")
 
     def __str__(self):
         return self.nombre
     
 class Siniestro(models.Model):
-    vehiculo = models.ForeignKey(Automovil, on_delete=models.CASCADE, related_name="siniestros")
+    vehiculo = models.ForeignKey(Automovil, on_delete=models.CASCADE, related_name="siniestros", verbose_name="Vehículo")
     tipo = models.ForeignKey(TipoSiniestro, on_delete=models.CASCADE, related_name="siniestros")
-    descripcion = models.TextField(blank=True, null=True)
+    descripcion = models.TextField(blank=True, null=True, verbose_name="Descripción")
     fecha = models.DateTimeField(auto_now_add=True)
-    ubicacion = models.CharField(max_length=255, blank=True, null=True)
+    ubicacion = models.CharField(max_length=255, blank=True, null=True, verbose_name="Ubicación")
     severidad_daños = models.CharField(max_length=10, choices=[('leve', 'Leve'), ('moderado', 'Moderado'), ('severo', 'Severo')])
     costo_estimado = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     cobertura_seguro = models.BooleanField(default=False)
@@ -308,15 +308,15 @@ class Siniestro(models.Model):
 
 class Infracciones(models.Model):
     auto = models.ForeignKey(Automovil, on_delete=models.CASCADE, verbose_name="Auto asociado", related_name="actas")
-    numero = models.CharField(max_length=20, unique=True, verbose_name="Número de acta")
-    fecha = models.DateTimeField(verbose_name="Fecha y hora del acta")
+    numero = models.CharField(max_length=20, unique=True, verbose_name="Nº de acta")
+    fecha = models.DateTimeField(verbose_name="Fecha y Hora del acta")
     infraccion = models.TextField(verbose_name="Descripción de la infracción")
     monto = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Monto de la multa")
     puntos_descontar = models.IntegerField(default=0, verbose_name="Puntos a descontar")
     puntos_reasignar = models.IntegerField(default=0, verbose_name="Puntos a reasignar")
     lugar = models.CharField(max_length=255, verbose_name="Lugar de la infracción")
     estado = models.TextField(verbose_name="Estado del acta")
-    legajo = models.CharField(max_length=20, verbose_name="Número de legajo")
+    legajo = models.CharField(max_length=20, verbose_name="Nº de legajo")
 
    #foto = models.ImageField(upload_to='actas/', null=True, blank=True, verbose_name="Foto de la infracción")
 

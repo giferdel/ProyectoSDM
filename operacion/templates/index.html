@@ -16,18 +16,34 @@
 <body class="menu">
     <div class="head">
         {% include 'cabecera.html' %}
-    {% include 'bnav.html' %}
-</div>
+        {% include 'bnav.html' %}
+    </div>
     
     <div class="cont-home">
         <div class="cont-lateral">
+            <a href="#home">Home</a>
             <a href="#gestion">Gestión</a>
             <a href="#documentacion">Documentación</a>
             <a href="#estadisticas">Estadísticas</a>
             
         </div>
         <div class="cont-principal">
+            <a id="home">
+            <div class="cont-widget">
+                <article class="widget">
+                    <h2 class="h2-widget">Mi calendario</h2>
+                    <iframe src="https://calendar.google.com/calendar/embed?height=400&wkst=1&ctz=America%2FArgentina%2FBuenos_Aires&showPrint=0&title=Calendario&mode=WEEK"></iframe>
+                </article>
+                <article class="widget">
+                    <h2 class="h2-widget">Cambio y Cotización</h2>
+                    <fxwidget-erp inverse="false" amount="1" decimals="2" large="false" shadow="false" symbol="true" flag="true" changes="true" tax="false" code="false" grouping="true" border="false" main-curr="USD" sel-curr="ARS" background-color="#f2f3f4" lang="es"></fxwidget-erp><script async src="https://s.fx-w.io/widgets/exchange-rates-pro/latest.js?es"></script>
+                    <fxwidget-erp inverse="false" amount="1" decimals="2" large="false" shadow="false" symbol="true" flag="true" changes="true" tax="false" code="false" grouping="true" border="false" main-curr="EUR" sel-curr="ARS" background-color="#f2f3f4" lang="es"></fxwidget-erp><script async src="https://s.fx-w.io/widgets/exchange-rates-pro/latest.js?es"></script>
+                    <fxwidget-erp inverse="false" amount="1" decimals="2" large="false" shadow="false" symbol="true" flag="true" changes="true" tax="false" code="false" grouping="true" border="false" main-curr="BTC" sel-curr="USD" background-color="#f2f3f4" lang="es"></fxwidget-erp><script async src="https://s.fx-w.io/widgets/exchange-rates-pro/latest.js?es"></script>
+                </article>
+            </div>
+            </a>
             
+
             <a id="gestion">
                 <section>
                     <h1>Gestión</h1>
@@ -64,6 +80,6 @@
     
 
 
-    <a href="#gestion" class="btn-flotante"><img src="{% static 'operacion/img/atras.svg' %}"></a>
+    <a href="#home" class="btn-flotante"><img src="{% static 'operacion/img/atras.svg' %}"></a>
 </body>
 </html>
