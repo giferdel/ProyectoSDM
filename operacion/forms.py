@@ -57,6 +57,10 @@ class FlotaForm(forms.ModelForm):
         widgets = {
             'descripcion': forms.TextInput(attrs={'placeholder': 'Cantidad de unidades y descripción'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)       
+        self.fields['cliente'].queryset = Cliente.objects.filter(visible=True)
     
 class TitularForm(forms.ModelForm):
     class Meta:
@@ -154,7 +158,14 @@ class ContratoForm(forms.ModelForm):
         model = Contrato
         fields = '__all__'  # Incluye todos los campos del modelo
       
+        widgets = {
+            'fecha_contrato_firmado': forms.DateInput(
+                attrs={'type': 'date', 'class': 'form-control'}
+            ),
 
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)       
-            self.fields['auto'].queryset = Automovil.objects.filter(visibilidad=True)
+        }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)       
+        self.fields['auto'].queryset = Automovil.objects.filter(visibilidad=True)
+        self.fields['cliente'].queryset = Cliente.objects.filter(visible=True)
+        self.fields['flota'].queryset = Flota.objects.filter(disponible=True)

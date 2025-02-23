@@ -82,12 +82,12 @@ class Coberturas(models.Model):
     
 class Cliente(models.Model):
     razon_social = models.CharField(max_length=50, verbose_name="Razón Social")
-    dni = models.PositiveBigIntegerField(unique=True, verbose_name="D.N.I.")
-    cuil = models.PositiveBigIntegerField(unique=True)
-    cuit = models.PositiveBigIntegerField(unique=True)
-    direccion = models.CharField(max_length=50, verbose_name="Dirección")
+    dni = models.PositiveBigIntegerField(unique=True, verbose_name="D.N.I.", null=True, blank=True)
+    cuil = models.PositiveBigIntegerField(unique=True,null=True, blank=True, verbose_name="C.U.I.L.")
+    cuit = models.PositiveBigIntegerField(unique=True,null=True, blank=True, verbose_name="C.U.I.T.")
+    direccion = models.CharField(max_length=50, verbose_name="Dirección", null=True, blank=True)
     telefono = models.PositiveIntegerField(default=0, verbose_name="Teléfono")
-    email = models.CharField(max_length=50, verbose_name="E-mail")
+    email = models.CharField(max_length=50, verbose_name="E-mail", null=True, blank=True)
     visible = models.BooleanField(default=True)  # Campo de visibilidad
 
     def __str__(self):
@@ -104,7 +104,7 @@ class Flota(models.Model):
 
 
     def __str__(self):
-        return f"{self.descripcion} {self.disponible}"
+        return f"{self.descripcion}"
 
     class Meta:
         verbose_name_plural = "Flotas"
@@ -299,7 +299,7 @@ class Siniestro(models.Model):
     vehiculo = models.ForeignKey(Automovil, on_delete=models.CASCADE, related_name="siniestros", verbose_name="Vehículo")
     tipo = models.ForeignKey(TipoSiniestro, on_delete=models.CASCADE, related_name="siniestros")
     descripcion = models.TextField(blank=True, null=True, verbose_name="Descripción")
-    fecha = models.DateField(null=True, blank=True, verbose_name="Fecha del siniestro")
+    fecha = models.DateField(blank=False, null=False, verbose_name="Fecha del siniestro")
     ubicacion = models.CharField(max_length=255, blank=True, null=True, verbose_name="Ubicación")
     severidad_daños = models.CharField(max_length=10, choices=[('leve', 'Leve'), ('moderado', 'Moderado'), ('severo', 'Severo')])
     costo_estimado = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)

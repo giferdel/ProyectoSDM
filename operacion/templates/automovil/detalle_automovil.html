@@ -20,8 +20,7 @@
     <article class="bloque">
             <ul>
                 <li><strong>Patente:</strong> {{ auto.patente }}</li>
-                <li><strong>Marca:</strong> {{ auto.marca }}</li>
-                <li><strong>Modelo:</strong> {{ auto.modelo }}</li>
+                <li><strong>Marca/Modelo:</strong> {{ auto.marca }}</li>
                 <li><strong>Año:</strong> {{ auto.anio }}</li>
             </ul>
             <ul>
@@ -31,7 +30,7 @@
                 <li><strong>VTV:</strong> {{ auto.vtv }}</li>
             </ul>
             <ul>
-                <li><strong>Póliza:</strong> {{ auto.poliza }} km</li>
+                <li><strong>Póliza:</strong> {{ auto.poliza }}</li>
                 <li><strong>Titular:</strong> {{ auto.titular }}</li>
                 <li><strong>Último servicio:</strong> {% if auto.fecha_ultimo_servicio %}
                     {{ auto.fecha_ultimo_servicio }}

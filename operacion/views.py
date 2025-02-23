@@ -121,6 +121,7 @@ def agregar_siniestro(request):
             
             if automovil:
                 # Incrementar el campo uso en 1 de forma eficiente
+                fecha_siniestro = Siniestro.objects.filter
                 Automovil.objects.filter(id=automovil.id).update(cantidad_de_sinistros=F('cantidad_de_sinistros') + 1)
                 Automovil.objects.filter(id=automovil.id).update(fecha_ultimo_siniestro = fecha_siniestro)
 
