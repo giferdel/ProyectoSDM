@@ -13,7 +13,9 @@ from .views import listado_titular,agregar_titular,eliminar_titular,editar_titul
 from .views import listado_aseguradoras,agregar_aseguradoras,eliminar_aseguradoras,editar_aseguradoras
 from .views import listado_poliza,agregar_poliza,eliminar_poliza,editar_poliza
 from .views import listado_servicios,agregar_servicios,eliminar_servicios,editar_servicios
-from .views import listado_mantenimiento,agregar_mantenimiento,eliminar_mantenimiento,editar_mantenimiento
+from .views import listado_mantenimiento,agregar_mantenimiento,eliminar_mantenimiento,editar_mantenimiento,eliminar_nota
+from .views import crear_nota
+
 
 from .views import listado_contrato,agregar_contrato,eliminar_contrato,editar_contrato
 
@@ -36,6 +38,8 @@ from .views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("crear-nota/", crear_nota, name="crear_nota"),
+    path('eliminar-nota/<int:pk>/', eliminar_nota, name='eliminar_nota'),
 
     path('home/', home,name='home'),
     path('menu/', barra_navegacion, name='bnav'),
@@ -124,7 +128,6 @@ urlpatterns = [
     path('contrato/eliminar/<int:pk>/', eliminar_contrato, name='eliminar_contrato'),
     path('contrato/editar/<int:pk>/', editar_contrato, name='editar_contrato'),
 
-
-
+    
 
 ]
