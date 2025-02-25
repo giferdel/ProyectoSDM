@@ -24,7 +24,7 @@ body{
     justify-content:space-evenly;
     
     .cont-lateral{
-        width: 200px;
+        width: 150px;
         height: 100vh;
         background-color: rgba(40, 40, 40, 0.2);
         display: flex;
@@ -40,17 +40,17 @@ body{
                 align-self:flex-start;
                 text-decoration: none;
                 color:var(--foreground);
-                font-size: 20px;
+                font-size: 15px;
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-weight: lighter;
             }
             a:hover{
-                border-left: solid 4px #f7752a;
+                border-left: solid 4px rgb(42, 80, 110, 0.5);
             }
             a:active{
-                width: 100%;
-                font-size: 21px;
-                background-color:#f7752a;
-                border-radius: 0 50px 50px 0;
+                width: 125px;
+                font-size: 15px;
+                background-color:rgb(42, 80, 110, 0.5);
                 color: var(--foreground);
             }
         
@@ -63,27 +63,35 @@ body{
     display: flex;
     flex-direction: column;
     align-content: flex-end;
+    align-items: flex-start;
     position: relative;
     
     section{
-        margin: 150px 0 0 200px;
+        margin: 200px 0 0 200px;
         height: 100vh;
     }
     .contenedor{
         display: flex;
         flex-direction: row;
-        justify-content: space-evenly;
+        justify-content:space-around;
         align-items: center;
-        flex-wrap: wrap;
+        flex-wrap: wrap;url(http://127.0.0.1:8080/operacion/home/#documentacion)
     }
 
     h1{
         font-family: Verdana, Geneva, Tahoma, sans-serif;
-        font-weight: normal;
-        font-size: 30px;
+        font-weight: lighter;
+        font-size: 25px;
         margin: 10px;
-        padding: 15px;
         color: var(--foreground);
+    }
+    hr{
+        width: 800px;
+        height: 1px;
+        margin-left: 10px;
+        border: transparent;
+        background-color: rgb(42, 80, 110);
+        justify-content: flex-start;
     }
 
     .cont-widget{
@@ -127,40 +135,34 @@ body{
 
 
 button{
-    width: 150px;
-    height: 70px;
+    width: 100px;
+    height: 40px;
     border: solid 1px var(--foreground);
     background-color: var(--background);
-    border-radius: 25px;
+    border-radius: 5px;
     margin: 20px;
     a{
         color: var(--foreground);
-        font-size: 20px;
+        font-size: 15px;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
-        font-weight:normal;
+        font-weight: lighter;
         text-decoration: none; 
     }
-    hr{
-        border: 0px;
-    }
+    
       
 }
 button:hover{
-    border: solid 1px var(--foreground);
-    background-color: rgb(42, 80, 110);
-    border-radius: 25px;
+    border: transparent;
+    background-color: rgb(42, 80, 110,0.7);
+    border-radius: 5px;
     margin: 20px;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
     a{
-        color: var(--foreground);
-        font-size: 20px;
+        color: var(--background);
+        font-size: 15px;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
-        font-weight: bold;
+        font-weight: lighter;
         text-decoration: none; 
-    }
-    hr{
-        width: 50px;
-        border: solid 1px #f7752a;
     }
       
 }

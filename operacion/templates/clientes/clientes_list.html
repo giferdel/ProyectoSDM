@@ -11,8 +11,10 @@
     <title>Listado de Clientes</title>
 </head>
 <body class="app">
-    <div class="head">{% include 'cabecera.html' %}
-        {% include 'bnav.html' %}</div>
+    <div class="head">
+        {% include 'cabecera.html' %}
+        {% include 'bnav.html' %}
+    </div>
     <a href="{% url 'home' %}" class="btn-atras"><img src="{% static 'operacion/img/atras.svg' %}"></a>
     <h1>Listado de Clientes</h1>
     <table>

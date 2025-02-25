@@ -52,10 +52,10 @@ class Vtv(models.Model):
 
 
 class Titular(models.Model):
-    razon_social = models.CharField(max_length=255, blank=True, null=True)  # Razón social para personas jurídicas
+    razon_social = models.CharField(max_length=255, blank=True, null=True, verbose_name="Razón Social")  # Razón social para personas jurídicas
     cuit = models.CharField(max_length=13, unique=True)  # CUIT/CUIL único
-    direccion = models.CharField(max_length=255)
-    telefono = models.CharField(max_length=20)
+    direccion = models.CharField(max_length=255, verbose_name="Dirección")
+    telefono = models.CharField(max_length=20, verbose_name="Teléfono")
     
 
     def __str__(self):
@@ -65,8 +65,8 @@ class Titular(models.Model):
 
 class Seguro(models.Model):
     nombre = models.CharField(max_length=50)
-    direccion = models.CharField(max_length=50)
-    telefono = models.PositiveIntegerField()
+    direccion = models.CharField(max_length=50, verbose_name="Dirección")
+    telefono = models.PositiveIntegerField(max_length=20, verbose_name="Teléfono")
 
     def __str__(self):
         return f"{self.nombre}"
@@ -167,12 +167,12 @@ class Turno_VTV(models.Model):
 
 class Mantenimiento(models.Model):
     automovil = models.ForeignKey(Automovil, on_delete=models.CASCADE, related_name='mantenimientos')
-    descripcion = models.TextField()
+    descripcion = models.TextField(verbose_name="Descripción")
     fecha_inicio_mantenimiento = models.DateField(null=True, blank=True)
     fecha_fin_mantenimiento = models.DateField(null=True, blank=True)
     kilometraje = models.IntegerField()
     costo = models.DecimalField(max_digits=10, decimal_places=2,null=True, blank=True)
-    proximo_mantenimiento = models.DateField(null=True, blank=True)
+    proximo_mantenimiento = models.DateField(null=True, blank=True, verbose_name="Próximo mantenimiento")
     tipo_mantenimiento = models.CharField(max_length=50, choices=[
         ('preventivo', 'Preventivo'),
         ('correctivo', 'Correctivo'),
@@ -334,7 +334,7 @@ class Contrato(models.Model):
     flota = models.ForeignKey('Flota', on_delete=models.CASCADE, blank=True, null=True)
     contrato_firmado = models.BooleanField(default=False)
     fecha_contrato_firmado = models.DateField(null=True, blank=True)
-    facturacion = models.BooleanField(default=False)
+    facturacion = models.BooleanField(default=False, verbose_name="Facturación")
 
     def __str__(self):
         return f"Contrato de {self.cliente} - {self.auto}"

@@ -27,17 +27,23 @@
     <h1>Pólizas</h1>
     <table>      
             <tr>
-                <th scope="col">Activa</th>
+                
                 <th scope="col">Aseguradora</th>
                 <th scope="col">Número de póliza</th>
                 <th scope="col">Fecha de inicio</th>      
                 <th scope="col">Fecha de fin</th>      
                 <th scope="col">Cobertura</th>      
-                
+                <th scope="col">Activa</th>
 
             </tr>
             {% for poliza in polizas  %}
             <tr>
+                
+                <td>{{ poliza.aseguradora }}</td>
+                <td>{{ poliza.numero_poliza }}</td>
+                <td>{{ poliza.fecha_inicio }}</td>
+                <td>{{ poliza.fecha_fin }}</td>
+                <td>{{ poliza.cobertura }}</td>
                 <td>
                     {% if poliza.activa %}
                         <img src="{% static 'operacion/img/check.svg' %}" alt="Habilitada">
@@ -46,12 +52,6 @@
                         
                     {% endif %}
                 </td>
-                <td>{{ poliza.aseguradora }}</td>
-                <td>{{ poliza.numero_poliza }}</td>
-                <td>{{ poliza.fecha_inicio }}</td>
-                <td>{{ poliza.fecha_fin }}</td>
-                <td>{{ poliza.cobertura }}</td>
-
 
                 <td class="acciones">
                     {% if poliza.id %}

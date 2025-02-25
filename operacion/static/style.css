@@ -27,12 +27,14 @@ body{
 h1{
     color:var(--foreground);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    margin: 40px;
+    font-weight: lighter;
+    font-size: 25px;
+    margin: 10px 20px;
 }
 h2{
     color:rgb(42, 80, 110);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 25px;
+    font-size: 15px;
     text-align: left;
     margin: 10px;
     padding-left: 20px;
@@ -45,7 +47,7 @@ table{
     flex-direction: column;
     align-content: baseline;
     
-    margin: 20px;
+    margin: 5px 20px;
     
     caption{
         margin: 20px;
@@ -58,17 +60,20 @@ table{
         
         height: 30px;
         color: rgb(2, 2, 2);
-        font-size: 15px;
+        font-size: 10px;
         text-align: center;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-weight: lighter;
+        text-transform: uppercase;
         .enlace{
-            font-size: 17px;
-            color: #f7752a;
+            font-size: 10px;
+            color: rgb(42, 80, 110);
             font-weight: bold;
             text-decoration: none;
+            letter-spacing: 1px;
         }
         .enlace:hover{
-            color: #ad3160;
+            color: rgb(20, 49, 71);
         }
         .enlace:active{
             color: rgb(240, 240, 240);
@@ -76,8 +81,10 @@ table{
             width: 400px;
         }
         img{
-            width: 30px;
+            width: 25px;
         }
+            
+        
         
     }
     tr:nth-child(odd){                      /*Color filas impares*/
@@ -98,7 +105,7 @@ table{
 
 th{
     width: 100vw;
-    font-size: 17px;
+    font-size: 15px;
     color: rgb(240, 240, 240);
     font-weight: lighter;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -115,7 +122,7 @@ th{
     margin: 3px;
     width: 25px;
     height: 25px;
-    background-color: #f7752a;
+    background-color: rgb(42, 80, 110);
     border: none;
     cursor: pointer;
     border-radius: 3px;
@@ -128,14 +135,14 @@ th{
 
 
 .btn:hover {
-    background-color: #c0392b;
+    background-color: rgb(20, 49, 71);
 }
 .btn-flotante {
     width: 40px;
     height: 40px;
 	color: #ffffff; /* Color del texto */
 	border-radius: 60%; /* Borde del boton */
-	background-color: #aa0d0d; /* Color de fondo */
+	background-color: rgb(42, 80, 110); /* Color de fondo */
 	padding: 10px; /* Relleno del boton */
 	position: fixed;
 	bottom: 40px;
@@ -145,7 +152,7 @@ th{
 	z-index: 99;
 }
 .btn-flotante:hover {
-	background-color: rgb(42, 80, 110); /* Color de fondo al pasar el cursor */
+	background-color: rgb(20, 49, 71); /* Color de fondo al pasar el cursor */
 	box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
 	transform: translateY(-7px);
 }
@@ -167,13 +174,15 @@ form .filtro-label{
     color:var(--foreground);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     margin: 25px;
+    font-size: 15px;
+    font-weight: lighter;
 }
 form .filtro-opcion{
-    font-size: 15px;
+    font-size: 10px;
     color:var(--foreground);
     background-color: var(--background);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    padding: 5px;
+    padding: 2px;
     border: solid 1px rgb(42, 80, 110);
 }
 
@@ -186,23 +195,25 @@ form .filtro-opcion{
     font-size: 15px;
     color:var(--foreground);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    padding: 5px;
+    padding: 2px;
     border: solid 1px var(--foreground); 
 }
 .filtro-fecha input{
-    font-size: 15px;
-    padding: 5px;
+    font-size: 10px;
+    padding: 2px;
     margin-top: 5px;
     background-color: var(--background);
     color: var(--foreground);
     border: 1px solid var(--foreground);
 }
 .filtro-fecha button{
-    height: 30px;
-    font-size: 15px;
+    height: 20px;
+    font-size: 10px;
     padding: 5px;
     margin: 5px;
-    background-color: #f7752a;
+    background-color: rgb(20, 49, 71);
     color: rgb(240, 240, 240);
     border: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }

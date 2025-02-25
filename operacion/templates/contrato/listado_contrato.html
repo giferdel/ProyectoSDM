@@ -11,8 +11,10 @@
     <title>Listado de contratos</title>
 </head>
 <body class="app">
-    <div class="head">{% include 'cabecera.html' %}
-        {% include 'bnav.html' %}</div>
+    <div class="head">
+        {% include 'cabecera.html' %}
+        {% include 'bnav.html' %}
+    </div>
     <a href="{% url 'home' %}" class="btn-atras"><img src="{% static 'operacion/img/atras.svg' %}"></a>
     <h1>Listado de contratos</h1>
     <table>
@@ -20,9 +22,9 @@
                 <th>Cliente</th>
                 <th>Auto</th>
                 <th>Flota</th>
-                <th>contrato firmado</th>
-                <th>fecha de firma</th>
-                <th>facturacion</th>
+                <th>Contrato firmado</th>
+                <th>Fecha de firma</th>
+                <th>Facturación</th>
                 <!-- <th>Acciones</th> -->
 
             </tr>

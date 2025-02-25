@@ -54,7 +54,8 @@ body{
 h1{
     color:var(--foreground);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    margin: 40px;
+    font-weight: lighter;
+    margin: 25px;
 }
 
 
@@ -66,11 +67,11 @@ form{
     padding: 25px 5px 15px 5px;
 
     width: 500px;
-    background-color: rgb(42, 80, 110);
+    background-color: rgb(42, 80, 110, 0.5);
     form button{
         width: 300px;
         height: 30px;
-        background-color: rgb(247, 117, 42);
+        background-color: rgb(42, 80, 110);
         border-radius: 50px;
         border: 0px;
         color: rgb(240,240,240);
@@ -84,7 +85,7 @@ form{
         display: flex;
         flex-direction: column;
         margin: 0;
-        padding: 5px 5px 15px 5px;
+        padding: 5px;
 
         label{
             color: rgb(240,240,240);
@@ -119,7 +120,7 @@ form{
     }
     textarea{
         width: 300px;
-        background-color: rgb(240,240,240,0.5);
+        background-color: rgb(240,240,240,0.2);
         
 
     }
@@ -128,7 +129,7 @@ form button{
     margin: 20px;
     width: 315px;
     height: 45px;
-    background-color: #f7752a;
+    background-color: rgb(42, 80, 110);
     border-radius: 50px;
     border: 0px;
     color: rgb(240,240,240);
@@ -137,7 +138,7 @@ form button{
     font-weight: bold;
 }
 form button:hover{
-    background-color: #b14b10;
+    background-color: rgb(20, 49, 71);
     border-radius: 50px;
     border: 0px;
     color: rgb(240,240,240);
@@ -148,8 +149,8 @@ form a{
     width: 315px;
     height: 45px;
     border-radius: 50px;
-    border: solid 1px #f7752a;
-    color: #f7752a;;
+    border: solid 1px rgb(42, 80, 110);
+    color: rgb(42, 80, 110);
     font-size: 15px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bold;
@@ -158,7 +159,7 @@ form a{
     align-content: center;
 }
 form a:hover{
-    background-color: #f7752a;
+    background-color: rgb(20, 49, 71);
     color: rgb(240,240,240);
     border-radius: 50px;
     font-size: 15px;
@@ -179,17 +180,35 @@ form a:hover{
 form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    margin: 0;
+    justify-content:center;
+    align-items: flex-start;
+    align-content: center;
+    margin: 5px;
+    padding: 50px;
+
+    h2{
+        /* text-transform:unset; */
+        font-weight: lighter;
+        font-variant: small-caps;
+        font-size: 30px;
+        margin-left: 20px;
+    }
+
+    button{
+        border: solid 1px rgb(240, 240, 240);
+        font-weight: lighter;
+    }
 
     label{
         color: rgb(240,240,240);
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         font-weight: lighter;
         padding: 3px;
+        margin-left: 20px;
     }
     .input-login{
         padding-left: 10px;
+        margin-left: 20px;
         height: 30px;
         width: 300px;
         background-color: rgba(10, 10, 10, 0.5);

@@ -9,8 +9,10 @@
     <title>Automóviles</title>
 </head>
 <body class="app">
-    <div class="head">{% include 'cabecera.html' %}
-        {% include 'bnav.html' %}</div>
+    <div class="head">
+        {% include 'cabecera.html' %}
+        {% include 'bnav.html' %}
+    </div>
     
     
     <a href="{% url 'home' %}" class="btn-atras"><img src="{% static 'operacion/img/atras.svg' %}"></a>
@@ -46,7 +48,7 @@
                 <th scope="col">Estado</th>
                 <th scope="col">Flota</th>
                 <th scope="col">VTV</th>    
-                <th scope="col">Poliza</th>
+                <th scope="col">Póliza</th>
                 <th scope="col">Cantidad de Siniestros</th>    
 
             </tr>

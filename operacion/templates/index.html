@@ -29,48 +29,43 @@
         </div>
         <div class="cont-principal">
             <a id="home">
-            <div class="cont-widget">
-                <article class="widget">
-                    <h2 class="h2-widget">Mi calendario</h2>
-                    <iframe src="https://calendar.google.com/calendar/embed?height=400&wkst=1&ctz=America%2FArgentina%2FBuenos_Aires&showPrint=0&title=Calendario&mode=WEEK"></iframe>
-                </article>
-                <article class="widget">
-                    <h2 class="h2-widget">Cambio y Cotización</h2>
-                    <fxwidget-erp inverse="false" amount="1" decimals="2" large="false" shadow="false" symbol="true" flag="true" changes="true" tax="false" code="false" grouping="true" border="false" main-curr="USD" sel-curr="ARS" background-color="#f2f3f4" lang="es"></fxwidget-erp><script async src="https://s.fx-w.io/widgets/exchange-rates-pro/latest.js?es"></script>
-                    <fxwidget-erp inverse="false" amount="1" decimals="2" large="false" shadow="false" symbol="true" flag="true" changes="true" tax="false" code="false" grouping="true" border="false" main-curr="EUR" sel-curr="ARS" background-color="#f2f3f4" lang="es"></fxwidget-erp><script async src="https://s.fx-w.io/widgets/exchange-rates-pro/latest.js?es"></script>
-                    <fxwidget-erp inverse="false" amount="1" decimals="2" large="false" shadow="false" symbol="true" flag="true" changes="true" tax="false" code="false" grouping="true" border="false" main-curr="BTC" sel-curr="USD" background-color="#f2f3f4" lang="es"></fxwidget-erp><script async src="https://s.fx-w.io/widgets/exchange-rates-pro/latest.js?es"></script>
-                </article>
-            </div>
+            <section>
+                <h1>Agenda</h1>
+                <hr>
+            </section>
             </a>
             
 
             <a id="gestion">
                 <section>
                     <h1>Gestión</h1>
+                    <hr>
                     <div class="contenedor">
-                        <button><a  href="{% url 'listado_automoviles' %}">Automóviles</a><hr></button>
-                        <button><a  href="">Alquileres</a><hr></button>
-                        <button><a  href="{% url 'listado_clientes' %}">Clientes</a><hr></button>        
+                        <button><a  href="{% url 'listado_automoviles' %}">Automóviles</a></button>
+                        <button><a  href="">Alquileres</a></button>
+                        <button><a  href="{% url 'listado_clientes' %}">Clientes</a></button>        
                     </div>
                 </section>
             </a>
             <a id="documentacion">
                 <section>
                     <h1>Documentación</h1>
+                    <hr>
                     <div class="contenedor">
-                        <button><a  href="{% url 'listado_automoviles' %}">Facturación</a><hr></button>
-                        <button><a  href="{% url 'listado_automoviles' %}">Contratos</a><hr></button>
-                        <button><a  href="{% url 'listado_clientes' %}">Bla</a><hr></button>
+                        <button><a  href="{% url 'listado_automoviles' %}">Facturación</a></button>
+                        <button><a  href="{% url 'listado_automoviles' %}">Contratos</a></button>
+                        <button><a  href="{% url 'listado_clientes' %}">Bla</a></button>
                     </div>
                 </section>
             </a>
             <a id="estadisticas">
                 <section>
                     <h1>Estadísticas e Informes</h1>
+                    <hr>
                     <div class="contenedor">
-                        <button><a  href="{% url 'listado_automoviles' %}">Facturación</a><hr></button>
-                        <button><a  href="{% url 'listado_automoviles' %}">Contratos</a><hr></button>
-                        <button><a  href="{% url 'listado_clientes' %}">Bla</a><hr></button>
+                        <button><a  href="{% url 'listado_automoviles' %}">Facturación</a></button>
+                        <button><a  href="{% url 'listado_automoviles' %}">Contratos</a></button>
+                        <button><a  href="{% url 'listado_clientes' %}">Bla</a></button>
                     </div>
                 </section>
             </a>
