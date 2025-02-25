@@ -66,7 +66,7 @@ class Titular(models.Model):
 class Seguro(models.Model):
     nombre = models.CharField(max_length=50)
     direccion = models.CharField(max_length=50, verbose_name="Dirección")
-    telefono = models.PositiveIntegerField(max_length=20, verbose_name="Teléfono")
+    telefono = models.CharField(max_length=20, verbose_name="Teléfono")
 
     def __str__(self):
         return f"{self.nombre}"
@@ -338,3 +338,17 @@ class Contrato(models.Model):
 
     def __str__(self):
         return f"Contrato de {self.cliente} - {self.auto}"
+
+
+
+    
+class notas(models.Model):
+    descripcion = models.TextField(blank=True, null=True, verbose_name="Descripción")
+    fecha = models.DateTimeField(verbose_name="Fecha y Hora de la nota")
+    prioridad = models.CharField(max_length=50,
+        choices=[
+            ('baja', 'Baja'),
+            ('media', 'Media'),
+            ('alta', 'Alta')],
+        default='media')
+    titulo = models.CharField(max_length=255, verbose_name="Título de la nota")

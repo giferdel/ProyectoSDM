@@ -7,6 +7,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'style_home.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
     <title>
         {% block title %}{% endblock %}
@@ -31,6 +34,64 @@
             <a id="home">
             <section>
                 <h1>Agenda</h1>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#notaModal">
+                    Agregar Nota
+                </button>
+                
+                <div id="notas">
+                    {% for nota in notas %}
+                        <div class="card mb-3 {% if nota.prioridad == 'alta' %}bg-danger{% elif nota.prioridad == 'media' %}bg-warning{% else %}bg-success{% endif %}"></div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ nota.titulo }}</h5>
+                                <p class="card-text">{{ nota.descripcion }}</p>
+                                <p class="card-text"><small class="text-muted">{{ nota.fecha }}</small></p>
+                                <p class="card-text"><span class="badge bg-secondary">{{ nota.prioridad }}</span></p>
+
+
+                            </div>
+
+
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="modal fade" id="notaModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel">Nueva Nota</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="notaForm">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label for="titulo" class="form-label">Título</label>
+                                        <input type="text" class="form-control" id="titulo" name="titulo" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="descripcion" class="form-label">Descripción</label>
+                                        <textarea class="form-control" id="descripcion" name="descripcion"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="fecha" class="form-label">Fecha y Hora</label>
+                                        <input type="datetime-local" class="form-control" id="fecha" name="fecha" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="prioridad" class="form-label">Prioridad</label>
+                                        <select class="form-select" id="prioridad" name="prioridad">
+                                            <option value="baja">Baja</option>
+                                            <option value="media" selected>Media</option>
+                                            <option value="alta">Alta</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-success">Guardar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <hr>
             </section>
             </a>
@@ -77,4 +138,26 @@
 
     <a href="#home" class="btn-flotante"><img src="{% static 'operacion/img/atras.svg' %}"></a>
 </body>
+
+<script>
+    document.getElementById("notaForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        let formData = new FormData(this);
+    
+        fetch("{% url 'crear_nota' %}", {
+            method: "POST",
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Nota guardada con éxito");
+                location.reload();
+            } else {
+                alert("Hubo un error");
+            }
+        });
+    });
+    </script>
+    
 </html>

@@ -1,4 +1,4 @@
-from .models import Automovil, Cliente,VtvEstado,Turno_VTV,Flota,Titular,Aseguradora,PolizaSeguro,Servicio,HistorialMantenimiento
+from .models import Automovil, Cliente,VtvEstado,Turno_VTV,Flota,Titular,Aseguradora,PolizaSeguro,Servicio,HistorialMantenimiento,notas
 from .models import Siniestro, Infracciones,Contrato
 from .forms import InfraccionesForm
 from django.shortcuts import render, redirect,get_object_or_404
@@ -160,12 +160,20 @@ def editar_siniestro(request, pk):
 
 @login_required
 def home(request):
+    N = notas.objects.all()
+    return render(request, 'index.html', {'notas': N})
     
-    return render(request, 'index.html')
+
 @login_required
 def barra_navegacion(request):
     opciones_menu = ['Automoviles', 'Clientes', 'VTV', 'Seguros','Patentes','Mantenimiento']
     return render(request, 'bnav.html', {'opciones_menu': opciones_menu})
+
+@login_required
+def eliminar_nota(request, pk):
+    nota = get_object_or_404(notas, pk=pk)
+    nota.delete()
+    return redirect('home')
 
 
 ####################################################################################################################################
@@ -732,3 +740,28 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
+
+
+
+
+###################################################################################################################
+
+
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import notas
+import json
+
+@csrf_exempt
+def crear_nota(request):
+    if request.method == "POST":
+        data = request.POST
+        nueva_nota = notas.objects.create(
+            titulo=data["titulo"],
+            descripcion=data["descripcion"],
+            fecha=data["fecha"],
+            prioridad=data["prioridad"]
+        )
+        return JsonResponse({"success": True})
+    return JsonResponse({"success": False}, status=400)
