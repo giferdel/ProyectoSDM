@@ -183,6 +183,47 @@ body{
         background-color: rgb(42, 80, 110);
         justify-content: flex-start;
     }
+    /* POPUP NOTA */
+    /* .modal{
+        background-color: aqua;
+    } */
+    .popup-nota{
+        pointer-events: auto;
+        background-color:rgb(240,240,240);
+        box-shadow: 1px 1px 5px rgb(20, 49, 71);
+        h5{
+            color: rgb(20, 49, 71);
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-weight: lighter;
+        }
+        .modal-body{
+            label{
+                color: rgb(20, 49, 71);
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-weight: lighter;
+            }
+            input, textarea, select{
+                background-color: rgba(40, 40, 40, 0.2);
+            }
+            .btn-popup{
+                width: 200px;
+                height: 50px;
+                background-color: rgb(42, 80, 110);
+                border-radius: 10px;
+                color: rgb(240,240,240);
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-weight: lighter;
+                display: flex;
+                justify-self: center;
+                justify-content: center;
+                align-items: center;
+            }
+            .btn-popup:hover{
+                background-color: rgb(20, 49, 71);
+                margin: 0px;
+            }
+        }
+    }
 
     /* .cont-widget{
         margin-left: 250px;
