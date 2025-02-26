@@ -23,7 +23,7 @@ body{
     flex-direction: row;
     justify-content:space-evenly;
     
-    .cont-lateral{
+    /* .cont-lateral{
         width: 150px;
         height: 100vh;
         background-color: rgba(40, 40, 40, 0.2);
@@ -54,7 +54,7 @@ body{
                 color: var(--foreground);
             }
         
-    } 
+    }  */
 }
 
 
@@ -66,16 +66,106 @@ body{
     align-items: flex-start;
     position: relative;
     
-    section{
-        margin: 200px 0 0 200px;
-        height: 100vh;
+    .referencias{
+        margin: 10px 10px;
+        color: rgb(20, 49, 71);
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: 10px;
+        font-weight: lighter;
+        .img-ref{
+            width: 15px;
+            height: 15px;
+            margin-right: 5px;
+        }
     }
+    /* section{
+        /* margin: 200px 0 0 0px; */
+        /* height: 100vh; 
+    } */
     .contenedor{
         display: flex;
         flex-direction: row;
-        justify-content:space-around;
+        justify-content:flex-start;
         align-items: center;
-        flex-wrap: wrap;url(http://127.0.0.1:8080/operacion/home/#documentacion)
+        flex-wrap: wrap;
+        .art-notas{
+            width: 250px;
+            height: 250px;
+            margin: 20px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            background-color: rgba(40, 40, 40, 0.2);
+            border-radius: 0 0 30px 0;
+            box-shadow: 2px 2px 5px rgb(42, 80, 110);
+            .hr-notas{
+                width: 200px;
+                margin: 5px 0 5px 0;
+                padding: 0;
+                border: solid 1px rgb(20, 49, 71);
+            }
+            .card-title{
+                display: flex;
+                flex-direction: row;
+                justify-content: left;
+                color: rgb(20, 49, 71);
+            }
+            .card-text-icon{
+                /* height:50%; */
+                margin: 0;
+                .img-nota{
+                    margin: 0px;
+                    padding-right: 5px;
+                } 
+            }
+            
+            .btn-eliminar{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                background-color: transparent;
+                border: none;
+                margin: 5px;
+                padding: 0px;
+                filter: contrast(0);
+            }
+            .btn-eliminar:hover{
+                filter: drop-shadow(1px 1px 2px rgb(20, 49, 71));
+            }
+        }
+
+        }
+        .btn-nota{
+            margin: 20px;
+            width: 45px;
+            height: 45px;
+            background-color: rgb(42, 80, 110);
+            border-radius: 50px;
+            border: 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img{
+                width: 35px;
+                padding: 0px;
+                
+            /* position:fixed;
+            right: 40px;
+            bottom: 40px;
+            z-index: 99; */
+        }
+        .btn-nota:hover{
+            background-color: rgb(20, 49, 71);
+            box-shadow: 2px 2px 3px rgb(42, 80, 110);
+            border-radius: 50px;
+            border: 0px;
+            color: rgb(240,240,240);
+            font-size: 15px;
+        }
     }
 
     h1{
@@ -94,7 +184,7 @@ body{
         justify-content: flex-start;
     }
 
-    .cont-widget{
+    /* .cont-widget{
         margin-left: 250px;
         margin-top: 120px;
         width: 60vw;
@@ -130,7 +220,30 @@ body{
         fxwidget-erp {
             width: 300px;
         }
+    } */
+    
+    .btn{
+        margin: 20px;
+        width: 45px;
+        height: 45px;
+        background-color: rgb(42, 80, 110);
+        border-radius: 50px;
+        border: 0px;
+        color: rgb(240,240,240);
+        font-size: 15px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-weight: bold;
+        
     }
+    .btn:hover{
+        background-color: rgb(20, 49, 71);
+        box-shadow: 2px 2px 3px rgb(42, 80, 110);
+        border-radius: 50px;
+        border: 0px;
+        color: rgb(240,240,240);
+        font-size: 15px;
+    }
+    
 }
 
 
@@ -181,3 +294,4 @@ button:hover{
         transform: rotate(90deg);
     }
 }
+

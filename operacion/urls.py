@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.urls import path
-from django.contrib.auth import views as auth_views
 
 
 from .views import barra_navegacion, menu_automoviles, home
@@ -15,9 +14,18 @@ from .views import listado_poliza,agregar_poliza,eliminar_poliza,editar_poliza
 from .views import listado_servicios,agregar_servicios,eliminar_servicios,editar_servicios
 from .views import listado_mantenimiento,agregar_mantenimiento,eliminar_mantenimiento,editar_mantenimiento,eliminar_nota
 from .views import crear_nota
+from django.conf.urls import handler404
 
+from .views import advertencia_view
+
+# Redirigir errores 404 a la vista de advertencia
 
 from .views import listado_contrato,agregar_contrato,eliminar_contrato,editar_contrato
+# En tu archivo urls.py
+from django.contrib.auth import views as auth_views
+
+
+
 
 from .views import (
     listado_siniestro,
@@ -35,12 +43,12 @@ from .views import (
 )
 
 
+handler404 = advertencia_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("crear-nota/", crear_nota, name="crear_nota"),
     path('eliminar-nota/<int:pk>/', eliminar_nota, name='eliminar_nota'),
-
     path('home/', home,name='home'),
     path('menu/', barra_navegacion, name='bnav'),
     path('automoviles/', menu_automoviles,name='listado_automoviles'),
@@ -120,7 +128,6 @@ urlpatterns = [
     path('siniestro/editar/<int:pk>/', editar_siniestro, name='editar_siniestro'),
 
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 
     
     path('contrato/', listado_contrato, name='listado_contrato'),

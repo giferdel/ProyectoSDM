@@ -1,33 +1,34 @@
-"""
-URL configuration for arrendadora project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path,include
 from django.shortcuts import redirect
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.views import LogoutView
+from django.conf.urls import handler404
+
+# Redirigir errores 404 a la vista de advertencia
+
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+
+def logout_view(request):
+    logout(request)  # Cierra la sesión del usuario
+    return redirect('login')  # Redirige a la página de inicio de sesión
+
+
+    # Otras URLs de tu proyecto
 
 def redirect_to_home(request):
-    return redirect('home')  # Cambia 'inicio' por el nombre de tu URL de destino
+    return redirect('login')  # Cambia 'inicio' por el nombre de tu URL de destino
 
 
 urlpatterns = [
     path('', redirect_to_home),  # Redirige la raíz a otra página
     path('admin/', admin.site.urls),
     path('operacion/', include('operacion.urls')),
+    path('logout/', logout_view, name='logout'),  # Correctly reference the logout view function
+
+
 
 ]
 

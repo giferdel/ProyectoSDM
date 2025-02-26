@@ -765,3 +765,8 @@ def crear_nota(request):
         )
         return JsonResponse({"success": True})
     return JsonResponse({"success": False}, status=400)
+
+
+
+def advertencia_view(request):
+    return render(request, '404.html')  # Vista de advertencia

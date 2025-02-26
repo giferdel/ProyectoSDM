@@ -23,38 +23,60 @@
     </div>
     
     <div class="cont-home">
-        <div class="cont-lateral">
+        <!-- <div class="cont-lateral">
             <a href="#home">Home</a>
             <a href="#gestion">Gestión</a>
             <a href="#documentacion">Documentación</a>
             <a href="#estadisticas">Estadísticas</a>
             
-        </div>
+        </div> -->
         <div class="cont-principal">
             <a id="home">
             <section>
-                <h1>Agenda</h1>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#notaModal">
-                    Agregar Nota
-                </button>
-                
-                <div id="notas">
+                <h1>Notas</h1>
+                <hr>
+                <!-- REFERENCIAS -->
+                 <p class="referencias">
+                    Referencias: 
+                    <img class="img-ref" src="{% static 'operacion/img/red-circle.svg' %}" alt="">Prioridad ALTA   
+                    <img class="img-ref" src="{% static 'operacion/img/orange-circle.svg' %}" alt="">Prioridad MEDIA   
+                    <img class="img-ref" src="{% static 'operacion/img/green-circle.svg' %}" alt="">Prioridad BAJA
+                </p>
+                <!-- NOTA -->
+                <div id="notas" class="contenedor">
                     {% for nota in notas %}
-                        <div class="card mb-3 {% if nota.prioridad == 'alta' %}bg-danger{% elif nota.prioridad == 'media' %}bg-warning{% else %}bg-success{% endif %}"></div>
+                        <article class="art-notas">
                             <div class="card-body">
-                                <h5 class="card-title">{{ nota.titulo }}</h5>
+                                <h5 class="card-title">
+                                    <p class="card-text-icon">
+                                    {% if nota.prioridad  == 'alta' %}
+                                        <img class="img-nota" src="{% static 'operacion/img/red-circle.svg' %}" alt="">
+                                    {% elif nota.prioridad == 'media' %}
+                                        <img class="img-nota" src="{% static 'operacion/img/orange-circle.svg' %}" alt="">
+                                    {% else %}
+                                        <img class="img-nota" src="{% static 'operacion/img/green-circle.svg' %}" alt="">
+                                    {% endif %}  
+                                </p>{{ nota.titulo }}</h5>
+                                <hr class="hr-notas">
                                 <p class="card-text">{{ nota.descripcion }}</p>
                                 <p class="card-text"><small class="text-muted">{{ nota.fecha }}</small></p>
-                                <p class="card-text"><span class="badge bg-secondary">{{ nota.prioridad }}</span></p>
-
-
+                                
                             </div>
-
-
+                            {% if nota.id %}
+                            <form method="post" action="{% url 'eliminar_nota' nota.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-eliminar"><img src="{% static 'operacion/img/eliminar_blanco.svg' %}" alt=""></button>
+                            </form>
+                            {% else %}
+                            <p>ID no válido</p>
+                            {% endif %}
+                                </article>
+                            {% endfor %}
+                            <button type="button" class="btn-nota" data-bs-toggle="modal" data-bs-target="#notaModal">
+                                <img src="{% static 'operacion/img/agregar.svg' %}">
+                            </button>
                         </div>
-                    {% endfor %}
-                </div>
-
+                
                 <div class="modal fade" id="notaModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -92,12 +114,12 @@
                     </div>
                 </div>
                 
-                <hr>
+                
             </section>
             </a>
             
 
-            <a id="gestion">
+            <!-- <a id="gestion">
                 <section>
                     <h1>Gestión</h1>
                     <hr>
@@ -129,7 +151,7 @@
                         <button><a  href="{% url 'listado_clientes' %}">Bla</a></button>
                     </div>
                 </section>
-            </a>
+            </a> -->
             
         </div>
     </div>
